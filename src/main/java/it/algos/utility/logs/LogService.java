@@ -1,10 +1,9 @@
 package it.algos.utility.logs;
 
 import com.mongodb.client.result.DeleteResult;
-import it.algos.vbase.backend.entity.AbstractEntity;
 import it.algos.vbase.backend.enumeration.LogLevel;
 import it.algos.vbase.backend.enumeration.TypeLog;
-import it.algos.vbase.backend.logic.CrudCompanyService;
+import it.algos.vbase.backend.logic.ModuloService;
 import it.algos.vbase.backend.modules.utente.UtenteEntity;
 import it.algos.vbase.backend.service.FileService;
 import it.algos.vbase.backend.service.MongoService;
@@ -27,7 +26,7 @@ import static it.algos.vbase.backend.boot.BaseCost.*;
  * Time: 18:34
  */
 @Service
-public class LogService extends CrudCompanyService {
+public class LogService extends ModuloService<LogEntity> {
 
     @Autowired
     FileService fileService;
@@ -118,7 +117,7 @@ public class LogService extends CrudCompanyService {
 
 
     @Override
-    public AbstractEntity afterInsert(AbstractEntity entityBean) {
+    public LogEntity afterInsert(LogEntity entityBean) {
         int appenderMax = APPENDER_MAX;
         int appenderOffset = APPENDER_OFFSET;
         long numEntities = count();
