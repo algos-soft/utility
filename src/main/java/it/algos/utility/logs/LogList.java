@@ -2,6 +2,7 @@ package it.algos.utility.logs;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.spring.annotation.SpringComponent;
+import it.algos.vbase.backend.annotation.AList;
 import it.algos.vbase.backend.enumeration.LogLevel;
 import it.algos.vbase.backend.enumeration.TypeLog;
 import it.algos.vbase.backend.list.CrudCompanyList;
@@ -15,6 +16,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 
 @SpringComponent
 @Scope(value = SCOPE_PROTOTYPE)
+@AList()
 public class LogList extends CrudCompanyList {
 
     private ComboBox comboModulo;
