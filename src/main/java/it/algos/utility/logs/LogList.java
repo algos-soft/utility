@@ -42,8 +42,8 @@ public class LogList extends CrudCompanyList {
     protected void fixPreferenze() {
         super.fixPreferenze();
 
-        super.usaBottoneDownload = false;
-        super.usaBottoneNew = false;
+//        super.usaBottoneDownload = false;
+//        super.usaBottoneNew = false;
         super.usaBottoneEdit = false;
         super.usaBottoneShow = true;
         super.usaVariantCompact = true;
