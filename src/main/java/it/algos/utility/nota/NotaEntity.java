@@ -2,7 +2,7 @@ package it.algos.utility.nota;
 
 import com.vaadin.flow.component.icon.VaadinIcon;
 import it.algos.vbase.backend.annotation.*;
-import it.algos.vbase.backend.entity.AbstractCompany;
+import it.algos.vbase.backend.entity.AbstractEntity;
 import it.algos.vbase.backend.enumeration.LogLevel;
 import it.algos.vbase.backend.enumeration.TypeField;
 import it.algos.vbase.backend.enumeration.TypeLog;
@@ -25,7 +25,7 @@ import static it.algos.vbase.backend.boot.BaseCost.VUOTA;
 @ALog()
 @AReset()
 @AEntity( sort = "inizio", sortDiscendente = true)
-public class NotaEntity extends AbstractCompany {
+public class NotaEntity extends AbstractEntity {
 
     @AFieldList()
 //    @AField(type = TypeField.enumType, enumClazz = TypeLog.class)

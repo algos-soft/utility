@@ -5,7 +5,7 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.vbase.backend.annotation.AList;
 import it.algos.vbase.backend.enumeration.LogLevel;
 import it.algos.vbase.backend.enumeration.TypeLog;
-import it.algos.vbase.backend.list.CrudCompanyList;
+import it.algos.vbase.backend.list.CrudList;
 import it.algos.vbase.ui.wrapper.ASpan;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Scope;
@@ -15,7 +15,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 @SpringComponent
 @Scope(value = SCOPE_PROTOTYPE)
 @AList()
-public class NotaList extends CrudCompanyList {
+public class NotaList extends CrudList {
     private ComboBox comboTypeLog;
     private ComboBox comboTypeLevel;
 
