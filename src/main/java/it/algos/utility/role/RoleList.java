@@ -29,8 +29,8 @@ public class RoleList extends CrudList {
     protected void fixPreferenze() {
         super.fixPreferenze();
 
-        super.usaBottoneEdit = false;
-        super.usaBottoneShow = false;
+//        super.usaBottoneEdit = false;
+//        super.usaBottoneShow = false;
 //        super.usaBottoneExport = false;
     }
 
