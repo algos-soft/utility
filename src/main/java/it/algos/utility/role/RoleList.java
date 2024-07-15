@@ -36,7 +36,7 @@ public class RoleList extends CrudList {
 
 
     @Override
-    public void syncHeader() {
+    public void fixHeader() {
 //        super.infoScopo = String.format(typeList.getInfoScopo(), "Role", "Role"); ;
         super.fixHeaderPost();
     }

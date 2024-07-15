@@ -34,7 +34,7 @@ public class NotaList extends CrudList {
 
 
     @Override
-    public void syncHeader() {
+    public void fixHeader() {
         super.infoScopo = "Appunti liberi";
         message="Data iniziale proposta quella attuale ma modificabile. Data finale inserita automaticamente col flag fatto=true.";
         headerPlaceHolder.add(ASpan.text(message).rosso().small());
