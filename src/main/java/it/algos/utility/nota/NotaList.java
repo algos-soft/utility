@@ -52,7 +52,7 @@ public class NotaList extends CrudList {
         comboTypeLog.setClearButtonVisible(true);
         comboTypeLog.setWidth("10rem");
         comboTypeLog.setItems(TypeLog.values());
-        comboTypeLog.addValueChangeListener(event -> sync());
+//        comboTypeLog.addValueChangeListener(event -> sync());
         listToolbar.add(comboTypeLog);
 
         comboTypeLevel = new ComboBox<>();
@@ -60,7 +60,7 @@ public class NotaList extends CrudList {
         comboTypeLevel.setClearButtonVisible(true);
         comboTypeLevel.setWidth("8.7rem");
         comboTypeLevel.setItems(LogLevel.values());
-        comboTypeLevel.addValueChangeListener(event -> sync());
+//        comboTypeLevel.addValueChangeListener(event -> sync());
         listToolbar.add(comboTypeLevel);
 
     }
