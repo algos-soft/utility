@@ -1,6 +1,7 @@
 package it.algos.utility.nota;
 
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.data.provider.SortDirection;
 import it.algos.vbase.backend.annotation.*;
 import it.algos.vbase.backend.entity.AbstractEntity;
 import it.algos.vbase.backend.enumeration.LogLevel;
@@ -24,7 +25,7 @@ import static it.algos.vbase.backend.boot.BaseCost.VUOTA;
 @Document(collection = "nota")
 @ALog()
 @AReset()
-@AEntity( sort = "inizio", sortDiscendente = true)
+@AEntity( sortProperty = "inizio", sortDirection = SortDirection.DESCENDING)
 public class NotaEntity extends AbstractEntity {
 
     @AFieldList()
