@@ -19,13 +19,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class RoleEntity extends AbstractEntity {
 
     @AFieldList(headerText = "#")
-//    @AField(type = TypeField.ordine)
     private int ordine;
 
 
     @Indexed(unique = true)
     @AFieldList(width = 12)
-//    @AField(type = TypeField.text)
     private String code;
 
 
