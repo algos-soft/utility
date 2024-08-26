@@ -41,7 +41,7 @@ public class NotaList extends CrudList {
         message="Filtri selezione per typeLog e typeLevel. Ordinamento decrescente per data iniziale. Descrizione libera.";
         headerPlaceHolder.add(ASpan.text(message).rosso().small());
 
-        super.fixHeaderPost();
+        super.fixHeader();
     }
 
     @PostConstruct
