@@ -5,7 +5,7 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.vbase.backend.annotation.AViewList;
 import it.algos.vbase.backend.enumeration.LogLevel;
 import it.algos.vbase.backend.enumeration.TypeLog;
-import it.algos.vbase.backend.list.CrudList;
+import it.algos.vbase.backend.list.AList;
 import it.algos.vbase.ui.wrapper.ASpan;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Scope;
@@ -15,7 +15,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 @SpringComponent
 @Scope(value = SCOPE_PROTOTYPE)
 @AViewList()
-public class NotaList extends CrudList {
+public class NotaList extends AList {
     private ComboBox comboTypeLog;
     private ComboBox comboTypeLevel;
 
@@ -92,4 +92,4 @@ public class NotaList extends CrudList {
     }
 
 
-}// end of CrudList class
+}// end of AList class

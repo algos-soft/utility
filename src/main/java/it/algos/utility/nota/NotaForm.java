@@ -20,8 +20,8 @@ public class NotaForm  <T extends NotaEntity> extends CrudForm {
     }
 
     //--new entityBean and update existing entityBean
-    public NotaForm(final CrudList parentCrudList, AbstractEntity entityBean, CrudOperation operation) {
-        super(parentCrudList, entityBean, operation);
+    public NotaForm(final AList parentAList, AbstractEntity entityBean, CrudOperation operation) {
+        super(parentAList, entityBean, operation);
     }
 
 
