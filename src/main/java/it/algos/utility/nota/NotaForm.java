@@ -1,13 +1,14 @@
 package it.algos.utility.nota;
 
-import com.vaadin.flow.component.checkbox.*;
-import com.vaadin.flow.spring.annotation.*;
-import it.algos.vbase.backend.entity.*;
-import it.algos.vbase.backend.enumeration.*;
-import it.algos.vbase.backend.list.*;
-import it.algos.vbase.ui.form.*;
-import static org.springframework.beans.factory.config.BeanDefinition.*;
-import org.springframework.context.annotation.*;
+import com.vaadin.flow.component.checkbox.Checkbox;
+import com.vaadin.flow.spring.annotation.SpringComponent;
+import it.algos.vbase.backend.entity.AbstractEntity;
+import it.algos.vbase.backend.enumeration.CrudOperation;
+import it.algos.vbase.backend.list.AList;
+import it.algos.vbase.ui.form.CrudForm;
+import org.springframework.context.annotation.Scope;
+
+import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
 @SpringComponent
 @Scope(value = SCOPE_PROTOTYPE)
@@ -37,7 +38,7 @@ public class NotaForm  <T extends NotaEntity> extends CrudForm {
     protected void addFields() {
         super.addFields();
 
-        if (crudOperation == CrudOperation.add) {
+        if (crudOperation == CrudOperation.create) {
             mappaFields.get("fatto").setEnabled(false);
         }
         else {
