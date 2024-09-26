@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static it.algos.vbase.backend.boot.BaseCost.VUOTA;
+import static it.algos.vbase.backend.boot.BaseCost.*;
 
 
 @Data
@@ -29,18 +29,18 @@ public class NotaEntity extends AbstractEntity {
     @AFieldForm(label = "typeColor", clearButtonVisible = TBool.vero)
     private TypeColor colore;
 
-    @NotNull
+    @NotNull(message = NO_NULL)
     @ASearch()
     private TypeLog typeLog;
 
-    @NotNull
+    @NotNull(message = NO_NULL)
     @ASearch()
     private LogLevel typeLevel;
 
     @NotNull
     private LocalDate inizio;
 
-    @NotBlank
+    @NotBlank(message = NO_BLANK)
     @ASearch(textSearchMode = TextSearchMode.contains)
     @AFieldList(width = 30)
     @AFieldForm(width = 40)

@@ -5,6 +5,8 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.vbase.backend.components.SimpleHorizontalLayout;
 import it.algos.vbase.backend.entity.AbstractEntity;
+import it.algos.vbase.backend.enumeration.LogLevel;
+import it.algos.vbase.backend.enumeration.TypeLog;
 import it.algos.vbase.backend.form.DefaultForm;
 import it.algos.vbase.backend.service.LoggerService;
 import it.algos.vbase.backend.wrapper.WrapField;
@@ -40,6 +42,8 @@ public class NotaForm<T extends AbstractEntity> extends DefaultForm<T> {
         List<String> propertyNames = new ArrayList<>(Arrays.asList("colore", "typeLog", "typeLevel", "inizio", "descrizione", "fatto"));
 
         if (newRecord) {
+            ((NotaEntity) bean).setTypeLog(TypeLog.system);
+            ((NotaEntity) bean).setTypeLevel(LogLevel.info);
             ((NotaEntity) bean).setInizio(LocalDate.now());
         } else {
             propertyNames.add("fine");
