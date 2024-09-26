@@ -72,7 +72,7 @@ public class NotaForm<T extends AbstractEntity> extends DefaultForm<T> {
 
 
     @Override
-    public void writeBean(AbstractEntity newBean) throws ValidationException {
+    public void writeBean(T newBean) throws ValidationException {
         super.writeBean(newBean);
 
         if (!newRecord) {
