@@ -21,7 +21,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 
 @SpringComponent
 @Scope(value = SCOPE_PROTOTYPE)
-public class NotaForm<T extends NotaEntity> extends DefaultForm {
+public class NotaForm<T extends AbstractEntity> extends DefaultForm<T> {
 
     @Autowired
     protected MongoTemplate mongoTemplate;
@@ -104,4 +104,4 @@ public class NotaForm<T extends NotaEntity> extends DefaultForm {
 //    }
 
 
-}// end of CrudForm class
+}
