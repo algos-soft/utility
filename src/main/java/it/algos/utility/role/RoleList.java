@@ -13,11 +13,6 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 public class RoleList extends AList {
 
 
-    //--non utilizzato. Serve SOLO per evitare un bug di IntelliJIDEA che segnala errore.
-    public RoleList() {
-        super();
-    }
-
     /**
      * @param parentCrudView che crea questa istanza
      */

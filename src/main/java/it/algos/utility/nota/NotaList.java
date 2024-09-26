@@ -20,11 +20,6 @@ public class NotaList extends AList {
     private ComboBox comboTypeLevel;
 
 
-    //--non utilizzato. Serve SOLO per evitare un bug di IntelliJIDEA che segnala errore.
-    public NotaList() {
-        super();
-    }
-
     /**
      * @param parentCrudView che crea questa istanza
      */
@@ -36,16 +31,16 @@ public class NotaList extends AList {
     @Override
     public void fixHeader() {
         super.infoScopo = "Appunti liberi";
-        message="Data iniziale proposta quella attuale ma modificabile. Data finale inserita automaticamente col flag fatto=true.";
+        message = "Data iniziale proposta quella attuale ma modificabile. Data finale inserita automaticamente col flag fatto=true.";
         headerPlaceHolder.add(ASpan.text(message).rosso().small());
-        message="Filtri selezione per typeLog e typeLevel. Ordinamento decrescente per data iniziale. Descrizione libera.";
+        message = "Filtri selezione per typeLog e typeLevel. Ordinamento decrescente per data iniziale. Descrizione libera.";
         headerPlaceHolder.add(ASpan.text(message).rosso().small());
 
         super.fixHeader();
     }
 
     @PostConstruct
-    private void init(){
+    private void init() {
 
         comboTypeLog = new ComboBox<>();
         comboTypeLog.setPlaceholder("TypeLog...");
@@ -73,8 +68,7 @@ public class NotaList extends AList {
                 if (comboTypeLog.getValue() instanceof TypeLog type) {
                     filtri.uguale("typeLog", type);
                 }
-            }
-            else {
+            } else {
                 filtri.remove("typeLog");
             }
         }
@@ -84,8 +78,7 @@ public class NotaList extends AList {
                 if (comboTypeLevel.getValue() instanceof LogLevel type) {
                     filtri.uguale("typeLevel", type);
                 }
-            }
-            else {
+            } else {
                 filtri.remove("typeLevel");
             }
         }

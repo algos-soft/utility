@@ -12,13 +12,8 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 
 @SpringComponent
 @Scope(value = SCOPE_PROTOTYPE)
-public class NotaForm  <T extends NotaEntity> extends CrudForm {
+public class NotaForm<T extends NotaEntity> extends CrudForm {
 
-
-    //--non utilizzato. Serve SOLO per evitare un bug di IntelliJIDEA che segnala errore.
-    public NotaForm() {
-        super();
-    }
 
     //--new entityBean and update existing entityBean
     public NotaForm(final AList parentAList, AbstractEntity entityBean, CrudOperation operation) {
@@ -40,8 +35,7 @@ public class NotaForm  <T extends NotaEntity> extends CrudForm {
 
         if (crudOperation == CrudOperation.create) {
             mappaFields.get("fatto").setEnabled(false);
-        }
-        else {
+        } else {
             mappaFields.get("typeLog").setEnabled(false);
             mappaFields.get("typeLevel").setEnabled(false);
             mappaFields.get("inizio").setEnabled(false);

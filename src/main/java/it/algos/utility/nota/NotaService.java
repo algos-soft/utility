@@ -80,21 +80,21 @@ public class NotaService extends ModuloService<NotaEntity> {
     }
 
 
-    @Override
-    public NotaEntity preSave(NotaEntity entityBean) {
-        NotaEntity notaBean = (NotaEntity) entityBean;
-
-        if (notaBean.isFatto()) {
-            if (notaBean.getFine() == null) {
-                notaBean.setFine(LocalDate.now());
-            }
-        }
-        else {
-            notaBean.setFine(null);
-        }
-
-        return super.preSave(notaBean);
-    }
+//    @Override
+//    public NotaEntity preSave(NotaEntity entityBean) {
+//        NotaEntity notaBean = (NotaEntity) entityBean;
+//
+//        if (notaBean.isFatto()) {
+//            if (notaBean.getFine() == null) {
+//                notaBean.setFine(LocalDate.now());
+//            }
+//        }
+//        else {
+//            notaBean.setFine(null);
+//        }
+//
+//        return super.preSave(notaBean);
+//    }
 
 
     @Override
