@@ -1,12 +1,9 @@
 package it.algos.utility.nota;
 
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.data.provider.SortDirection;
 import it.algos.vbase.backend.annotation.*;
 import it.algos.vbase.backend.entity.AbstractEntity;
-import it.algos.vbase.backend.enumeration.LogLevel;
-import it.algos.vbase.backend.enumeration.TypeField;
-import it.algos.vbase.backend.enumeration.TypeLog;
+import it.algos.vbase.backend.enumeration.*;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,43 +13,36 @@ import java.time.format.DateTimeFormatter;
 import static it.algos.vbase.backend.boot.BaseCost.VUOTA;
 
 
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Document(collection = "nota")
-@ALog()
 @AReset()
-@AEntity( sortProperty = "inizio", sortDirection = SortDirection.DESCENDING)
+@AEntity(sortProperty = "inizio", sortDirection = SortDirection.DESCENDING)
 public class NotaEntity extends AbstractEntity {
 
-    @AFieldList()
-//    @AField(type = TypeField.enumType, enumClazz = TypeLog.class)
-    @AFieldForm(type = TypeField.enumType)
+    @ASearch()
+    @AFieldForm(label = "typeColor", clearButtonVisible = TBool.vero)
+    private TypeColor colore;
+
+    @ASearch()
     private TypeLog typeLog;
 
-    @AFieldList()
-//    @AField(type = TypeField.enumType, enumClazz = LogLevel.class)
-    @AFieldForm(type = TypeField.enumType)
+    @ASearch()
     private LogLevel typeLevel;
 
-    @AFieldList()
-//    @AField(type = TypeField.localDate, typeDate = TypeDate.dateNormal)
-    @AFieldForm(type = TypeField.localDate)
     private LocalDate inizio;
 
-    @AFieldList(width = 20)
+    @ASearch(textSearchMode = TextSearchMode.contains)
+    @AFieldList(width = 30)
+    @AFieldForm(width = 30)
     private String descrizione;
 
-    @AFieldList(headerIcon = VaadinIcon.CHECK)
-    @AFieldForm(type = TypeField.booleano)
+    @ASearch(checkBoxInitialStatus = CheckBoxStatus.falso)
     private boolean fatto;
 
-    @AFieldList()
-//    @AField(type = TypeField.localDate, typeDate = TypeDate.dateNormal)
-    @AFieldForm(type = TypeField.localDate)
     private LocalDate fine;
 
     @Override

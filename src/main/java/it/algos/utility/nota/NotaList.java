@@ -1,30 +1,27 @@
 package it.algos.utility.nota;
 
-import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.spring.annotation.SpringComponent;
+import com.vaadin.flow.data.provider.SortDirection;
 import it.algos.vbase.backend.annotation.AViewList;
-import it.algos.vbase.backend.enumeration.LogLevel;
-import it.algos.vbase.backend.enumeration.TypeLog;
 import it.algos.vbase.backend.list.AList;
 import it.algos.vbase.ui.wrapper.ASpan;
-import jakarta.annotation.PostConstruct;
-import org.springframework.context.annotation.Scope;
 
-import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
-
-@SpringComponent
-@Scope(value = SCOPE_PROTOTYPE)
-@AViewList()
+@AViewList(columns = {
+        "*colore",
+        "typeLog",
+        "typeLevel",
+        "inizio",
+        "descrizione",
+        "fatto",
+        "fine"},
+        sortProperty = "inizio", sortDirection = SortDirection.DESCENDING)
 public class NotaList extends AList {
-    private ComboBox comboTypeLog;
-    private ComboBox comboTypeLevel;
 
 
     /**
-     * @param parentCrudView che crea questa istanza
+     * @param parentView che crea questa istanza
      */
-    public NotaList(final NotaView parentCrudView) {
-        super(parentCrudView);
+    public NotaList(final NotaView parentView) {
+        super(parentView);
     }
 
 
@@ -37,51 +34,6 @@ public class NotaList extends AList {
         headerPlaceHolder.add(ASpan.text(message).rosso().small());
 
         super.fixHeader();
-    }
-
-    @PostConstruct
-    private void init() {
-
-        comboTypeLog = new ComboBox<>();
-        comboTypeLog.setPlaceholder("TypeLog...");
-        comboTypeLog.setClearButtonVisible(true);
-        comboTypeLog.setWidth("10rem");
-        comboTypeLog.setItems(TypeLog.values());
-//        comboTypeLog.addValueChangeListener(event -> sync());
-        listToolbar.add(comboTypeLog);
-
-        comboTypeLevel = new ComboBox<>();
-        comboTypeLevel.setPlaceholder("TypeLevel...");
-        comboTypeLevel.setClearButtonVisible(true);
-        comboTypeLevel.setWidth("8.7rem");
-        comboTypeLevel.setItems(LogLevel.values());
-//        comboTypeLevel.addValueChangeListener(event -> sync());
-        listToolbar.add(comboTypeLevel);
-
-    }
-
-
-    @Override
-    protected void syncFiltri() {
-        if (comboTypeLog != null) {
-            if (comboTypeLog.getValue() != null) {
-                if (comboTypeLog.getValue() instanceof TypeLog type) {
-                    filtri.uguale("typeLog", type);
-                }
-            } else {
-                filtri.remove("typeLog");
-            }
-        }
-
-        if (comboTypeLevel != null) {
-            if (comboTypeLevel.getValue() != null) {
-                if (comboTypeLevel.getValue() instanceof LogLevel type) {
-                    filtri.uguale("typeLevel", type);
-                }
-            } else {
-                filtri.remove("typeLevel");
-            }
-        }
     }
 
 
