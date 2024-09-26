@@ -4,6 +4,8 @@ import com.vaadin.flow.data.provider.SortDirection;
 import it.algos.vbase.backend.annotation.*;
 import it.algos.vbase.backend.entity.AbstractEntity;
 import it.algos.vbase.backend.enumeration.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -27,14 +29,18 @@ public class NotaEntity extends AbstractEntity {
     @AFieldForm(label = "typeColor", clearButtonVisible = TBool.vero)
     private TypeColor colore;
 
+    @NotNull
     @ASearch()
     private TypeLog typeLog;
 
+    @NotNull
     @ASearch()
     private LogLevel typeLevel;
 
+    @NotNull
     private LocalDate inizio;
 
+    @NotBlank
     @ASearch(textSearchMode = TextSearchMode.contains)
     @AFieldList(width = 30)
     @AFieldForm(width = 40)
