@@ -37,7 +37,7 @@ public class NotaEntity extends AbstractEntity {
 
     @ASearch(textSearchMode = TextSearchMode.contains)
     @AFieldList(width = 30)
-    @AFieldForm(width = 30)
+    @AFieldForm(width = 40)
     private String descrizione;
 
     @ASearch(checkBoxInitialStatus = CheckBoxStatus.falso)

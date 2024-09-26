@@ -74,27 +74,13 @@ public class NotaService extends ModuloService<NotaEntity> {
         return newEntityBean;
     }
 
+
     @Override
     public Sort getBasicSort() {
         return Sort.by(Sort.Order.asc("fatto"), Sort.Order.desc("evento"));
     }
 
 
-//    @Override
-//    public NotaEntity preSave(NotaEntity entityBean) {
-//        NotaEntity notaBean = (NotaEntity) entityBean;
-//
-//        if (notaBean.isFatto()) {
-//            if (notaBean.getFine() == null) {
-//                notaBean.setFine(LocalDate.now());
-//            }
-//        }
-//        else {
-//            notaBean.setFine(null);
-//        }
-//
-//        return super.preSave(notaBean);
-//    }
 
 
     @Override
@@ -102,8 +88,7 @@ public class NotaService extends ModuloService<NotaEntity> {
         RisultatoReset typeReset = RisultatoReset.nessuno;
 
         if (collectionNullOrEmpty()) {
-            insert(newEntity(TypeLog.debug,LogLevel.info,LocalDate.now(),"Prima nota"));
-            insert(newEntity(TypeLog.startup,LogLevel.warn,LocalDate.now(),"Seconda"));
+            insert(newEntity(TypeLog.debug,LogLevel.warn,LocalDate.now(),"Prima nota (da cancellare)"));
             typeReset = RisultatoReset.vuotoMaCostruito;
         } else {
             typeReset = RisultatoReset.esistenteNonModificato;

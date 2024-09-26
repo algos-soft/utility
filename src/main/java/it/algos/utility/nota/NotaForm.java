@@ -1,8 +1,21 @@
 package it.algos.utility.nota;
 
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.spring.annotation.SpringComponent;
+import it.algos.vbase.backend.components.SimpleHorizontalLayout;
+import it.algos.vbase.backend.entity.AbstractEntity;
 import it.algos.vbase.backend.form.DefaultForm;
+import it.algos.vbase.backend.service.LoggerService;
+import it.algos.vbase.backend.wrapper.WrapField;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
@@ -10,11 +23,66 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 @Scope(value = SCOPE_PROTOTYPE)
 public class NotaForm<T extends NotaEntity> extends DefaultForm {
 
+    @Autowired
+    protected MongoTemplate mongoTemplate;
+
+    @Autowired
+    protected LoggerService logger;
+
 
     public NotaForm(T bean) {
         super(bean);
     }
 
+
+    @Override
+    public List<WrapField> registerFields() {
+        List<String> propertyNames = new ArrayList<>(Arrays.asList("colore", "typeLog", "typeLevel", "inizio", "descrizione", "fatto"));
+
+        if (newRecord) {
+            ((NotaEntity) bean).setInizio(LocalDate.now());
+        } else {
+            propertyNames.add("fine");
+        }
+
+        return formService.creaFieldsList(getBeanType(), propertyNames);
+    }
+
+    @Override
+    protected void addFieldsToLayout() {
+        HorizontalLayout primaRiga = new SimpleHorizontalLayout();
+        primaRiga.setAlignItems(Alignment.BASELINE);
+        primaRiga.add(getField("colore"));
+        primaRiga.add(getField("typeLog"));
+        primaRiga.add(getField("typeLevel"));
+        add(primaRiga);
+
+        add(getField("inizio"));
+
+        HorizontalLayout terzaRiga = new SimpleHorizontalLayout();
+        terzaRiga.setAlignItems(Alignment.BASELINE);
+        terzaRiga.add(getField("descrizione"));
+        terzaRiga.add(getField("fatto"));
+        add(terzaRiga);
+
+        if (!newRecord && ((NotaEntity) bean).isFatto()) {
+            add(getField("fine"));
+        }
+    }
+
+
+    @Override
+    public void writeBean(AbstractEntity newBean) throws ValidationException {
+        super.writeBean(newBean);
+
+        if (!newRecord) {
+            NotaEntity oldBean = mongoTemplate.findById(newBean.getId(), NotaEntity.class);
+            if (oldBean.getFine() == null && ((NotaEntity) newBean).isFatto()) {
+                ((NotaEntity) newBean).setFine(LocalDate.now());
+            }
+        }
+
+    }
 
 
     /**
@@ -34,5 +102,6 @@ public class NotaForm<T extends NotaEntity> extends DefaultForm {
 //            mappaFields.get("descrizione").setEnabled(!((Checkbox) mappaFields.get("fatto")).getValue());
 //        }
 //    }
+
 
 }// end of CrudForm class
