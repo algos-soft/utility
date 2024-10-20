@@ -4,6 +4,7 @@ import it.algos.vbase.backend.enumeration.LogLevel;
 import it.algos.vbase.backend.enumeration.RisultatoReset;
 import it.algos.vbase.backend.enumeration.TypeLog;
 import it.algos.vbase.backend.logic.ModuloService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import static it.algos.vbase.backend.boot.BaseCost.VUOTA;
  * Date: gio, 02-nov-2023
  * Time: 09:14
  */
+@Slf4j
 @Service
 public class NotaService extends ModuloService<NotaEntity> {
 
@@ -53,13 +55,16 @@ public class NotaService extends ModuloService<NotaEntity> {
         return newEntity(null, null, null, VUOTA);
     }
 
+    public NotaEntity newEntity(String descrizione) {
+        return newEntity(null, null, null, descrizione);
+    }
+
     /**
      * Creazione in memoria di una nuova entity che NON viene salvata <br>
      *
      * @param typeLog     merceologico della nota
      * @param typeLevel   di importanza o rilevanza della nota
      * @param descrizione dettagliata della nota
-     *
      * @return la nuova entity appena creata (con keyID ma non salvata)
      */
     public NotaEntity newEntity(TypeLog typeLog, LogLevel typeLevel, LocalDate inizio, String descrizione) {
@@ -81,14 +86,12 @@ public class NotaService extends ModuloService<NotaEntity> {
     }
 
 
-
-
     @Override
     public RisultatoReset reset() {
         RisultatoReset typeReset = RisultatoReset.nessuno;
 
         if (collectionNullOrEmpty()) {
-            insert(newEntity(TypeLog.debug,LogLevel.warn,LocalDate.now(),"Prima nota (da cancellare)"));
+            insert(newEntity(TypeLog.debug, LogLevel.warn, LocalDate.now(), "Prima nota (da cancellare)"));
             typeReset = RisultatoReset.vuotoMaCostruito;
         } else {
             typeReset = RisultatoReset.esistenteNonModificato;
@@ -97,4 +100,12 @@ public class NotaService extends ModuloService<NotaEntity> {
         return typeReset;
     }
 
+//    @Override
+//    public NotaEntity save(NotaEntity document) {
+//        NotaEntity oldBean = mongoTemplate.findById(document.getId(), NotaEntity.class);
+//        NotaEntity nota = super.save(document);
+//        log.info(LogFactory.update(nota, oldBean));
+//
+//        return nota;
+//    }
 }// end of CrudService class
