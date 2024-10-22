@@ -26,4 +26,4 @@ public class NotaView extends AView {
     }
 
 
-}// end of @Route CrudView class
+}
