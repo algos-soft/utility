@@ -1,9 +1,9 @@
 package it.algos.utility.role;
 
 import com.vaadin.flow.router.Route;
-import it.algos.vbase.backend.annotation.AView;
+import it.algos.vbase.backend.annotation.IView;
 import it.algos.vbase.backend.constant.Gruppo;
-import it.algos.vbase.ui.view.CrudView;
+import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 
 /**
@@ -16,8 +16,8 @@ import it.algos.vbase.ui.view.MainLayout;
  * @Route chiamata dal menu generale o dalla barra del browser <br>
  */
 @Route(value = "role", layout = MainLayout.class)
-@AView(menuGroup = Gruppo.UTILITY, menuName = "Ruoli")
-public class RoleView extends CrudView {
+@IView(menuGroup = Gruppo.UTILITY, menuName = "Ruoli")
+public class RoleView extends AView {
 
     /**
      * Costruttore invocato dalla sottoclasse concreta obbligatoriamente con (almeno) due parametri <br>
