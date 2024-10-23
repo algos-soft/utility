@@ -1,9 +1,9 @@
 package it.algos.utility.nota;
 
-import it.algos.vbase.backend.enumeration.LogLevel;
-import it.algos.vbase.backend.enumeration.RisultatoReset;
-import it.algos.vbase.backend.enumeration.TypeLog;
-import it.algos.vbase.backend.logic.ModuloService;
+import it.algos.vbase.enumeration.LogLevel;
+import it.algos.vbase.enumeration.RisultatoReset;
+import it.algos.vbase.enumeration.TypeLog;
+import it.algos.vbase.logic.ModuloService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-import static it.algos.vbase.backend.boot.BaseCost.VUOTA;
+import static it.algos.vbase.boot.BaseCost.VUOTA;
 
 /**
  * Project base24

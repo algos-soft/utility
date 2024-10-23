@@ -1,9 +1,9 @@
 package it.algos.utility.nota;
 
 import com.vaadin.flow.data.provider.SortDirection;
-import it.algos.vbase.backend.annotation.AViewList;
-import it.algos.vbase.backend.constant.Bottone;
-import it.algos.vbase.backend.list.AList;
+import it.algos.vbase.annotation.AViewList;
+import it.algos.vbase.constant.Bottone;
+import it.algos.vbase.list.AList;
 import it.algos.vbase.ui.wrapper.ASpan;
 
 @AViewList(bottoni = {

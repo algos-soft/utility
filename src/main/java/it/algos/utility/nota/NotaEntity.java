@@ -1,9 +1,9 @@
 package it.algos.utility.nota;
 
 import com.vaadin.flow.data.provider.SortDirection;
-import it.algos.vbase.backend.annotation.*;
-import it.algos.vbase.backend.entity.AbstractEntity;
-import it.algos.vbase.backend.enumeration.*;
+import it.algos.vbase.annotation.*;
+import it.algos.vbase.entity.AbstractEntity;
+import it.algos.vbase.enumeration.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static it.algos.vbase.backend.boot.BaseCost.*;
+import static it.algos.vbase.boot.BaseCost.*;
 
 
 @Data

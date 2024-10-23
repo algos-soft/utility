@@ -1,7 +1,7 @@
 package it.algos.utility.role;
 
-import it.algos.vbase.backend.annotation.AViewList;
-import it.algos.vbase.backend.list.AList;
+import it.algos.vbase.annotation.AViewList;
+import it.algos.vbase.list.AList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

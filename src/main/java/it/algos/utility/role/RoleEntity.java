@@ -1,9 +1,9 @@
 package it.algos.utility.role;
 
-import it.algos.vbase.backend.annotation.AEntity;
-import it.algos.vbase.backend.annotation.AFieldList;
-import it.algos.vbase.backend.annotation.AReset;
-import it.algos.vbase.backend.entity.AbstractEntity;
+import it.algos.vbase.annotation.AEntity;
+import it.algos.vbase.annotation.AFieldList;
+import it.algos.vbase.annotation.AReset;
+import it.algos.vbase.entity.AbstractEntity;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
