@@ -1,6 +1,6 @@
 package it.algos.utility.role;
 
-import it.algos.vbase.annotation.AViewList;
+import it.algos.vbase.annotation.IViewList;
 import it.algos.vbase.list.AList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
-@AViewList()
+@IViewList()
 public class RoleList extends AList {
 
 

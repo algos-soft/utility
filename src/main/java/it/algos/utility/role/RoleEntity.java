@@ -1,8 +1,8 @@
 package it.algos.utility.role;
 
-import it.algos.vbase.annotation.AEntity;
-import it.algos.vbase.annotation.AFieldList;
-import it.algos.vbase.annotation.AReset;
+import it.algos.vbase.annotation.IEntity;
+import it.algos.vbase.annotation.IFieldList;
+import it.algos.vbase.annotation.IReset;
 import it.algos.vbase.entity.AbstractEntity;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -14,16 +14,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Builder
 @Document(collection = "role")
-@AReset
-@AEntity()
+@IReset
+@IEntity()
 public class RoleEntity extends AbstractEntity {
 
-    @AFieldList(headerText = "#")
+    @IFieldList(headerText = "#")
     private int ordine;
 
 
     @Indexed(unique = true)
-    @AFieldList(width = 12)
+    @IFieldList(width = 12)
     private String code;
 
 

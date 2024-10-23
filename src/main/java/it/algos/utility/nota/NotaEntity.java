@@ -21,32 +21,32 @@ import static it.algos.vbase.boot.BaseCost.*;
 @AllArgsConstructor
 @Builder
 @Document(collection = "nota")
-@AReset()
-@AEntity(sortProperty = "inizio", sortDirection = SortDirection.DESCENDING)
+@IReset()
+@IEntity(sortProperty = "inizio", sortDirection = SortDirection.DESCENDING)
 public class NotaEntity extends AbstractEntity {
 
-    @ASearch()
-    @AFieldForm(label = "typeColor", clearButtonVisible = TBool.vero)
+    @ISearch()
+    @IFieldForm(label = "typeColor", clearButtonVisible = TBool.vero)
     private TypeColor colore;
 
     @NotNull(message = NO_NULL)
-    @ASearch()
+    @ISearch()
     private TypeLog typeLog;
 
     @NotNull(message = NO_NULL)
-    @ASearch()
+    @ISearch()
     private LogLevel typeLevel;
 
     @NotNull
     private LocalDate inizio;
 
     @NotBlank(message = NO_BLANK)
-    @ASearch(textSearchMode = TextSearchMode.contains)
-    @AFieldList(width = 30)
-    @AFieldForm(width = 40)
+    @ISearch(textSearchMode = TextSearchMode.contains)
+    @IFieldList(width = 30)
+    @IFieldForm(width = 40)
     private String descrizione;
 
-    @ASearch(checkBoxInitialStatus = CheckBoxStatus.falso)
+    @ISearch(checkBoxInitialStatus = CheckBoxStatus.falso)
     private boolean fatto;
 
     private LocalDate fine;
