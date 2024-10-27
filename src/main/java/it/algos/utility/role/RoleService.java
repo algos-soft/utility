@@ -61,11 +61,11 @@ public class RoleService extends ModuloService<RoleEntity> {
         for (RoleEnum roleEnum : RoleEnum.values()) {
             newBean = newEntity(roleEnum.ordinal() + 1, roleEnum.name());
             if (newBean != null) {
-                mappaBeans.put(roleEnum.name(), newBean);
+//                mappaBeans.put(roleEnum.name(), newBean);
             }
         }
 
-        mappaBeans.values().stream().forEach(bean -> insertSave(bean));
+//        mappaBeans.values().stream().forEach(bean -> insertSave(bean));
         return RisultatoReset.vuotoMaCostruito;
     }
 
