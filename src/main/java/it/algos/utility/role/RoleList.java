@@ -30,11 +30,6 @@ public class RoleList extends AList {
     }
 
 
-    @Override
-    public void fixHeader() {
-//        super.infoScopo = String.format(typeList.getInfoScopo(), "Role", "Role"); ;
-        super.fixHeader();
-    }
 
 
 }// end of AList class
