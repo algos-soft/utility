@@ -46,7 +46,7 @@ public class NotaEntity extends AbstractEntity {
     @IFieldForm(width = 40)
     private String descrizione;
 
-    @ISearch(checkBoxInitialStatus = CheckBoxStatus.falso)
+    @ISearch(checkBoxInitialStatus = TriState.falso)
     private boolean fatto;
 
     private LocalDate fine;
