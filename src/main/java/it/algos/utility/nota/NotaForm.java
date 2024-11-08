@@ -49,7 +49,8 @@ public class NotaForm<T extends AbstractEntity> extends DefaultForm<T> {
             propertyNames.add("fine");
         }
 
-        return formService.creaFieldsList(getBeanType(), propertyNames);
+//        return formService.creaFieldsList(getBeanType(), propertyNames);
+        return null;
     }
 
     @Override
