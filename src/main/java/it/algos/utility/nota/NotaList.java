@@ -1,12 +1,12 @@
 package it.algos.utility.nota;
 
 import com.vaadin.flow.data.provider.SortDirection;
-import it.algos.vbase.annotation.IViewList;
+import it.algos.vbase.annotation.IList;
 import it.algos.vbase.constant.Bottone;
 import it.algos.vbase.list.AList;
 import it.algos.vbase.ui.wrapper.ASpan;
 
-@IViewList(bottoni = {
+@IList(bottoni = {
         Bottone.CREATE_ITEM,
         Bottone.EDIT_ITEM,
         Bottone.DELETE_ITEM},
