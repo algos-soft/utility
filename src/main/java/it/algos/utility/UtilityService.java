@@ -5,6 +5,7 @@ import it.algos.vbase.logic.ModuloService;
 import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ReflectionService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -57,7 +58,12 @@ public class UtilityService {
         for (Class<? extends ModuloService> moduloServiceClazz : listClazzService) {
             try {
                 unModulo = appContext.getBean(moduloServiceClazz);
-                moduliSelezionati.add(unModulo);
+                Class<?> targetClass = AopProxyUtils.ultimateTargetClass(unModulo);
+                if (annotationService.usaResetStartup(unModulo.getEntityClass())) {
+                    moduliSelezionati.add(unModulo);
+                } else {
+                    log.info("Il modulo {} non usa {}", targetClass.getSimpleName(), "resetStartup");
+                }
             } catch (Exception unErrore) {
                 log.warn(unErrore.getMessage(), unErrore);
             }
@@ -70,11 +76,7 @@ public class UtilityService {
         }
 
         for (ModuloService modulo : moduliSelezionati) {
-            if (annotationService.usaResetStartup(modulo.getEntityClass())) {
-                modulo.checkResetStartup();
-            } else {
-                log.info("Il modulo {} non usa {}", modulo.getClass().getSimpleName(), "resetStartup");
-            }
+            modulo.checkResetStartup();
         }
     }
 

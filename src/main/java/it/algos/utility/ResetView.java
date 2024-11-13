@@ -76,11 +76,11 @@ public class ResetView extends AView {
             }
         });
 
+        mainProjectOnly = new Checkbox("mainProjectOnly", true);
+        add(mainProjectOnly);
+
         deleteAllBefore = new Checkbox("deleteAllBefore");
         add(deleteAllBefore);
-
-        mainProjectOnly = new Checkbox("mainProjectOnly");
-        add(mainProjectOnly);
 
         startLayout.add(startButton);
         add(startLayout);
