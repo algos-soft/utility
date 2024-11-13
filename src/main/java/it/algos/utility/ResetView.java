@@ -5,6 +5,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
@@ -13,7 +14,6 @@ import it.algos.vbase.components.SimpleHorizontalLayout;
 import it.algos.vbase.components.SimpleVerticalLayout;
 import it.algos.vbase.constant.Gruppo;
 import it.algos.vbase.service.MongoService;
-import it.algos.vbase.service.UtilityService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
@@ -32,6 +32,10 @@ public class ResetView extends AView {
     ResetView() {
         super();
     }
+
+    private Checkbox deleteAllBefore;
+
+    private Checkbox mainProjectOnly;
 
 
     private SimpleVerticalLayout logPanel;
@@ -62,7 +66,7 @@ public class ResetView extends AView {
 
         SimpleHorizontalLayout startLayout = new SimpleHorizontalLayout();
         startLayout.setWidthFull();
-        startLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        startLayout.setJustifyContentMode(JustifyContentMode.START);
         Button startButton = new Button("Start reset");
         startButton.setWidth(25, Unit.REM);
         startButton.addClickListener(new ComponentEventListener<ClickEvent<Button>>() {
@@ -71,6 +75,13 @@ public class ResetView extends AView {
                 startButtonClicked();
             }
         });
+
+        deleteAllBefore = new Checkbox("deleteAllBefore");
+        add(deleteAllBefore);
+
+        mainProjectOnly = new Checkbox("mainProjectOnly");
+        add(mainProjectOnly);
+
         startLayout.add(startButton);
         add(startLayout);
 
@@ -100,7 +111,7 @@ public class ResetView extends AView {
 
 
     public void startButtonClicked() {
-        utilityService.resetStartup();
+        utilityService.resetStartup(deleteAllBefore.getValue(), mainProjectOnly.getValue());
 //        CheckResult mongoResult = checkMongoDb();
 //        if (!mongoResult.success()) {
 //            Notification notification = new Notification("Mongo DB non risponde, controlla il server e la configurazione", 3000);
