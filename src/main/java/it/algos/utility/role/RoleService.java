@@ -23,7 +23,7 @@ public class RoleService extends ModuloService<RoleEntity> {
      * Regola la listClazz associata a questo Modulo e la passa alla superclasse <br>
      */
     public RoleService() {
-        super(RoleEntity.class, RoleView.class);
+        super(RoleEntity.class);
     }
 
 

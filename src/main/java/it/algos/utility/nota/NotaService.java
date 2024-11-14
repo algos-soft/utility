@@ -31,7 +31,7 @@ public class NotaService extends ModuloService<NotaEntity> {
      * Regola la viewClazz @Route associata a questo Modulo <br>
      */
     public NotaService() {
-        super(NotaEntity.class, NotaView.class);
+        super(NotaEntity.class);
     }
 
 
