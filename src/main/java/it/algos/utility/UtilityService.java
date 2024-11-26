@@ -7,6 +7,7 @@ import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.vbase.logic.ModuloService;
+import it.algos.vbase.pref.IPref;
 import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ReflectionService;
 import it.algos.wiki24.backend.annotation.ASchedule;
@@ -143,45 +144,38 @@ public class UtilityService {
 
         // Ottieni una descrizione in italiano
         CronDescriptor descriptor = CronDescriptor.instance();
-        String description = descriptor.describe(cron);
 
-        return description;
+        return descriptor.describe(cron);
     }
 
 
     public Optional<String> getCronText(@NonNull Method method) {
         Optional<String> optCron = getCron(method);
-        return optCron.isPresent() ? Optional.ofNullable(getCron(optCron.get())) : Optional.empty();
+        return optCron.map(this::getCron);
     }
 
 
     public Optional<String> getCronInfo(@NonNull Class<?> clazz, @NonNull String methodName) {
-        String clazzName = clazz.getSimpleName();
         Method method;
-
         try {
             method = clazz.getMethod(methodName);
+            return getCronInfo(method);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
-
-        String cron = getCronText(method).orElse(VUOTA);
-        Optional<String> optPrefCode = getPrefCode(method);
-        String description = optPrefCode.isPresent() ? WPref.valueOf(optPrefCode.get()).getDescrizione() : VUOTA;
-        ;
-
-        String message = String.format("Task: %s.%s() - %s %s", clazzName, methodName, description, cron);
-        return Optional.of(message);
     }
 
     public Optional<String> getCronInfo(@NonNull Method method) {
-        String clazzName = method.getDeclaringClass().getSimpleName();
         String methodName = method.getName();
+
         String cron = getCronText(method).orElse(VUOTA);
         Optional<String> optPrefCode = getPrefCode(method);
-        String description = optPrefCode.isPresent() ? WPref.valueOf(optPrefCode.get()).getDescrizione() : VUOTA;
 
-        String message = String.format("Task: %s.%s() - %s %s", clazzName, methodName, description, cron);
+        Object optPref = optPrefCode.isPresent() ? WPref.valueOf(optPrefCode.get()) : Optional.empty();
+        String description = ((IPref) optPref).getDescrizione();
+        String status = ((IPref) optPref).is() ? "acceso" : "spento";
+
+        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
         return Optional.of(message);
     }
 
@@ -190,7 +184,7 @@ public class UtilityService {
 
         for (Method method : methods) {
             Optional<String> otpCronInfo = getCronInfo(method);
-            log.info(otpCronInfo.isPresent() ? otpCronInfo.get() : VUOTA);
+            log.info(otpCronInfo.orElse(VUOTA));
         }
     }
 
