@@ -10,7 +10,6 @@ import it.algos.vbase.logic.ModuloService;
 import it.algos.vbase.pref.IPref;
 import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ReflectionService;
-import it.algos.wiki24.backend.annotation.ASchedule;
 import it.algos.wiki24.backend.enumeration.WPref;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
