@@ -8,9 +8,9 @@ import com.cronutils.parser.CronParser;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.vbase.logic.ModuloService;
 import it.algos.vbase.pref.IPref;
+import it.algos.vbase.pref.Pref;
 import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ReflectionService;
-import it.algos.wiki24.backend.enumeration.WPref;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -170,7 +170,7 @@ public class UtilityService {
         String cron = getCronText(method).orElse(VUOTA);
         Optional<String> optPrefCode = getPrefCode(method);
 
-        Object optPref = optPrefCode.isPresent() ? WPref.valueOf(optPrefCode.get()) : Optional.empty();
+        Object optPref = optPrefCode.isPresent() ? Pref.valueOf(optPrefCode.get()) : Optional.empty();
         String description = ((IPref) optPref).getDescrizione();
         String status = ((IPref) optPref).is() ? "acceso" : "spento";
 
