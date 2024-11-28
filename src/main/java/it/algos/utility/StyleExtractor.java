@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -55,11 +56,11 @@ public class StyleExtractor {
      * @return una mappa contenente le proprietà di stile di ciascun componente, inclusi gli stili del layout
      */
     public static Map<Component, Map<String, String>> extractStyles(FlexComponent layout) {
-        Map<Component, Map<String, String>> stylesMap = new HashMap<>();
+        Map<Component, Map<String, String>> stylesMap = new LinkedHashMap<>();
 
         // Aggiungi gli stili del layout principale
         if (layout instanceof HasStyle styledLayout) {
-            Map<String, String> layoutStyles = new HashMap<>();
+            Map<String, String> layoutStyles = new LinkedHashMap<>();
             styledLayout.getStyle().getNames()
                     .forEach(styleName -> layoutStyles.put(styleName, styledLayout.getStyle().get(styleName)));
 
@@ -76,7 +77,7 @@ public class StyleExtractor {
         // Estrai gli stili dei componenti figli
         layout.getChildren().forEach(component -> {
             if (component instanceof HasStyle styledComponent) {
-                Map<String, String> styles = new HashMap<>();
+                Map<String, String> styles = new LinkedHashMap<>();
                 styledComponent.getStyle().getNames()
                         .forEach(styleName -> styles.put(styleName, styledComponent.getStyle().get(styleName)));
 
