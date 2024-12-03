@@ -21,13 +21,6 @@ public class RoleList extends AList {
     }
 
 
-    protected void fixPreferenze() {
-        super.fixPreferenze();
-
-//        super.usaBottoneEdit = false;
-//        super.usaBottoneShow = false;
-//        super.usaBottoneExport = false;
-    }
 
 
 
