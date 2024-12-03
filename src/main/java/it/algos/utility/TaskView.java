@@ -13,7 +13,6 @@ import it.algos.vbase.service.MongoService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
-import it.algos.wiki24.backend.enumeration.WPref;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -88,7 +87,7 @@ public class TaskView extends AView {
 
         Object optPref = null;
         try {
-            optPref = optPrefCode.isPresent() ? WPref.valueOf(optPrefCode.get()) : Optional.empty();
+//            optPref = optPrefCode.isPresent() ? IPref.valueOf(optPrefCode.get()) : Optional.empty();
         } catch (Exception exception) {
             log.warn(exception.getMessage());
             log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.isPresent() ? optPrefCode.get() : VUOTA);
