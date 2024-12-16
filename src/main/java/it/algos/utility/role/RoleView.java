@@ -25,7 +25,7 @@ public class RoleView extends AView {
      * Mantiene il riferimento ad una listClazz (AList) per creare l'istanza prototype <br>
      */
     RoleView(RoleService moduloCrudService) {
-        super(moduloCrudService, RoleList.class);
+        super(RoleEntity.class, moduloCrudService, RoleList.class);
     }
 
 

@@ -22,7 +22,7 @@ import it.algos.vbase.ui.view.MainLayout;
 public class NotaView extends AView {
 
     NotaView(NotaService moduloCrudService) {
-        super(moduloCrudService, NotaList.class, NotaForm.class);
+        super(NotaEntity.class, moduloCrudService, NotaList.class, NotaForm.class);
     }
 
 
