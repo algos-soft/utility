@@ -13,6 +13,7 @@ import it.algos.vbase.service.MongoService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
+import it.algos.wiki24.backend.enumeration.WPref;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +64,7 @@ public class TaskView extends AView {
         String message;
         for (Method method : methods) {
             Optional<String> otpCronInfo = getCronInfo(method);
-            message= otpCronInfo.orElse(VUOTA);
+            message = otpCronInfo.orElse(VUOTA);
             add(ASpan.text(message).verde().bold());
         }
     }
@@ -80,24 +81,36 @@ public class TaskView extends AView {
     }
 
     public Optional<String> getCronInfo(@NonNull Method method) {
+        IPref pref = null;
+        String message=VUOTA;
         String methodName = method.getName();
 
         String cron = utilityService.getCronText(method).orElse(VUOTA);
-        Optional<String> optPrefCode = utilityService.getPrefCode(method);
+        String optPrefCode = utilityService.getPrefCode(method).orElse(VUOTA);
+        if (textService.isValid(optPrefCode)) {
+            pref = WPref.getPref(optPrefCode);
+        }
+        if (pref != null) {
+            String description =  pref.getDescrizione();
+            String status = pref.is() ? "acceso" : "spento";
 
-        Object optPref = null;
-        try {
-//            optPref = optPrefCode.isPresent() ? IPref.valueOf(optPrefCode.get()) : Optional.empty();
-        } catch (Exception exception) {
-            log.warn(exception.getMessage());
-            log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.isPresent() ? optPrefCode.get() : VUOTA);
-            return Optional.empty();
+             message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
         }
 
-        String description = ((IPref) optPref).getDescrizione();
-        String status = ((IPref) optPref).is() ? "acceso" : "spento";
 
-        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
+//        Object optPref = null;
+//        try {
+////            optPref = optPrefCode : Optional.empty();
+//        } catch (Exception exception) {
+//            log.warn(exception.getMessage());
+////            log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.isPresent() ? optPrefCode.get() : VUOTA);
+//            return Optional.empty();
+//        }
+//
+//        String description = ((IPref) optPref).getDescrizione();
+//        String status = ((IPref) optPref).is() ? "acceso" : "spento";
+//
+//        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
         return Optional.of(message);
     }
 
