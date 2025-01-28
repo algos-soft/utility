@@ -7,8 +7,10 @@ import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.vbase.logic.ModuloService;
+import it.algos.vbase.pref.IPref;
 import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ReflectionService;
+import it.algos.wiki24.backend.enumeration.WPref;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -25,6 +27,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static it.algos.vbase.boot.BaseCost.VUOTA;
 
 /**
  * Project crono
@@ -146,6 +150,28 @@ public class UtilityService {
     public Optional<String> getCronText(@NonNull Method method) {
         Optional<String> optCron = getCron(method);
         return optCron.map(this::getCron);
+    }
+
+    public Optional<String> getCronInfo(@NonNull Method method) {
+        String methodName = method.getName();
+
+        String cron = this.getCronText(method).orElse(VUOTA);
+        Optional<String> optPrefCode = this.getPrefCode(method);
+
+        Object optPref;
+        try {
+            optPref = optPrefCode.isPresent() ? WPref.valueOf(optPrefCode.get()) : Optional.empty();
+        } catch (Exception exception) {
+            log.warn(exception.getMessage());
+            log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.isPresent() ? optPrefCode.get() : VUOTA);
+            return Optional.empty();
+        }
+
+        String description = ((IPref) optPref).getDescrizione();
+        String status = ((IPref) optPref).is() ? "acceso" : "spento";
+
+        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
+        return Optional.of(message);
     }
 
 
