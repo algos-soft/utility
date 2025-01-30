@@ -6,7 +6,7 @@ import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
 import com.vaadin.flow.spring.annotation.SpringComponent;
-import it.algos.vbase.logic.ModuloService;
+import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.pref.IPref;
 import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ReflectionService;

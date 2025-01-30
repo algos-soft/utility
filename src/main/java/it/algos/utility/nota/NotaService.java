@@ -3,7 +3,7 @@ package it.algos.utility.nota;
 import it.algos.vbase.enumeration.LogLevel;
 import it.algos.vbase.enumeration.RisultatoReset;
 import it.algos.vbase.enumeration.TypeLog;
-import it.algos.vbase.logic.ModuloService;
+import it.algos.vbase.service.ModuloService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
