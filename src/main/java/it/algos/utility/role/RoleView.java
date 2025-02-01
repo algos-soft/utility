@@ -4,7 +4,7 @@ import com.vaadin.flow.router.Route;
 import it.algos.vbase.annotation.IView;
 import it.algos.vbase.constant.Gruppo;
 import it.algos.vbase.ui.view.AView;
-import it.algos.vbase.ui.view.MainLayout;
+import it.algos.evento24.view.EMainLayout;
 
 /**
  * Project base24
@@ -15,7 +15,7 @@ import it.algos.vbase.ui.view.MainLayout;
  *
  * @Route chiamata dal menu generale o dalla barra del browser <br>
  */
-@Route(value = "role", layout = MainLayout.class)
+@Route(value = "role", layout = EMainLayout.class)
 @IView(menuGroup = Gruppo.UTILITY, menuName = "Ruoli")
 public class RoleView extends AView {
 
