@@ -11,7 +11,7 @@ import it.algos.vbase.constant.Gruppo;
 import it.algos.vbase.pref.IPref;
 import it.algos.vbase.service.MongoService;
 import it.algos.vbase.ui.view.AView;
-import it.algos.evento24.view.EMainLayout;
+import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
 import it.algos.wiki24.backend.enumeration.WPref;
 import jakarta.annotation.PostConstruct;
@@ -27,7 +27,7 @@ import java.util.Optional;
 import static it.algos.vbase.boot.BaseCost.VUOTA;
 
 @Slf4j
-@Route(value = "task", layout = EMainLayout.class)
+@Route(value = "task", layout = MainLayout.class)
 @IView(menuGroup = Gruppo.UTILITY, menuName = "Task", vaadin = VaadinIcon.CALENDAR)
 public class TaskView extends AView {
 

@@ -6,7 +6,7 @@ import com.vaadin.flow.theme.lumo.LumoIcon;
 import it.algos.vbase.annotation.IView;
 import it.algos.vbase.constant.Gruppo;
 import it.algos.vbase.ui.view.AView;
-import it.algos.evento24.view.EMainLayout;
+import it.algos.vbase.ui.view.MainLayout;
 
 /**
  * Project base24
@@ -17,7 +17,7 @@ import it.algos.evento24.view.EMainLayout;
  *
  * @Route chiamata dal menu generale o dalla barra del browser <br>
  */
-@Route(value = "nota", layout = EMainLayout.class)
+@Route(value = "nota", layout = MainLayout.class)
 @IView(menuGroup = Gruppo.UTILITY, menuName = "Note", lumo = LumoIcon.BAR_CHART, vaadin = VaadinIcon.CHECK)
 public class NotaView extends AView {
 
