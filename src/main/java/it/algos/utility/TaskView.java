@@ -13,7 +13,6 @@ import it.algos.vbase.service.MongoService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
-import it.algos.wiki24.backend.enumeration.WPref;
 import jakarta.annotation.PostConstruct;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -87,15 +86,15 @@ public class TaskView extends AView {
 
         String cron = utilityService.getCronText(method).orElse(VUOTA);
         String optPrefCode = utilityService.getPrefCode(method).orElse(VUOTA);
-        if (textService.isValid(optPrefCode)) {
-            pref = WPref.getPref(optPrefCode);
-        }
-        if (pref != null) {
-            String description =  pref.getDescrizione();
-            String status = pref.is() ? "acceso" : "spento";
-
-             message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
-        }
+//        if (textService.isValid(optPrefCode)) {
+//            pref = Pref.getPref(optPrefCode);
+//        }
+//        if (pref != null) {
+//            String description =  pref.getDescrizione();
+//            String status = pref.is() ? "acceso" : "spento";
+//
+//             message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
+//        }
 
 
 //        Object optPref = null;

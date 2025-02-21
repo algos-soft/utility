@@ -10,9 +10,7 @@ import it.algos.vbase.ui.wrapper.ASpan;
         Bottone.CREATE_ITEM,
         Bottone.EDIT_ITEM,
         Bottone.DELETE_ITEM},
-        columns = {
-                "*colore",
-                "typeLog",
+        columns = {"typeLog",
                 "typeLevel",
                 "inizio",
                 "descrizione",

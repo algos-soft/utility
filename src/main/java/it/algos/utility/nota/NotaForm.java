@@ -1,29 +1,29 @@
 package it.algos.utility.nota;
 
+import com.vaadin.flow.component.AbstractField;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.vbase.components.SimpleHorizontalLayout;
-import it.algos.vbase.entity.AbstractEntity;
 import it.algos.vbase.enumeration.LogLevel;
 import it.algos.vbase.enumeration.TypeLog;
+import it.algos.vbase.field.ADateField;
+import it.algos.vbase.field.ATextField;
 import it.algos.vbase.form.DefaultForm;
 import it.algos.vbase.service.LoggerService;
-import it.algos.vbase.wrapper.WrapField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
 @SpringComponent
 @Scope(value = SCOPE_PROTOTYPE)
-public class NotaForm<T extends AbstractEntity> extends DefaultForm<T> {
+public class NotaForm extends DefaultForm<NotaEntity> {
 
     @Autowired
     protected MongoTemplate mongoTemplate;
@@ -32,52 +32,58 @@ public class NotaForm<T extends AbstractEntity> extends DefaultForm<T> {
     protected LoggerService logger;
 
 
-    public NotaForm(T bean) {
+    public NotaForm(NotaEntity bean) {
         super(bean);
     }
 
-
-    @Override
-    public List<WrapField> registerFields() {
-        List<String> propertyNames = new ArrayList<>(Arrays.asList("colore", "typeLog", "typeLevel", "inizio", "descrizione", "fatto"));
-
+    protected void preInit() {
         if (newRecord) {
-            ((NotaEntity) bean).setTypeLog(TypeLog.system);
-            ((NotaEntity) bean).setTypeLevel(LogLevel.info);
-            ((NotaEntity) bean).setInizio(LocalDate.now());
-        } else {
-            propertyNames.add("fine");
+            bean.setTypeLog(TypeLog.sviluppo);
+            bean.setTypeLevel(LogLevel.info);
+            bean.setInizio(LocalDate.now());
         }
-
-//        return formService.creaFieldsList(getBeanType(), propertyNames);
-        return null;
     }
 
     @Override
     protected void addFieldsToLayout() {
+        AbstractField<?, ?> field;
         HorizontalLayout primaRiga = new SimpleHorizontalLayout();
-        primaRiga.setAlignItems(Alignment.BASELINE);
-        primaRiga.add(getField("colore"));
+        primaRiga.setWidthFull();
+        primaRiga.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+        Div spacer = new Div();
+        spacer.getStyle().set("flex-grow", "1");
+
         primaRiga.add(getField("typeLog"));
         primaRiga.add(getField("typeLevel"));
+        primaRiga.add(spacer);
+        primaRiga.add(getField("inizio"));
         add(primaRiga);
 
-        add(getField("inizio"));
+        ATextField textField = (ATextField) getField("descrizione");
+        textField.focus();
+        add(textField);
 
         HorizontalLayout terzaRiga = new SimpleHorizontalLayout();
         terzaRiga.setAlignItems(Alignment.BASELINE);
-        terzaRiga.add(getField("descrizione"));
-        terzaRiga.add(getField("fatto"));
-        add(terzaRiga);
+        terzaRiga.setWidthFull();
+        field = getField("fatto");
+        field.getElement().getStyle().set("margin-top", "12px");
+        terzaRiga.add(field);
 
-        if (!newRecord && ((NotaEntity) bean).isFatto()) {
-            add(getField("fine"));
+        if (!newRecord && bean.isFatto()) {
+            Div spacer2 = new Div();
+            spacer2.getStyle().set("flex-grow", "1");
+            terzaRiga.add(spacer2);
+            ADateField dateField = (ADateField) getField("fine");
+            terzaRiga.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+            terzaRiga.add(dateField);
         }
+        add(terzaRiga);
     }
 
 
     @Override
-    public void writeBean(T newBean) throws ValidationException {
+    public void writeBean(NotaEntity newBean) throws ValidationException {
         super.writeBean(newBean);
 
         if (!newRecord) {
@@ -86,27 +92,6 @@ public class NotaForm<T extends AbstractEntity> extends DefaultForm<T> {
                 ((NotaEntity) newBean).setFine(LocalDate.now());
             }
         }
-
     }
-
-
-    /**
-     * Aggiunge i componenti grafici al layout
-     * Può essere sovrascritto, invocando PRIMA il metodo della superclasse <br>
-     */
-//    protected void addFields() {
-//        super.addFields();
-//
-//        if (crudOperation == CrudOperation.create) {
-//            mappaFields.get("fatto").setEnabled(false);
-//        } else {
-//            mappaFields.get("typeLog").setEnabled(false);
-//            mappaFields.get("typeLevel").setEnabled(false);
-//            mappaFields.get("inizio").setEnabled(false);
-//            mappaFields.get("typeLog").setEnabled(false);
-//            mappaFields.get("descrizione").setEnabled(!((Checkbox) mappaFields.get("fatto")).getValue());
-//        }
-//    }
-
 
 }

@@ -10,7 +10,6 @@ import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.pref.IPref;
 import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ReflectionService;
-import it.algos.wiki24.backend.enumeration.WPref;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -153,25 +152,26 @@ public class UtilityService {
     }
 
     public Optional<String> getCronInfo(@NonNull Method method) {
-        String methodName = method.getName();
-
-        String cron = this.getCronText(method).orElse(VUOTA);
-        Optional<String> optPrefCode = this.getPrefCode(method);
-
-        Object optPref;
-        try {
-            optPref = optPrefCode.isPresent() ? WPref.valueOf(optPrefCode.get()) : Optional.empty();
-        } catch (Exception exception) {
-            log.warn(exception.getMessage());
-            log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.isPresent() ? optPrefCode.get() : VUOTA);
-            return Optional.empty();
-        }
-
-        String description = ((IPref) optPref).getDescrizione();
-        String status = ((IPref) optPref).is() ? "acceso" : "spento";
-
-        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
-        return Optional.of(message);
+//        String methodName = method.getName();
+//
+//        String cron = this.getCronText(method).orElse(VUOTA);
+//        Optional<String> optPrefCode = this.getPrefCode(method);
+//
+//        Object optPref;
+//        try {
+//            optPref = optPrefCode.isPresent() ? WPref.valueOf(optPrefCode.get()) : Optional.empty();
+//        } catch (Exception exception) {
+//            log.warn(exception.getMessage());
+//            log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.isPresent() ? optPrefCode.get() : VUOTA);
+//            return Optional.empty();
+//        }
+//
+//        String description = ((IPref) optPref).getDescrizione();
+//        String status = ((IPref) optPref).is() ? "acceso" : "spento";
+//
+//        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
+//        return Optional.of(message);
+        return Optional.of(null);
     }
 
 

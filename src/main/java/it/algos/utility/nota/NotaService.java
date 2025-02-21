@@ -35,15 +35,6 @@ public class NotaService extends ModuloService<NotaEntity> {
     }
 
 
-    /**
-     * Regola le property visibili in una scheda AForm <br>
-     * Di default prende tutti i fields della ModelClazz specifica <br>
-     * Può essere sovrascritto SENZA richiamare il metodo della superclasse <br>
-     */
-    public List<String> getFormPropertyNames() {
-        return Arrays.asList("typeLog", "typeLevel", "inizio", "descrizione", "fatto");
-    }
-
 
     /**
      * Creazione in memoria di una nuova entity che NON viene salvata <br>
