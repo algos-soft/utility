@@ -12,6 +12,7 @@ import it.algos.vbase.enumeration.TypeLog;
 import it.algos.vbase.field.ADateField;
 import it.algos.vbase.field.ATextField;
 import it.algos.vbase.form.DefaultForm;
+import it.algos.vbase.mongo.MongoTemplateProvider;
 import it.algos.vbase.service.LoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -26,7 +27,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 public class NotaForm extends DefaultForm<NotaEntity> {
 
     @Autowired
-    protected MongoTemplate mongoTemplate;
+    protected MongoTemplateProvider mongoTemplateProvider;
 
     @Autowired
     protected LoggerService logger;
@@ -87,11 +88,15 @@ public class NotaForm extends DefaultForm<NotaEntity> {
         super.writeBean(newBean);
 
         if (!newRecord) {
-            NotaEntity oldBean = mongoTemplate.findById(newBean.getId(), NotaEntity.class);
+            NotaEntity oldBean = getMongoTemplate().findById(newBean.getId(), NotaEntity.class);
             if (oldBean.getFine() == null && ((NotaEntity) newBean).isFatto()) {
                 ((NotaEntity) newBean).setFine(LocalDate.now());
             }
         }
+    }
+
+    protected MongoTemplate getMongoTemplate(){
+        return mongoTemplateProvider.getMongoTemplate();
     }
 
 }
