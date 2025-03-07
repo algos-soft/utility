@@ -3,6 +3,7 @@ package it.algos.utility.role;
 import it.algos.vbase.enumeration.RisultatoReset;
 import it.algos.vbase.enumeration.RoleEnum;
 import it.algos.vbase.service.ModuloService;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.*;
 
 import static it.algos.vbase.boot.BaseCost.VUOTA;
@@ -55,7 +56,7 @@ public class RoleService extends ModuloService<RoleEntity> {
     }
 
     @Override
-    public RisultatoReset reset() {
+    public RisultatoReset reset(MongoTemplate mongoTemplate) {
         RoleEntity newBean;
 
         for (RoleEnum roleEnum : RoleEnum.values()) {

@@ -6,6 +6,7 @@ import it.algos.vbase.enumeration.TypeLog;
 import it.algos.vbase.service.ModuloService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -78,7 +79,7 @@ public class NotaService extends ModuloService<NotaEntity> {
 
 
     @Override
-    public RisultatoReset reset() {
+    public RisultatoReset reset(MongoTemplate mongoTemplate) {
         RisultatoReset typeReset = RisultatoReset.nessuno;
 
         if (collectionNullOrEmpty()) {
