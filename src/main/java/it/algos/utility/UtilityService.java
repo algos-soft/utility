@@ -6,6 +6,7 @@ import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
 import com.vaadin.flow.spring.annotation.SpringComponent;
+import it.algos.vbase.mongo.MongoTemplateProvider;
 import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.pref.IPref;
 import it.algos.vbase.service.AnnotationService;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.StringUtils;
 
@@ -49,6 +51,9 @@ public class UtilityService {
 
     @Autowired
     public AnnotationService annotationService;
+
+    @Autowired
+    private MongoTemplateProvider mongoTemplateProvider;
 
     @Value("${algos.project.modulo}")
     protected String projectName;
@@ -90,7 +95,7 @@ public class UtilityService {
         }
 
         for (ModuloService modulo : moduliSelezionati) {
-            modulo.checkResetStartup();
+            modulo.checkResetStartup(getMongoTemplate());
         }
     }
 
@@ -174,5 +179,8 @@ public class UtilityService {
         return Optional.of(null);
     }
 
+    protected MongoTemplate getMongoTemplate(){
+        return mongoTemplateProvider.getMongoTemplate();
+    }
 
 }
