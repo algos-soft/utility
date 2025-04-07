@@ -176,7 +176,7 @@ public class UtilityService {
 //
 //        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
 //        return Optional.of(message);
-        return Optional.of(null);
+        return Optional.ofNullable(null);
     }
 
     protected MongoTemplate getMongoTemplate(){
