@@ -6,13 +6,14 @@ import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
 import com.vaadin.flow.spring.annotation.SpringComponent;
+import it.algos.utility.role.WrapTask;
 import it.algos.vbase.modules.preferenza.PreferenzaService;
 import it.algos.vbase.mongo.MongoTemplateProvider;
-import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.pref.IPref;
 import it.algos.vbase.service.AnnotationService;
+import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.service.ReflectionService;
-import it.algos.wiki24.backend.enumeration.WPref;
+import it.algos.vbase.service.TextService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -50,6 +51,9 @@ public class UtilityService {
 
     @Autowired
     public ReflectionService reflectionService;
+
+    @Autowired
+    public TextService textService;
 
     @Autowired
     public AnnotationService annotationService;
@@ -139,6 +143,11 @@ public class UtilityService {
         return annotation.map(ASchedule::prefCode).filter(StringUtils::hasText);
     }
 
+    public int getDurata(@NonNull Method method) {
+        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
+        return annotation.isPresent() ? annotation.get().durataMinuti() : 0;
+    }
+
     public Optional<String> getCron(@NonNull Method method) {
         Optional<Scheduled> annotation = getOptionalAnnotation(method, Scheduled.class);
         return annotation.map(Scheduled::cron).filter(StringUtils::hasText);
@@ -158,33 +167,112 @@ public class UtilityService {
 
     public Optional<String> getCronText(@NonNull Method method) {
         Optional<String> optCron = getCron(method);
-        return optCron.map(this::getCron);
+//        return optCron.map(this::getCron);
+        return optCron;
     }
+
 
     public Optional<String> getCronInfo(@NonNull Method method) {
-        String methodName = method.getName();
+        final String methodName = method.getName();  // Made final
 
         String cron = this.getCronText(method).orElse(VUOTA);
+        cron = textService.isEmpty(cron) ? "not scheduled" : cron;
+
+        Optional<IPref> optPref = getPref(method);
+
+        // Use ifPresent to avoid casting, and ensure variables are effectively final
+        String finalCron = cron;
+        return optPref.map(pref -> {
+            final String description = pref.getDescrizione();  // Made final
+            final String status = pref.is() ? "acceso" : "spento";  // Made final
+            final int durata = getDurata(method);  // Made final
+            String message = String.format("%s (%s) - %s [%s] (in %s)", methodName, status, description, finalCron, durata);
+            return message;
+        });
+    }
+
+
+    public Optional<IPref> getPref(@NonNull Method method) {
+        Optional<IPref> optPref = Optional.empty();
         Optional<String> optPrefCode = this.getPrefCode(method);
 
-        Object optPref;
         try {
-            optPref = optPrefCode.isPresent() ? preferenzaService.getPref(optPrefCode.get()) : Optional.empty();
+            if (optPrefCode.isPresent()) {
+                optPref = Optional.ofNullable(preferenzaService.getPref(optPrefCode.get()));
+            }
         } catch (Exception exception) {
             log.warn(exception.getMessage());
-            log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.isPresent() ? optPrefCode.get() : VUOTA);
-            return Optional.empty();
+            log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.orElse(VUOTA));
         }
 
-        String description = ((IPref) optPref).getDescrizione();
-        String status = ((IPref) optPref).is() ? "acceso" : "spento";
-
-        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
-        return Optional.of(message);
+        return optPref;
     }
 
-    protected MongoTemplate getMongoTemplate(){
+
+    public Optional<WrapTask> getWrapTask(@NonNull Method method) {
+        String cron = this.getCronText(method).orElse(VUOTA);
+        boolean scheduled = textService.isValid(cron);
+        int durata = getDurata(method);
+        Optional<IPref> optPref = getPref(method);
+
+        if (optPref.isPresent()) {
+            IPref pref = optPref.get();  // Estrai l'oggetto da Optional
+            String sigla = pref.getKeyCode();  // Made final
+            String description = pref.getDescrizione();
+            boolean status = pref.is();
+            WrapTask wrap = new WrapTask(sigla, status, description, scheduled, cron, durata);
+            return Optional.of(wrap);
+        }
+
+        return Optional.empty();
+    }
+
+
+    public List<WrapTask> getListWrapTask(@NonNull List<Method> methods) {
+        List<WrapTask> tasks = new ArrayList<>();
+        Optional<WrapTask> task;
+
+        for (Method method : methods) {
+            task = getWrapTask(method);
+            if (task.isPresent()) {
+                tasks.add(task.get());
+            }
+        }
+
+        return tasks;
+    }
+
+
+    public List<WrapTask> getScheduledListWrapTask(@NonNull List<Method> methods) {
+        List<WrapTask> tasks = new ArrayList<>();
+        Optional<WrapTask> task;
+
+        for (Method method : methods) {
+            task = getWrapTask(method);
+            if (task.isPresent() && task.get().isScheduled()) {
+                tasks.add(task.get());
+            }
+        }
+
+        return tasks;
+    }
+
+    protected MongoTemplate getMongoTemplate() {
         return mongoTemplateProvider.getMongoTemplate();
     }
+
+    // forse può andare in AnnotationService o in ReflectionService
+    public List<Method> getAnnotatedClazzMethods(Class<?> clazz, Class<? extends Annotation> annotation) {
+        List<Method> annotatedMethods = new ArrayList<>();
+
+        for (Method method : clazz.getDeclaredMethods()) {
+            if (method.isAnnotationPresent(annotation)) {
+                annotatedMethods.add(method);
+            }
+        }
+
+        return annotatedMethods;
+    }
+
 
 }

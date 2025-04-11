@@ -20,6 +20,8 @@ public @interface ASchedule {
 
     String prefCode() default VUOTA;
 
+    int durataMinuti() default 0;
+
 
 }// end of interface
 
