@@ -7,6 +7,7 @@ import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.utility.role.WrapTask;
+import it.algos.vbase.enumeration.TypeColor;
 import it.algos.vbase.modules.preferenza.PreferenzaService;
 import it.algos.vbase.mongo.MongoTemplateProvider;
 import it.algos.vbase.pref.IPref;
@@ -230,12 +231,19 @@ public class UtilityService {
 
     public List<WrapTask> getListWrapTask(@NonNull List<Method> methods) {
         List<WrapTask> tasks = new ArrayList<>();
-        Optional<WrapTask> task;
+        Optional<WrapTask> optTask;
+        WrapTask task;
+        int pos = 3; // esclude i primi colori bianco e nero
+        String[] colors;
 
         for (Method method : methods) {
-            task = getWrapTask(method);
-            if (task.isPresent()) {
-                tasks.add(task.get());
+            optTask = getWrapTask(method);
+            if (optTask.isPresent()) {
+                task = optTask.get();
+                colors = getColore(pos++);
+                task.setColoreBackground(colors[0]);
+                task.setColoreTesto(colors[1]);
+                tasks.add(task);
             }
         }
 
@@ -256,6 +264,30 @@ public class UtilityService {
 
         return tasks;
     }
+
+    private String[] getColore(int pos) {
+        TypeColor color = TypeColor.values()[pos];
+        String textColor = isColorDark(color.getEsa()) ? "white" : "black";
+
+        return new String[]{color.getHtml(), textColor};
+    }
+
+
+    private boolean isColorDark(String hexColor) {
+        // Rimuovi il simbolo "#" se presente
+        hexColor = hexColor.replace("#", "");
+
+        // Estrai i componenti R, G, B dal colore esadecimale
+        int r = Integer.parseInt(hexColor.substring(0, 2), 16);
+        int g = Integer.parseInt(hexColor.substring(2, 4), 16);
+        int b = Integer.parseInt(hexColor.substring(4, 6), 16);
+
+        // Calcola la luminanza con la formula della luminanza percepita
+        double luminanza = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        return luminanza < 140; // Se la luminanza è inferiore a 140, il colore è scuro
+    }
+
 
     protected MongoTemplate getMongoTemplate() {
         return mongoTemplateProvider.getMongoTemplate();
