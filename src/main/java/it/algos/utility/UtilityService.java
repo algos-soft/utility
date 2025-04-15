@@ -241,8 +241,8 @@ public class UtilityService {
             if (optTask.isPresent()) {
                 task = optTask.get();
                 colors = getColore(pos++);
-                task.setColoreBackground(colors[0]);
-                task.setColoreTesto(colors[1]);
+                task.setBackgroundColor(colors[0]);
+                task.setTextColor(colors[1]);
                 tasks.add(task);
             }
         }
