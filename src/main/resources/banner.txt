@@ -1,0 +1,7 @@
+${AnsiColor.MAGENTA}Java ver: ${AnsiColor.GREEN}${java.version}
+${AnsiColor.MAGENTA}SpringBoot ver: ${AnsiColor.GREEN}${spring-boot.version}
+${AnsiColor.MAGENTA}Vaadin ver: ${AnsiColor.GREEN}${algos.vaadin.version}
+${AnsiColor.MAGENTA}FrameWork: ${AnsiColor.GREEN}${algos.base.name}${AnsiColor.MAGENTA} ver ${AnsiColor.GREEN}${algos.project.version} ${AnsiColor.MAGENTA}di ${AnsiColor.GREEN}${algos.base.version.date}
+${AnsiColor.MAGENTA}Project: ${AnsiColor.GREEN}${algos.project.appName}${AnsiColor.MAGENTA} ver ${AnsiColor.GREEN}${algos.project.version} ${AnsiColor.MAGENTA}di ${AnsiColor.GREEN}${algos.project.version.date}
+${AnsiColor.MAGENTA}Tomcat port: ${AnsiColor.GREEN}${server.port}
+${AnsiColor.MAGENTA}MongDB name: ${AnsiColor.GREEN}${spring.data.mongodb.database}${AnsiColor.DEFAULT}

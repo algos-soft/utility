@@ -16,6 +16,14 @@
         <relativePath>vbase/pom.xml</relativePath>
     </parent>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

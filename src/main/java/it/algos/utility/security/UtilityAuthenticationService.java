@@ -2,13 +2,8 @@ package it.algos.utility.security;
 
 import it.algos.vbase.security.IAuthenticationService;
 import it.algos.vbase.utility.SpringContext;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,7 +14,7 @@ import java.util.List;
  * a user database specific to the application.
  */
 @Service
-public class WikiAuthenticationService implements IAuthenticationService {
+public class UtilityAuthenticationService implements IAuthenticationService {
 
     private MongoTemplate mongoTemplate;
 

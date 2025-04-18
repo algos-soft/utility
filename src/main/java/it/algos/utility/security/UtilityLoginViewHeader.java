@@ -5,7 +5,7 @@ import com.vaadin.flow.component.html.H2;
 import it.algos.vbase.security.LoginViewHeader;
 
 @org.springframework.stereotype.Component
-public class WikiLoginViewHeader implements LoginViewHeader {
+public class UtilityLoginViewHeader implements LoginViewHeader {
 
     @Override
     public Component getComponent() {

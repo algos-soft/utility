@@ -22,7 +22,7 @@ import it.algos.vbase.ui.wrapper.ASpan;
  *     <li>access the user info and configuration</ul>
  * </ul>
  */
-public class WikiLoginManager extends LoginManager {
+public class UtilityLoginManager extends LoginManager {
 
 
     @Override
