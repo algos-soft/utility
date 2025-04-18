@@ -50,7 +50,7 @@ public class TaskView extends AView {
     private UI ui;
 
     @PostConstruct
-    private void init() {
+    protected void init() {
 
         ui = UI.getCurrent();
         this.setSpacing(true);

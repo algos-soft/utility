@@ -83,7 +83,7 @@ public class NotaService extends ModuloService<NotaEntity> {
         RisultatoReset typeReset = RisultatoReset.nessuno;
 
         if (collectionNullOrEmpty()) {
-            insert(newEntity(TypeLog.debug, LogLevel.warn, LocalDate.now(), "Prima nota (da cancellare)"));
+            save(newEntity(TypeLog.debug, LogLevel.warn, LocalDate.now(), "Prima nota (da cancellare)"));
             typeReset = RisultatoReset.vuotoMaCostruito;
         } else {
             typeReset = RisultatoReset.esistenteNonModificato;
