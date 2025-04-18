@@ -1,6 +1,5 @@
 package it.algos.utility.schedule;
 
-import it.algos.wiki24.backend.service.QueryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +12,6 @@ import static it.algos.vbase.boot.BaseCost.VUOTA;
 @Slf4j
 @Service
 public class CronService {
-    @Autowired
-    QueryService queryService;
 
     // Aggiungi questa mappa come campo statico nella classe CronDescriptor
     private static final Map<String, String> MESI = Map.ofEntries(

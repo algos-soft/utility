@@ -8,8 +8,4 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class UtilitySecurityConfig extends SecurityConfig {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
-    }
 }
