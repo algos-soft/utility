@@ -1,9 +1,7 @@
-package it.algos.utility;
+package it.algos.utility.schedule;
 
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.schedule.ASchedule;
-import it.algos.utility.schedule.WrapTask;
-import it.algos.utility.schedule.WrapTaskFactory;
 import it.algos.vbase.enumeration.TypeColor;
 import it.algos.vbase.modules.preferenza.PreferenzaService;
 import it.algos.vbase.mongo.MongoTemplateProvider;
@@ -12,7 +10,6 @@ import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.service.ReflectionService;
 import it.algos.vbase.service.TextService;
-import it.algos.utility.schedule.CronService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -43,7 +40,7 @@ import static it.algos.vbase.boot.BaseCost.VUOTA;
 @Slf4j
 @SpringComponent
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class UtilityService {
+public class TaskService {
 
     @Autowired
     public ApplicationContext appContext;

@@ -1,10 +1,11 @@
-package it.algos.utility;
+package it.algos.schedule;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
+import it.algos.utility.UtilityService;
 import it.algos.vbase.annotation.IView;
 import it.algos.vbase.components.SimpleVerticalLayout;
 import it.algos.vbase.constant.Gruppo;
@@ -84,7 +85,7 @@ public class TaskView extends AView {
         String message=VUOTA;
         String methodName = method.getName();
 
-        String cron = utilityService.getCronText(method).orElse(VUOTA);
+        String cron = utilityService.getCronSpring(method);
         String optPrefCode = utilityService.getPrefCode(method).orElse(VUOTA);
 //        if (textService.isValid(optPrefCode)) {
 //            pref = Pref.getPref(optPrefCode);

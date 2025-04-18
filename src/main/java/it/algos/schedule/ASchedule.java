@@ -1,4 +1,4 @@
-package it.algos.utility;
+package it.algos.schedule;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
