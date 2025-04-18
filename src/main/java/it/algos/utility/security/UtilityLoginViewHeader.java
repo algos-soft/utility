@@ -9,7 +9,7 @@ public class UtilityLoginViewHeader implements LoginViewHeader {
 
     @Override
     public Component getComponent() {
-        return new H2("Wiki24 Login");
+        return new H2("Utility");
     }
 
 }
