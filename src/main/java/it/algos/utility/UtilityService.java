@@ -1,7 +1,7 @@
 package it.algos.utility;
 
 import com.vaadin.flow.spring.annotation.SpringComponent;
-import it.algos.schedule.ASchedule;
+import it.algos.utility.schedule.ASchedule;
 import it.algos.utility.schedule.WrapTask;
 import it.algos.utility.schedule.WrapTaskFactory;
 import it.algos.vbase.enumeration.TypeColor;

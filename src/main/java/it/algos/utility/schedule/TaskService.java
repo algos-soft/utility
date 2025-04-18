@@ -1,7 +1,6 @@
 package it.algos.utility.schedule;
 
 import com.vaadin.flow.spring.annotation.SpringComponent;
-import it.algos.schedule.ASchedule;
 import it.algos.vbase.enumeration.TypeColor;
 import it.algos.vbase.modules.preferenza.PreferenzaService;
 import it.algos.vbase.mongo.MongoTemplateProvider;

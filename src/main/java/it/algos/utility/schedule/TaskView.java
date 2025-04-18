@@ -1,4 +1,4 @@
-package it.algos.schedule;
+package it.algos.utility.schedule;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.checkbox.Checkbox;
