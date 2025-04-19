@@ -74,4 +74,12 @@ Utilizzare:
 
 ## Nota Finale
 Per piattaforme specifiche come GitHub, consultare la documentazione per funzionalità aggiuntive di formattazione disponibili.
-```
+
+## Colori comuni in esadecimale:
+- Rosso: `#e74c3c`
+- Verde: `#2ecc71
+- Blue: `#3498db
+- Arancione: `#e67e22`
+- Giallo: `#f1c40f`
+- Viola: `#9b59b6`
+- Grigio: `#95a5a6`
