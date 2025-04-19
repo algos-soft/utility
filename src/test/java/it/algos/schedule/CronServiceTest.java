@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static it.algos.vbase.boot.BaseCost.NULLO;
+import static it.algos.vbase.boot.BaseCost.VUOTA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -21,7 +22,7 @@ class CronServiceTest {
     @Test
     @Order(1)
     void testEspressioneVuota() {
-        String cron = "";
+        String cron = VUOTA;
         System.out.println(String.format("[%s] -> %s", cron, NULLO));
         assertEquals("", cronService.info(cron));
     }

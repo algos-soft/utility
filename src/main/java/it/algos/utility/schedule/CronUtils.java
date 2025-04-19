@@ -33,7 +33,19 @@ public final class CronUtils {
             Map.entry("11", "novembre"),
             Map.entry("12", "dicembre")
     );
-
+    private static final Map<String, String> MESI2 = Map.of(
+            "1", "gennaio",
+            "2", "febbraio",
+            "3", "marzo",
+            "4", "aprile",
+            "4", "aprile",
+            "4", "aprile",
+            "2", "febbraio",
+            "3", "marzo",
+            "4", "aprile",
+            "11", "novembre",
+            "12", "dicembre"
+    );
 
     // Mappa per la conversione da stringhe a numeri
     private static final Map<String, Integer> DAY_MAPPING = new HashMap<>() {{
