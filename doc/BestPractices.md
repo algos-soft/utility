@@ -1,4 +1,4 @@
-# ⚙️ Best Practices
+# 📝 Best Practices
 
 ## 🔧 Metodi statici
 ### Quando usare metodi statici:
