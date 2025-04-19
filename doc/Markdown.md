@@ -72,6 +72,8 @@ Utilizzare:
 `RuntimeException: Null Pointer Exception`
 ```
 
+***
+
 ## Nota Finale
 Per piattaforme specifiche come GitHub, consultare la documentazione per funzionalità aggiuntive di formattazione disponibili.
 
@@ -83,3 +85,29 @@ Per piattaforme specifiche come GitHub, consultare la documentazione per funzion
 - Giallo: `#f1c40f`
 - Viola: `#9b59b6`
 - Grigio: `#95a5a6`
+
+***
+
+## Dimensione titoli
+# Titolo H1 (più grande)
+## Titolo H2
+### Titolo H3
+#### Titolo H4
+##### Titolo H5
+###### Titolo H6 (più piccolo)
+
+***
+
+## Dimensione testo
+
+**Testo in grassetto**
+
+*Testo in corsivo*
+
+***Testo in grassetto e corsivo***
+
+È importante notare che Markdown di per sé non permette di specificare dimensioni esatte del font come potresti fare in HTML. La dimensione effettiva dipenderà dal CSS utilizzato per renderizzare il Markdown.
+Se hai bisogno di un controllo più preciso sulla dimensione del testo, potresti dover utilizzare HTML inline (se il tuo renderer Markdown lo supporta):
+
+<span style="font-size: 20px">Testo più grande</span>
+<span style="font-size: 2em">Testo ancora più grande</span>
