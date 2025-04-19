@@ -51,3 +51,35 @@ Quando usi `@Component`:
 ### Errori
 Se qualcuno ti suggerisce di usare `@SpringComponent`, è probabilmente un errore o una confusione con `@Component`. Dovresti sempre usare `@Component` o una delle sue specializzazioni (, `@Repository`, `@Controller`) a seconda del caso d'uso specifico. `@Service`
 
+
+## 🔧 Markdown
+#### Formattazione esatta del testo
+- Usando i triple backtick <code> ```:
+
+```
+Prima riga
+Seconda riga
+Terza riga
+    Questa riga mantiene anche l'indentazione
+```
+- Usando il tag &lt;pre&gt; e &lt;/pre&gt;:
+<pre>
+Prima riga
+Seconda riga
+Terza riga
+    Questa riga mantiene anche l'indentazione
+</pre>
+
+- Usando quattro spazi o un tab all'inizio di ogni riga:
+
+      Prima riga
+      Seconda riga
+      Terza riga
+      Questa riga mantiene anche l'indentazione
+
+La soluzione più pulita e comunemente usata è la prima con i triple backtick, perché:
+- È più leggibile nel codice sorgente
+- È supportata universalmente
+- Permette anche di specificare il linguaggio per la syntax highlighting (se necessario)
+- Mantiene esattamente la formattazione del testo
+
