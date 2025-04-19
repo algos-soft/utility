@@ -33,7 +33,7 @@ class CronServiceTest {
     private CronService cronService;
 
 
-    private static final Map<String, String> cronPatterns = new LinkedHashMap<>() {{
+    private static final Map<String, String> CRON_PATTERNS = new LinkedHashMap<>() {{
         put("ogni minuto", "0 * * * * ?");
         put("ogni 15 minuti", "0 */15 * * * ?");
         put("ogni 30 minuti nelle ore lavorative", "0 */30 9-17 * * ?");
@@ -56,8 +56,10 @@ class CronServiceTest {
         put("primo lunedì del mese alle 9", "0 0 9 ? * 2#1");
     }};
 
+
     static Stream<Arguments> cronPatterns() {
-        return cronPatterns.entrySet().stream()
+        return CRON_PATTERNS.entrySet()
+                .stream()
                 .map(entry -> Arguments.of(entry.getKey(), entry.getValue()));
     }
 

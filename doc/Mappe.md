@@ -7,10 +7,10 @@
 
 ### 1) `Map.of()`
 
-      private static final Map<String, String> STATIC_MAP = Map.of(
-      "chiave1", "valore1",
-      "chiave2", "valore2"
-      );
+    private static final Map<String, String> STATIC_MAP = Map.of(
+    "chiave1", "valore1",
+    "chiave2", "valore2"
+    );
 
 #### Vantaggi
 - Crea una mappa immutabile
