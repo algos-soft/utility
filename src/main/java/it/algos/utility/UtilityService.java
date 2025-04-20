@@ -2,6 +2,7 @@ package it.algos.utility;
 
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.utility.schedule.ASchedule;
+import it.algos.utility.schedule.CronService;
 import it.algos.utility.schedule.WrapTask;
 import it.algos.utility.schedule.WrapTaskFactory;
 import it.algos.vbase.enumeration.TypeColor;
@@ -12,7 +13,6 @@ import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.service.ReflectionService;
 import it.algos.vbase.service.TextService;
-import it.algos.utility.schedule.CronService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -229,8 +229,8 @@ public class UtilityService {
 
 
     public Optional<WrapTask> getWrapTask(@NonNull Method method) {
-        String cronText = this.getCronSpring(method);
-        boolean scheduled = textService.isValid(cronText);
+        Optional<String> optCron = this.getCron(method);
+        boolean scheduled = optCron.isPresent();
         int durata = getDurata(method);
         Optional<IPref> optPref = getPref(method);
 
@@ -244,7 +244,7 @@ public class UtilityService {
                     .status(status)
                     .description(description)
                     .scheduled(scheduled)
-                    .cron(cronText)
+                    .cron(optCron.isPresent() ? optCron.get() : VUOTA)
                     .durata(durata)
                     .build();
 
@@ -289,6 +289,21 @@ public class UtilityService {
         }
 
         return tasks;
+    }
+
+
+    public String infoCron(@NonNull Method method) {
+        String info = VUOTA;
+        Optional<WrapTask> optWrapTask;
+
+        optWrapTask = getWrapTask(method);
+        if (optWrapTask.isPresent()) {
+            info = optWrapTask.get().infoText();
+        } else {
+            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
+        }
+
+        return info;
     }
 
     private String[] getColore(int pos) {

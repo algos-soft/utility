@@ -2,8 +2,10 @@ package it.algos.utility.schedule;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.util.StringUtils;
 
 import static it.algos.vbase.boot.BaseCost.SPAZIO;
+import static it.algos.vbase.boot.BaseCost.VUOTA;
 
 public class WrapTask {
 
@@ -24,7 +26,7 @@ public class WrapTask {
     public boolean scheduled;
 
     @Getter
-    public String cron;
+    public String cronSpring;
 
     @Setter
     @Getter
@@ -45,36 +47,38 @@ public class WrapTask {
             boolean status,
             String description,
             boolean scheduled,
-            String cron,
+            String cronSpring,
             int durataTotaleMinuti) {
         this.cronService = cronService;
         this.sigla = sigla;
         this.status = status;
         this.description = description;
         this.scheduled = scheduled;
-        this.cron = cron;
+        this.cronSpring = cronSpring;
         this.durataTotaleMinuti = durataTotaleMinuti;
-    }
-
-
-    public String infoCron() {
-        String stato = status ? "acceso" : "spento";
-        String durata = durataTotaleMinuti < 1 ? "meno di 1 minuto" : durataTotaleMinuti + SPAZIO + "minuti";
-        return String.format("%s (%s) - %s [%s] (in %s)", sigla, stato, description, scheduled ? cron : "not scheduled", durata);
     }
 
     public String getSiglaBreve() {
         return sigla.startsWith(TASK) ? sigla.substring(TASK.length()) : sigla;
     }
 
-    public String infoText() {
-        String stato = status ? "acceso" : "spento";
-        String durata = durataTotaleMinuti < 1 ? "meno di 1 minuto" : durataTotaleMinuti + SPAZIO + "minuti";
-        return String.format("%s (%s) - %s [%s] (in %s)", sigla, stato, description, scheduled ? getCronText() : "not scheduled", durata);
+    public String getCronText() {
+        return StringUtils.hasText(cronSpring) ? cronService.info(cronSpring) : VUOTA;
     }
 
-    public String getCronText() {
-        return cronService.info(cron);
+    private String info(String cronSpringText) {
+        String stato = status ? "acceso" : "spento";
+        String durata = durataTotaleMinuti < 1 ? "meno di 1 minuto" : durataTotaleMinuti + SPAZIO + "minuti";
+        return String.format("%s (%s) - %s [%s] (previsti %s)", sigla, stato, description, scheduled ? cronSpringText : "not scheduled", durata);
     }
+
+    public String infoCron() {
+        return info(cronSpring);
+    }
+
+    public String infoText() {
+        return info(getCronText());
+    }
+
 
 }

@@ -125,3 +125,10 @@ Contesto: Java-Declaration
 - Rimuovi quelli non utilizzati
 - Documenta modifiche importanti
 - Condividi best practices con il team
+
+## 🔴 ToolTip
+Nella configurazione delle variabili occorre sempre usare le doppie virgolette. Anche per i numeri.
+- `"1"`
+- `"valore"`
+
+ 
