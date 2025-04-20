@@ -1,5 +1,27 @@
 # ⚙️ Mappe
-
+<!-- TOC -->
+* [⚙️ Mappe](#-mappe)
+  * [Possibilità](#possibilità)
+    * [1) `Map.of()`](#1-mapof)
+      * [Vantaggi](#vantaggi)
+      * [Limitazioni](#limitazioni)
+      * [Consigliata](#consigliata)
+    * [2) `Map.ofEntries()`](#2-mapofentries)
+      * [Vantaggi](#vantaggi-1)
+      * [Limitazioni](#limitazioni-1)
+      * [Consigliata](#consigliata-1)
+    * [3) `new HashMap<>()`](#3-new-hashmap)
+      * [Vantaggi](#vantaggi-2)
+      * [Svantaggi](#svantaggi)
+      * [Uso consigliato](#uso-consigliato)
+  * [Best Practices](#best-practices)
+      * [1. Per costanti e configurazioni statiche:](#1-per-costanti-e-configurazioni-statiche)
+      * [2. Per Mappe che devono essere modificate:](#2-per-mappe-che-devono-essere-modificate)
+      * [3. Per collezioni condivise tra thread:](#3-per-collezioni-condivise-tra-thread)
+      * [4. Evita la double-brace initialization:](#4-evita-la-double-brace-initialization)
+      * [5. Per l'inizializzazione con valori predefiniti:](#5-per-linizializzazione-con-valori-predefiniti)
+  * [Conclusione](#conclusione)
+<!-- TOC -->
 ## Possibilità
 1. `Map.of()`
 2. `Map.ofEntries()`

@@ -13,6 +13,7 @@
       * [Formattazione esatta del testo](#formattazione-esatta-del-testo)
   * [🔧 Static](#-static)
   * [🔧 Autowired](#-autowired)
+  * [🔧 Table of contents - TOC](#-table-of-contents---toc)
 <!-- TOC -->
 ## 🔧 Metodi statici
 ### Quando usare metodi statici:

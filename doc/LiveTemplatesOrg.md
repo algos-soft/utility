@@ -1,5 +1,24 @@
 # Live Templates IntelliJ IDEA - Organizzazione Gerarchica
-
+<!-- TOC -->
+* [Live Templates IntelliJ IDEA - Organizzazione Gerarchica](#live-templates-intellij-idea---organizzazione-gerarchica)
+  * [1. Java Core (<span style="color:#2ecc71">jc</span>)](#1-java-core-span-stylecolor2ecc71jcspan)
+  * [2. Spring Boot (<span style="color:#2ecc71">sb</span>)](#2-spring-boot-span-stylecolor2ecc71sbspan)
+    * [Controller (<span style="color:#2ecc71">sbc</span>)](#controller-span-stylecolor2ecc71sbcspan)
+    * [Service (<span style="color:#2ecc71">sbs</span>)](#service-span-stylecolor2ecc71sbsspan)
+    * [Repository (<span style="color:#2ecc71">sbr</span>)](#repository-span-stylecolor2ecc71sbrspan)
+    * [Configuration (<span style="color:#2ecc71">sbc</span>)](#configuration-span-stylecolor2ecc71sbcspan)
+  * [3. Vaadin (<span style="color:#2ecc71">v</span>)](#3-vaadin-span-stylecolor2ecc71vspan)
+    * [Views (<span style="color:#2ecc71">vv</span>)](#views-span-stylecolor2ecc71vvspan)
+    * [Components (<span style="color:#2ecc71">vc</span>)](#components-span-stylecolor2ecc71vcspan)
+    * [Binder (<span style="color:#2ecc71">vb</span>)](#binder-span-stylecolor2ecc71vbspan)
+  * [4. Testing (<span style="color:#2ecc71">t</span>)](#4-testing-span-stylecolor2ecc71tspan)
+    * [Unit Test (<span style="color:#2ecc71">tu</span>)](#unit-test-span-stylecolor2ecc71tuspan)
+    * [Integration Test (<span style="color:#2ecc71">ti</span>`)](#integration-test-span-stylecolor2ecc71tispan)
+  * [5. Lombok (<span style="color:#2ecc71">l</span>)](#5-lombok-span-stylecolor2ecc71lspan)
+  * [6. Annotation (<span style="color:#2ecc71">an</span>)](#6-annotation-span-stylecolor2ecc71anspan)
+  * [7. Algos (<span style="color:#2ecc71">al</span>)](#7-algos-span-stylecolor2ecc71alspan)
+  * [Configurazione in IntelliJ IDEA](#configurazione-in-intellij-idea)
+<!-- TOC -->
 ## 1. Java Core (<span style="color:#2ecc71">jc</span>)
 - `test` - Template base per test JUnit
 - `testpar` - Test parametrizzato

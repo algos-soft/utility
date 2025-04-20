@@ -1,5 +1,31 @@
 # Guida Completa Live Templates in IntelliJ IDEA
-
+<!-- TOC -->
+* [Guida Completa Live Templates in IntelliJ IDEA](#guida-completa-live-templates-in-intellij-idea)
+  * [Configurazione Base](#configurazione-base)
+    * [Accesso alle Impostazioni](#accesso-alle-impostazioni)
+    * [Creazione Gruppi](#creazione-gruppi)
+    * [Creazione Template](#creazione-template)
+  * [Organizzazione Gerarchica](#organizzazione-gerarchica)
+    * [Struttura Consigliata](#struttura-consigliata)
+    * [Convenzioni di Naming](#convenzioni-di-naming)
+  * [Utilizzo Quotidiano](#utilizzo-quotidiano)
+    * [Accesso Rapido](#accesso-rapido)
+    * [Applicazione Template](#applicazione-template)
+  * [Best Practices](#best-practices)
+    * [Organizzazione Template](#organizzazione-template)
+    * [Contesti di Applicazione](#contesti-di-applicazione)
+    * [Esempi Pratici](#esempi-pratici)
+  * [Ricerca e Filtri](#ricerca-e-filtri)
+    * [Metodi di Ricerca](#metodi-di-ricerca)
+    * [Filtri Automatici](#filtri-automatici)
+  * [Gestione e Manutenzione](#gestione-e-manutenzione)
+    * [Organizzazione](#organizzazione)
+    * [Condivisione](#condivisione)
+  * [Shortcut Essenziali](#shortcut-essenziali)
+  * [Conversione Codice in Template](#conversione-codice-in-template)
+  * [Note Finali](#note-finali)
+  * [🔴 ToolTip](#-tooltip)
+<!-- TOC -->
 ## Configurazione Base
 
 ### Accesso alle Impostazioni

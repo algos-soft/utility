@@ -1,5 +1,13 @@
 # 📝 Design pattern
-
+<!-- TOC -->
+* [📝 Design pattern](#-design-pattern)
+    * [Storia](#storia)
+    * [1. Pattern Creazionali](#1-pattern-creazionali)
+    * [2. Pattern Strutturali](#2-pattern-strutturali)
+    * [3. Pattern Comportamentali](#3-pattern-comportamentali)
+    * [Esempio pratico di Observer Pattern:](#esempio-pratico-di-observer-pattern)
+<!-- TOC -->
+### Storia
 Principali design pattern dalla <span style="color:#2ecc71">Gang of Four</span> (GoF)
 - Erich Gamma
 - Richard Helm

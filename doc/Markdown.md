@@ -1,5 +1,25 @@
 # Colorazione del Testo in Markdown
-
+<!-- TOC -->
+* [Colorazione del Testo in Markdown](#colorazione-del-testo-in-markdown)
+  * [1. HTML Inline](#1-html-inline)
+  * [2. Evidenziazioni Alternative (Markdown Puro)](#2-evidenziazioni-alternative-markdown-puro)
+  * [3. Blocchi di Codice con Syntax Highlighting](#3-blocchi-di-codice-con-syntax-highlighting)
+  * [4. Tabelle per Organizzazione Visiva](#4-tabelle-per-organizzazione-visiva)
+  * [5. Emoji per Aggiungere Colore](#5-emoji-per-aggiungere-colore)
+  * [Criteri di Scelta](#criteri-di-scelta)
+  * [Suggerimenti per Massima Compatibilità](#suggerimenti-per-massima-compatibilità)
+  * [Esempio Pratico](#esempio-pratico)
+  * [Nota Finale](#nota-finale)
+  * [Colori comuni in esadecimale:](#colori-comuni-in-esadecimale)
+  * [Dimensione titoli](#dimensione-titoli)
+* [Titolo H1 (più grande)](#titolo-h1-più-grande)
+  * [Titolo H2](#titolo-h2)
+    * [Titolo H3](#titolo-h3)
+      * [Titolo H4](#titolo-h4)
+        * [Titolo H5](#titolo-h5)
+          * [Titolo H6 (più piccolo)](#titolo-h6-più-piccolo)
+  * [Dimensione testo](#dimensione-testo)
+<!-- TOC -->
 ## 1. HTML Inline
 Non è Markdown puro, ma funziona nella maggior parte dei renderer:
 
