@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.*;
  */
 @PageTitle("Icone")
 @Route(value = "icona", layout = MainLayout.class)
-@IView(menuGroup = Gruppo.NESSUNO)
+@IView(menuGroup = Gruppo.UTILITY)
 public class IconaView extends AView {
 
 
