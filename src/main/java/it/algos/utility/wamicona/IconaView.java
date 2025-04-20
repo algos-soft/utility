@@ -4,7 +4,6 @@ import com.vaadin.flow.router.*;
 import it.algos.vbase.annotation.IView;
 import it.algos.vbase.constant.Gruppo;
 import it.algos.vbase.ui.view.*;
-import it.algos.wam24.view.WamMainLayout;
 import org.springframework.beans.factory.annotation.*;
 
 /**
@@ -17,7 +16,7 @@ import org.springframework.beans.factory.annotation.*;
  * @Route chiamata dal menu generale o dalla barra del browser <br>
  */
 @PageTitle("Icone")
-@Route(value = "icona", layout = WamMainLayout.class)
+@Route(value = "icona", layout = MainLayout.class)
 @IView(menuGroup = Gruppo.NESSUNO)
 public class IconaView extends AView {
 
