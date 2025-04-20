@@ -14,7 +14,10 @@ public class WrapTask {
     private final CronService cronService;
 
     @Getter
-    public boolean status;
+    public boolean masterEnabled;
+
+    @Getter
+    public boolean taskEnabled;
 
     @Getter
     public String sigla;
@@ -44,14 +47,16 @@ public class WrapTask {
     public WrapTask(
             CronService cronService,  // Dipendenza Spring come primo parametro
             String sigla,
-            boolean status,
+            boolean masterEnabled,
+            boolean taskEnabled,
             String description,
             boolean scheduled,
             String cronSpring,
             int durataTotaleMinuti) {
         this.cronService = cronService;
         this.sigla = sigla;
-        this.status = status;
+        this.masterEnabled = masterEnabled;
+        this.taskEnabled = taskEnabled;
         this.description = description;
         this.scheduled = scheduled;
         this.cronSpring = cronSpring;
@@ -67,9 +72,8 @@ public class WrapTask {
     }
 
     private String info(String cronSpringText) {
-        String stato = status ? "acceso" : "spento";
         String durata = durataTotaleMinuti < 1 ? "meno di 1 minuto" : durataTotaleMinuti + SPAZIO + "minuti";
-        return String.format("%s (%s) - %s [%s] (previsti %s)", sigla, stato, description, scheduled ? cronSpringText : "not scheduled", durata);
+        return String.format("%s %s - %s [%s] (previsti %s)", sigla, getStatus(), description, scheduled ? cronSpringText : "not scheduled", durata);
     }
 
     public String infoCron() {
@@ -80,5 +84,16 @@ public class WrapTask {
         return info(getCronText());
     }
 
+    // Metodo di utilità per verificare se la task è effettivamente eseguibile
+    public boolean isExecutable() {
+        return masterEnabled && taskEnabled && scheduled;
+    }
+
+    public String getStatus() {
+        String statoGlobale = masterEnabled ? "abilitate" : "disabilitate";
+        String statoTask = taskEnabled ? "acceso" : "spento";
+        return String.format("(%s/%s)", statoGlobale, statoTask);
+    }
 
 }
+

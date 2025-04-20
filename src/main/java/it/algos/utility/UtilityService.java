@@ -13,6 +13,7 @@ import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.service.ReflectionService;
 import it.algos.vbase.service.TextService;
+import it.algos.wiki24.backend.enumeration.WPref;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -237,11 +238,13 @@ public class UtilityService {
         if (optPref.isPresent()) {
             IPref pref = optPref.get();  // Estrai l'oggetto da Optional
             String sigla = pref.getKeyCode();  // Made final
-            boolean status = pref.is();
+            boolean masterEnabled = WPref.taskMaster.is();
+            boolean taskEnabled = pref.is();
             String description = pref.getDescrizione();
             WrapTask wrap = wrapTaskFactory.builder()
                     .sigla(sigla)
-                    .status(status)
+                    .masterEnabled(masterEnabled)
+                    .taskEnabled(taskEnabled)
                     .description(description)
                     .scheduled(scheduled)
                     .cron(optCron.isPresent() ? optCron.get() : VUOTA)

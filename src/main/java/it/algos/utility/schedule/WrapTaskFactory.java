@@ -17,7 +17,8 @@ public class WrapTaskFactory {
 
     public WrapTask createWrapTask(
             String sigla,
-            boolean status,
+            boolean masterEnabled,
+            boolean taskEnabled,
             String description,
             boolean scheduled,
             String cron,
@@ -27,7 +28,8 @@ public class WrapTaskFactory {
         return new WrapTask(
                 cronService,  // Prima il servizio iniettato
                 sigla != null ? sigla : VUOTA,
-                status,
+                masterEnabled,
+                taskEnabled,
                 description != null ? description : VUOTA,
                 scheduled,
                 cron != null ? cron : VUOTA,
@@ -42,7 +44,8 @@ public class WrapTaskFactory {
 
     public class WrapTaskBuilder {
         private String sigla = "";
-        private boolean status = false;
+        private boolean masterEnabled = false;
+        private boolean taskEnabled = false;
         private String description = "";
         private boolean scheduled = false;
         private String cron = VUOTA;
@@ -53,8 +56,13 @@ public class WrapTaskFactory {
             return this;
         }
 
-        public WrapTaskBuilder status(boolean status) {
-            this.status = status;
+        public WrapTaskBuilder masterEnabled(boolean masterEnabled) {
+            this.masterEnabled = masterEnabled;
+            return this;
+        }
+
+        public WrapTaskBuilder taskEnabled(boolean taskEnabled) {
+            this.taskEnabled = taskEnabled;
             return this;
         }
 
@@ -82,7 +90,8 @@ public class WrapTaskFactory {
             return new WrapTask(
                     cronService,  // La dipendenza Spring viene dalla factory
                     sigla,
-                    status,
+                    masterEnabled,
+                    taskEnabled,
                     description,
                     scheduled,
                     cron,
