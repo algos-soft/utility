@@ -1,42 +1,46 @@
 package it.algos.utility.schedule;
 
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import it.algos.utility.UtilityService;
 import it.algos.vbase.annotation.IView;
+import it.algos.vbase.boot.BaseBoot;
+import it.algos.vbase.boot.BaseCost;
 import it.algos.vbase.components.SimpleVerticalLayout;
 import it.algos.vbase.constant.Gruppo;
-import it.algos.vbase.pref.IPref;
-import it.algos.vbase.service.MongoService;
+import it.algos.vbase.service.MainLayoutService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
+import it.algos.wiki24.backend.boot.WikiBoot;
 import jakarta.annotation.PostConstruct;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Optional;
 
-import static it.algos.vbase.boot.BaseCost.VUOTA;
+import static it.algos.vbase.boot.BaseCost.SPAZIO;
 
 @Slf4j
+@PageTitle("Elenco task")
 @Route(value = "task", layout = MainLayout.class)
-@IView(menuGroup = Gruppo.UTILITY, menuName = "Task", vaadin = VaadinIcon.CALENDAR)
+@IView(menuGroup = Gruppo.NESSUNO, menuName = "Task elenco", vaadin = VaadinIcon.LINES_LIST)
 public class TaskView extends AView {
 
     @Autowired
     private UtilityService utilityService;
 
-    TaskView() {
-        super();
-    }
+    @Autowired
+    ApplicationContext applicationContext;
 
     private Checkbox deleteAllBefore;
 
@@ -46,9 +50,28 @@ public class TaskView extends AView {
     private SimpleVerticalLayout logPanel;
 
     @Autowired
-    private MongoService mongoService;
+    private MainLayoutService mainLayoutService;
+
+    @Value("${algos.project.boot.qualifier}")
+    private String bootClazzQualifier;
 
     private UI ui;
+
+    private BaseBoot projectBoot;
+
+    TaskView() {
+        super();
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+
+        String title = "Elenco task";
+        Component img = VaadinIcon.LINES_LIST.create();
+        img.getElement().getStyle().set("color", "blue");
+        mainLayoutService.setTopBarTitle(title, img);
+    }
 
     @PostConstruct
     protected void init() {
@@ -59,67 +82,15 @@ public class TaskView extends AView {
         this.setPadding(true);
         add(new H2("Task scheduled per questa applicazione"));
 
-        List<Method> methods = annotationService.getAnnotatedMethods(Scheduled.class);
+        projectBoot = (BaseBoot) applicationContext.getBean(bootClazzQualifier);
+        List<Method> orderedMethods = ((WikiBoot) projectBoot).getOrderedScheduledMethods();
 
         String message;
-        for (Method method : methods) {
-            Optional<String> otpCronInfo = getCronInfo(method);
-            message = otpCronInfo.orElse(VUOTA);
-            add(ASpan.text(message).verde().bold());
-        }
-    }
-
-
-    public Optional<String> getCronInfo(@NonNull Class<?> clazz, @NonNull String methodName) {
-        Method method;
-        try {
-            method = clazz.getMethod(methodName);
-            return getCronInfo(method);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Optional<String> getCronInfo(@NonNull Method method) {
-        IPref pref = null;
-        String message=VUOTA;
-        String methodName = method.getName();
-
-        String cron = utilityService.getCronSpring(method);
-        String optPrefCode = utilityService.getPrefCode(method).orElse(VUOTA);
-//        if (textService.isValid(optPrefCode)) {
-//            pref = Pref.getPref(optPrefCode);
-//        }
-//        if (pref != null) {
-//            String description =  pref.getDescrizione();
-//            String status = pref.is() ? "acceso" : "spento";
-//
-//             message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
-//        }
-
-
-//        Object optPref = null;
-//        try {
-////            optPref = optPrefCode : Optional.empty();
-//        } catch (Exception exception) {
-//            log.warn(exception.getMessage());
-////            log.warn("No enum constant WPref.{} in WikiBoot.getCronInfo()", optPrefCode.isPresent() ? optPrefCode.get() : VUOTA);
-//            return Optional.empty();
-//        }
-//
-//        String description = ((IPref) optPref).getDescrizione();
-//        String status = ((IPref) optPref).is() ? "acceso" : "spento";
-//
-//        String message = String.format("%s (%s) - %s %s", methodName, status, description, cron);
-        return Optional.of(message);
-    }
-
-    public void logCronInfo() {
-        List<Method> methods = annotationService.getAnnotatedMethods(Scheduled.class);
-
-        for (Method method : methods) {
-            Optional<String> otpCronInfo = getCronInfo(method);
-            log.info(otpCronInfo.orElse(VUOTA));
+        int pos = 1;
+        for (Method method : orderedMethods) {
+            message = pos++ + BaseCost.PARENTESI_TONDA_END + SPAZIO;
+            message += utilityService.infoCron(method);
+            add(ASpan.text(message).blue().bold());
         }
     }
 

@@ -291,6 +291,21 @@ public class UtilityService {
         return tasks;
     }
 
+
+    public String infoCron(@NonNull Method method) {
+        String info = VUOTA;
+        Optional<WrapTask> optWrapTask;
+
+        optWrapTask = getWrapTask(method);
+        if (optWrapTask.isPresent()) {
+            info = optWrapTask.get().infoText();
+        } else {
+            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
+        }
+
+        return info;
+    }
+
     private String[] getColore(int pos) {
         TypeColor color = TypeColor.values()[pos];
         String textColor = isColorDark(color.getEsa()) ? "white" : "black";
