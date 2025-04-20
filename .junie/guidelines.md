@@ -36,40 +36,59 @@ spring.data.mongodb.database=utility
 ## Testing
 
 ### Unit Testing
-Here's an example of a simple test for the CronUtils class:
+Here's an example of a simple test for the NotaEntity class:
 
 ```java
 @SpringBootTest
-class CronUtilsTest {
-    
+class NotaEntityTest {
+
     @Test
-    void testDescriviCron() throws CronValidationException {
-        // Test for daily execution at midnight
-        String cron = "0 0 0 * * *";
-        String expected = "Esegue tutti i giorni a mezzanotte";
-        assertEquals(expected, CronUtils.descriviCron(cron));
-        
-        // Test for execution every minute
-        cron = "0 * * * * *";
-        expected = "Esegue ogni minuto";
-        assertEquals(expected, CronUtils.descriviCron(cron));
+    void testEntityCreation() {
+        // Test entity creation using builder
+        LocalDate today = LocalDate.now();
+        NotaEntity nota = NotaEntity.builder()
+                .typeLog(TypeLog.debug)
+                .typeLevel(LogLevel.info)
+                .inizio(today)
+                .descrizione("Test note")
+                .fatto(false)
+                .build();
+
+        // Verify properties
+        assertEquals(TypeLog.debug, nota.getTypeLog());
+        assertEquals(LogLevel.info, nota.getTypeLevel());
+        assertEquals(today, nota.getInizio());
+        assertEquals("Test note", nota.getDescrizione());
+        assertFalse(nota.isFatto());
+        assertNull(nota.getFine());
     }
 }
 ```
 
 ### Test Execution
-- Run unit tests: `./mvnw test`
+- Run all tests: `./mvnw test`
 - Run integration tests: `./mvnw verify`
 - Run specific test class: `./mvnw test -Dtest=CronServiceTest`
+- Run specific test method: `./mvnw test -Dtest=NotaEntityTest#testEntityCreation`
 
 ### Test Guidelines
 - Use `@SpringBootTest` for integration tests
 - Use `@DataMongoTest` for isolated MongoDB tests
-- Name test methods following the pattern: `should[ExpectedBehavior]When[StateUnderTest]`
+- Name test methods following the pattern: `test[Feature]` or `should[ExpectedBehavior]When[StateUnderTest]`
 - Use `@ParameterizedTest` for testing multiple inputs with the same logic
 - Use `@Order` annotation to control test execution order when necessary
+- Add debug logging with `System.out.println("[DEBUG_LOG] message")` for troubleshooting
 
 ## Code Style & Development
+
+### Java Conventions
+- Use Lombok annotations to reduce boilerplate code (`@Data`, `@Builder`, etc.)
+- Follow Spring component annotations best practices:
+  - Use `@Service` for business logic components
+  - Use `@Repository` for data access components
+  - Use `@Controller` or `@RestController` for web endpoints
+- Use static methods for utility functions that don't depend on instance state
+- Use instance methods for operations that manipulate object state or depend on injected components
 
 ### Cron Expression Conventions
 - Always use 6 fields in cron expressions (with seconds)
@@ -83,6 +102,7 @@ src/
 │   ├── java/
 │   │   └── it/algos/
 │   │       ├── utility/    # Utility classes
+│   │       │   ├── nota/      # Note management
 │   │       │   └── schedule/  # Scheduling components
 │   │       └── vbase/      # Base framework components
 │   └── resources/
@@ -90,19 +110,28 @@ src/
 └── test/
     └── java/
         └── it/algos/
-            └── schedule/   # Test classes for scheduling
+            ├── utility/
+            │   ├── nota/      # Tests for note components
+            │   └── schedule/  # Tests for scheduling components
+            └── vbase/      # Tests for base components
 ```
 
 ### Frontend Development
-- Vaadin 24.6.5 is used for the UI components
+- Vaadin 24.3.9 is used for the UI components (as specified in application.properties)
 - TypeScript is used for frontend components
 - Frontend resources are located in the `frontend/` directory
 - Vaadin Maven plugin handles frontend build process
+
+### MongoDB Configuration
+- Default database name: `utility` (configured in application.properties)
+- Auto index creation is enabled: `spring.data.mongodb.auto-index-creation=true`
+- Entity classes are annotated with `@Document(collection = "collectionName")`
 
 ### Troubleshooting
 - For MongoDB connection issues: verify `spring.data.mongodb.database` in application.properties
 - Enable debug logging: `logging.level.it.algos=DEBUG` in application.properties
 - Check application logs in `log/` directory
+- For Vaadin UI issues, check browser console for JavaScript errors
 
 ## Version Control
 - Branch naming: `feature/`, `fix/`, `refactor/`
@@ -116,3 +145,4 @@ src/
 - Use MongoDB indexes for frequently queried fields
 - Implement caching for repetitive cron operations
 - Use Spring's `@Scheduled` annotation for cron-based scheduling
+- Consider using `@Async` for long-running operations
