@@ -19,6 +19,8 @@
     - Dipende da altre dipendenze iniettate (come nel tuo caso con `@Autowired`)
     - Fa parte della logica di business specifica dell'istanza
 
+---
+
 ## 🔧 Component
 ### Differenza tra @SpringComponent e @Component
 La differenza principale tra `@Component` e `@SpringComponent` è che:
@@ -51,6 +53,7 @@ Quando usi `@Component`:
 ### Errori
 Se qualcuno ti suggerisce di usare `@SpringComponent`, è probabilmente un errore o una confusione con `@Component`. Dovresti sempre usare `@Component` o una delle sue specializzazioni (, `@Repository`, `@Controller`) a seconda del caso d'uso specifico. `@Service`
 
+---
 
 ## 🔧 Markdown
 #### Formattazione esatta del testo
@@ -83,3 +86,69 @@ La soluzione più pulita e comunemente usata è la prima con i triple backtick, 
 - Permette anche di specificare il linguaggio per la syntax highlighting (se necessario)
 - Mantiene esattamente la formattazione del testo
 
+---
+
+## 🔧 Static
+In italiano, la convenzione più utilizzata e raccomandata è `public static final`.
+
+Ecco le ragioni:
+
+1. **Ordine standard**: La convenzione Java generalmente accettata suggerisce questo ordine:
+    - Prima i modificatori di accesso (`public`, `private`, ecc.)
+    - Poi i modificatori non di accesso (`static`, `final`, ecc.)
+
+2. **JLS (Java Language Specification)**: Anche se tecnicamente l'ordine non influisce sul funzionamento del codice, il JLS suggerisce l'ordine `public static final`.
+
+3. **Leggibilità**: È più facile leggere e comprendere il codice quando seguiamo convenzioni standard.
+
+Esempio:
+```java
+// CORRETTO (raccomandato)
+public static final String COSTANTE = "valore";
+
+// FUNZIONA MA NON RACCOMANDATO
+public final static String COSTANTE = "valore";
+```
+
+
+Inoltre, questo ordine è coerente con come appaiono le costanti nella libreria standard Java. Per esempio in `java.lang.Math`:
+```java
+public static final double PI = 3.14159265358979323846;
+```
+
+Quindi, per mantenere la coerenza con le convenzioni Java e migliorare la leggibilità del codice, è meglio utilizzare `public static final`.
+
+---
+
+## 🔧 Autowired
+Per lo Spring Framework moderno, è meglio utilizzare `@Autowired`.
+
+Ecco perché:
+
+1. **@Autowired**:
+    - È l'annotazione standard di Spring
+    - Funziona perfettamente con tutto l'ecosistema Spring
+    - È più flessibile e offre più opzioni di configurazione
+    - È l'annotazione raccomandata nella documentazione Spring
+
+2. **@Inject**:
+    - È un'annotazione Jakarta EE (precedentemente Java EE)
+    - È più generica e meno specifica per Spring
+    - Non offre tutte le funzionalità specifiche di Spring
+
+Se stai utilizzando Spring come framework principale, la scelta migliore è:
+
+```java
+@Autowired
+private MioServizio servizio;
+```
+
+Inoltre, nelle versioni più recenti di Spring, se hai un solo costruttore, non è nemmeno necessario utilizzare `@Autowired` - l'iniezione delle dipendenze avverrà automaticamente.
+
+La scelta di `@Autowired` garantisce:
+- Migliore integrazione con Spring
+- Accesso a tutte le funzionalità Spring
+- Codice più coerente
+- Migliore supporto degli strumenti di sviluppo
+
+```
