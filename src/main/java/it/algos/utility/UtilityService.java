@@ -9,11 +9,11 @@ import it.algos.vbase.enumeration.TypeColor;
 import it.algos.vbase.modules.preferenza.PreferenzaService;
 import it.algos.vbase.mongo.MongoTemplateProvider;
 import it.algos.vbase.pref.IPref;
+import it.algos.vbase.pref.Pref;
 import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.service.ReflectionService;
 import it.algos.vbase.service.TextService;
-import it.algos.wiki24.backend.enumeration.WPref;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -238,7 +238,7 @@ public class UtilityService {
         if (optPref.isPresent()) {
             IPref pref = optPref.get();  // Estrai l'oggetto da Optional
             String sigla = pref.getKeyCode();  // Made final
-            boolean masterEnabled = WPref.taskMaster.is();
+            boolean masterEnabled = Pref.taskMaster.is();
             boolean taskEnabled = pref.is();
             String description = pref.getDescrizione();
             WrapTask wrap = wrapTaskFactory.builder()
