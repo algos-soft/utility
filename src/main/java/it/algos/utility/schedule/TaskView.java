@@ -5,6 +5,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -18,7 +19,6 @@ import it.algos.vbase.service.MainLayoutService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
-import it.algos.wiki24.backend.boot.WikiBoot;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.algos.vbase.boot.BaseCost.SPAZIO;
@@ -33,31 +34,19 @@ import static it.algos.vbase.boot.BaseCost.SPAZIO;
 @Slf4j
 @PageTitle("Elenco task")
 @Route(value = "task", layout = MainLayout.class)
-@IView(menuGroup = Gruppo.NESSUNO, menuName = "Task elenco", vaadin = VaadinIcon.LINES_LIST)
+@IView(menuGroup = Gruppo.UTILITY, menuName = "Task elenco", vaadin = VaadinIcon.LINES_LIST)
 public class TaskView extends AView {
 
     @Autowired
     private UtilityService utilityService;
 
-    @Autowired
-    ApplicationContext applicationContext;
-
-    private Checkbox deleteAllBefore;
-
-    private Checkbox mainProjectOnly;
-
-
-    private SimpleVerticalLayout logPanel;
 
     @Autowired
     private MainLayoutService mainLayoutService;
 
-    @Value("${algos.project.boot.qualifier}")
-    private String bootClazzQualifier;
 
     private UI ui;
 
-    private BaseBoot projectBoot;
 
     TaskView() {
         super();
@@ -80,18 +69,25 @@ public class TaskView extends AView {
         this.setSpacing(true);
         this.setMargin(true);
         this.setPadding(true);
-        add(new H2("Task scheduled per questa applicazione"));
+        String titolo = "Task scheduled per questa applicazione";
 
-        projectBoot = (BaseBoot) applicationContext.getBean(bootClazzQualifier);
-        List<Method> orderedMethods = ((WikiBoot) projectBoot).getOrderedScheduledMethods();
+        List<Method> methods = new ArrayList<>(annotationService.getAnnotatedMethods(ASchedule.class));
 
         String message;
         int pos = 1;
-        for (Method method : orderedMethods) {
-            message = pos++ + BaseCost.PARENTESI_TONDA_END + SPAZIO;
-            message += utilityService.infoCron(method);
-            add(ASpan.text(message).blue().bold());
+        if (methods != null && methods.size() > 0) {
+            add(new H2(titolo));
+            for (Method method : methods) {
+                message = pos++ + BaseCost.PARENTESI_TONDA_END + SPAZIO;
+                message += utilityService.infoCron(method);
+                add(ASpan.text(message).blue().bold());
+            }
+        } else {
+            add(new H3(titolo));
+            add(ASpan.text("Non ci sono task in questo progetto").rosso().bold().big());
         }
+
+
     }
 
 }
