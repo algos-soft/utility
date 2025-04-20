@@ -1,5 +1,19 @@
 # 📝 Best Practices
-
+<!-- TOC -->
+* [📝 Best Practices](#-best-practices)
+  * [🔧 Metodi statici](#-metodi-statici)
+    * [Quando usare metodi statici:](#quando-usare-metodi-statici)
+    * [Quando usare metodi di istanza:](#quando-usare-metodi-di-istanza)
+  * [🔧 Component](#-component)
+    * [Differenza tra @SpringComponent e @Component](#differenza-tra-springcomponent-e-component)
+    * [Caratteristiche di @Component](#caratteristiche-di-component)
+    * [Utilizzo di @Component](#utilizzo-di-component)
+    * [Errori](#errori)
+  * [🔧 Markdown](#-markdown)
+      * [Formattazione esatta del testo](#formattazione-esatta-del-testo)
+  * [🔧 Static](#-static)
+  * [🔧 Autowired](#-autowired)
+<!-- TOC -->
 ## 🔧 Metodi statici
 ### Quando usare metodi statici:
 1. Per utility methods che:
@@ -151,4 +165,23 @@ La scelta di `@Autowired` garantisce:
 - Codice più coerente
 - Migliore supporto degli strumenti di sviluppo
 
-```
+
+---
+
+## 🔧 Table of contents - TOC
+
+1. **Generare un Indice (Table of Contents)**:
+    - Posiziona il cursore dove vuoi inserire l'indice
+   - Premi `⌘` `N` o usa `Generated`
+    - Seleziona "Table of Contents"
+    - L'indice verrà generato automaticamente con link cliccabili 
+
+2. **Utilizzare la finestra Struttura**:
+    - Premi `⌘` `7` o usa `Structure`
+per aprire la finestra Structure 
+    - Visualizzerai tutti i titoli e le sezioni del documento
+    - Puoi cliccare su qualsiasi elemento per saltare direttamente a quella sezione [[2]](https://www.jetbrains.com/help/idea/2025.1/markdown.html#navigation)
+
+3. **Popup Struttura File**:
+    - Premi `⌘` `F12` o usa `File Structure`
+    - Apparirà un popup con la struttura del file per una navigazione rapida [[2]](https://www.jetbrains.com/help/idea/2025.1/markdown.html#navigation)
