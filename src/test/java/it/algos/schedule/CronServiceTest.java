@@ -56,9 +56,23 @@ class CronServiceTest {
         put("primo lunedì del mese alle 9", "0 0 9 ? * 2#1");
     }};
 
+    private static final Map<String, String> CRON_PATTERNS_ERRORE = new LinkedHashMap<>() {{
+        put("spazi vuoti", "0 *   *   * ?");
+        put("senza mese o settimana", "0 * * 30 * ?");
+        put("doppi spazi vuoti", "0 *   *   * ?");
+        put("colonna delle ore vuota", "0 *   *   * ?");
+        put("mese invalido", "0 * 25 * * ?");
+        put("spazio vuoto nella colonna dei giorni", "0 * *   * ?");
+    }};
 
     static Stream<Arguments> cronPatterns() {
         return CRON_PATTERNS.entrySet()
+                .stream()
+                .map(entry -> Arguments.of(entry.getKey(), entry.getValue()));
+    }
+
+    static Stream<Arguments> cronPatternsErrore() {
+        return CRON_PATTERNS_ERRORE.entrySet()
                 .stream()
                 .map(entry -> Arguments.of(entry.getKey(), entry.getValue()));
     }
@@ -132,4 +146,19 @@ class CronServiceTest {
         }
     }
 
+    @ParameterizedTest(name = "{0}")
+    @Order(6)
+    @MethodSource("cronPatternsErrore")
+    void testCronExpressionErrore(String description, String cronExpression) {
+        try {
+            CronExpression cron = CronExpression.parse(cronExpression);
+
+            LocalDateTime now = LocalDateTime.now();
+            // Verifica se l'espressione produrrebbe una data valida
+            // o se si verificherebbe un errore durante la parsing
+        } catch (Exception e) {
+            fail(String.format("Espressione non valida: %s (%s). Errore: %s",
+                    cronExpression, description, e.getMessage()));
+        }
+    }
 }

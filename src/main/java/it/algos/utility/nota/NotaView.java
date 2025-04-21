@@ -25,6 +25,9 @@ import static it.algos.vbase.security.Roles.ROLE_SUPERUSER;
 @RolesAllowed(ROLE_SUPERUSER)
 public class NotaView extends AView {
 
+    final public static String[] roles = {ROLE_SUPERUSER};
+
+
     NotaView(NotaService moduloCrudService) {
         super(NotaEntity.class, moduloCrudService, NotaList.class, NotaForm.class);
     }

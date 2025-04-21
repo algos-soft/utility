@@ -14,6 +14,7 @@
   * [🔧 Static](#-static)
   * [🔧 Autowired](#-autowired)
   * [🔧 Table of contents - TOC](#-table-of-contents---toc)
+  * [🔧 Cron Spring](#-cron-spring)
 <!-- TOC -->
 ## 🔧 Metodi statici
 ### Quando usare metodi statici:
@@ -186,3 +187,16 @@ per aprire la finestra Structure
 3. **Popup Struttura File**:
     - Premi `⌘` `F12` o usa `File Structure`
     - Apparirà un popup con la struttura del file per una navigazione rapida [[2]](https://www.jetbrains.com/help/idea/2025.1/markdown.html#navigation)
+
+---
+
+## 🔧 Cron Spring
+Nelle espressioni cron di Spring, ci sono 6 posizioni:
+
+*   Posizione 1: Secondi: (0-59) indica i secondi del minuto.
+*   Posizione 2: Minuti: (0-59) indica i minuti dell'ora.
+*   Posizione 3: Ore: (0-23) indica le ore del giorno.
+*   Posizione 4: Giorno del mese: (1-31) indica il giorno del mese.
+*   Posizione 5: Mese: (1-12) indica il mese dell'anno.
+*   Posizione 6: Giorno della settimana: (0-6, dove 0 e 7 possono essere domenica) indica il giorno della settimana.
+
