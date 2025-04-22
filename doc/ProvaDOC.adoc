@@ -1,0 +1,193 @@
+= 📝 Best Practices
+
+:toc:
+:toclevels: 3
+
+== 🔧 Metodi statici
+
+=== Quando usare metodi statici:
+. Per utility methods che:
+* Non dipendono dallo stato dell'oggetto
+* Sono funzioni pure (stesso output per stesso input)
+* Non accedono a campi di istanza
+* Esempi: operazioni matematiche, parsing di stringhe, conversioni
+
+. Per Factory methods:
+* Metodi che creano istanze di oggetti
+* Esempio: `LocalDate.now()`
+
+=== Quando usare metodi di istanza:
+. Quando il metodo:
+* Manipola lo stato dell'oggetto
+* Accede a campi di istanza
+* Dipende da altre dipendenze iniettate (come nel tuo caso con `@Autowired`)
+* Fa parte della logica di business specifica dell'istanza
+
+---
+
+== 🔧 Component
+
+=== Differenza tra @SpringComponent e @Component
+La differenza principale tra `@Component` e `@SpringComponent` è che:
+. `@Component` è l'annotazione standard di Spring Framework che viene utilizzata per indicare che una classe è un componente Spring. È inclusa nel package `org.springframework.stereotype.Component`.
+. `@SpringComponent` non è un'annotazione standard di Spring Framework. In realtà, questa annotazione non esiste nel framework Spring ufficiale.
+
+=== Caratteristiche di @Component
+Le principali caratteristiche di `@Component` sono:
+. È un'annotazione generica per qualsiasi componente Spring
+. È la base per altre annotazioni stereotipo specializzate come:
+* `@Service` (logica di business)
+* `@Repository` (accesso ai dati)
+* `@Controller` (controller web)
+* `@Configuration` (configurazione)
+
+=== Utilizzo di @Component
+
+[source,java]
+----
+import org.springframework.stereotype.Component;
+
+@Component
+public class MioServizio {
+    // implementazione
+}
+----
+
+Quando usi `@Component`:
+* La classe viene automaticamente rilevata durante la scansione dei componenti
+* Spring creerà e gestirà un bean per questa classe nel contesto dell'applicazione
+* L'IDE mostrerà un'icona speciale nel gutter per indicare che è un bean Spring
+
+=== Errori
+Se qualcuno ti suggerisce di usare `@SpringComponent`, è probabilmente un errore o una confusione con `@Component`.
+Dovresti sempre usare `@Component` o una delle sue specializzazioni (`@Repository`, `@Controller`, `@Service`) a seconda del caso d'uso specifico.
+
+---
+
+== 🔧 Markdown
+
+=== Formattazione esatta del testo
+
+* Usando i triple backtick:
+[source]
+----
+Prima riga
+Seconda riga
+Terza riga
+    Questa riga mantiene anche l'indentazione
+----
+
+* Usando il tag HTML `<pre>`:
+[subs="verbatim"]
+++++
+<pre>
+Prima riga
+Seconda riga
+Terza riga
+    Questa riga mantiene anche l'indentazione
+</pre>
+++++
+
+* Usando quattro spazi o un tab all'inizio di ogni riga:
+
+----
+    Prima riga
+    Seconda riga
+    Terza riga
+    Questa riga mantiene anche l'indentazione
+----
+
+La soluzione più pulita e comunemente usata è la prima con i triple backtick perché:
+* È più leggibile nel codice sorgente
+* È supportata universalmente
+* Permette anche di specificare il linguaggio per il syntax highlighting
+* Mantiene esattamente la formattazione del testo
+
+---
+
+== 🔧 Static
+
+In italiano, la convenzione più utilizzata e raccomandata è `public static final`.
+
+=== Motivi:
+
+. **Ordine standard**:
+* Prima i modificatori di accesso (`public`, `private`, ecc.)
+* Poi quelli non di accesso (`static`, `final`, ecc.)
+
+. **JLS (Java Language Specification)**:
+* Suggerisce l'ordine `public static final`
+
+. **Leggibilità**:
+* È più facile da comprendere seguendo la convenzione
+
+[source,java]
+----
+// CORRETTO (raccomandato)
+public static final String COSTANTE = "valore";
+
+// FUNZIONA MA NON RACCOMANDATO
+public final static String COSTANTE = "valore";
+----
+
+Nella libreria standard Java, ad esempio in `java.lang.Math`:
+
+[source,java]
+----
+public static final double PI = 3.14159265358979323846;
+----
+
+---
+
+== 🔧 Autowired
+
+=== Perché usare @Autowired:
+
+. È l'annotazione standard di Spring
+. Funziona perfettamente con l'ecosistema Spring
+. Offre flessibilità e configurazione
+. È la scelta raccomandata dalla documentazione
+
+=== Differenze rispetto a @Inject
+
+* `@Inject` è parte di Jakarta EE
+* Meno specifica per Spring
+* Manca di alcune funzionalità specifiche
+
+[source,java]
+----
+@Autowired
+private MioServizio servizio;
+----
+
+Inoltre, con un solo costruttore, `@Autowired` non è nemmeno necessario (Spring lo rileva automaticamente).
+
+---
+
+== 🔧 Table of contents - TOC
+
+. **Generare un Indice (TOC)**:
+* Posiziona il cursore dove vuoi l'indice
+* Usa il comando "Table of Contents"
+* Verrà generato automaticamente
+
+. **Finestra Struttura**:
+* Usa `⌘` + `7` o "Structure"
+* Mostra la gerarchia del documento
+
+. **Popup struttura file**:
+* Usa `⌘` + `F12` o "File Structure"
+* Navigazione rapida tra sezioni
+
+---
+
+== 🔧 Cron Spring
+
+Nelle espressioni cron di Spring ci sono 6 campi:
+
+. **Secondi**: (0-59)
+. **Minuti**: (0-59)
+. **Ore**: (0-23)
+. **Giorno del mese**: (1-31)
+. **Mese**: (1-12)
+. **Giorno della settimana**: (0-6, dove 0 e 7 = domenica)
