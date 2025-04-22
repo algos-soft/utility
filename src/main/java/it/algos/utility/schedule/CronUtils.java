@@ -1,8 +1,10 @@
 package it.algos.utility.schedule;
 
 import com.vaadin.flow.spring.annotation.SpringComponent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +70,11 @@ public final class CronUtils {
 
 
     public static String descriviCron(String expression) throws CronValidationException {
-        if (expression == null || expression.trim().isEmpty()) {
+        if (expression == null) {
+            throw new CronValidationException("L'espressione cron non può essere nulla");
+        }
+
+        if (expression.trim().isEmpty()) {
             throw new CronValidationException("L'espressione cron non può essere vuota");
         }
 
@@ -270,5 +276,88 @@ public final class CronUtils {
         }
     }
 
+
+    private static boolean isValidCron(String cronExpression) {
+        if (cronExpression.length() != 6) {
+            return false;
+        }
+
+        String[] campi = cronExpression.split(" ");
+        for (int i = 0; i < campi.length; i++) {
+            if (!validSecondi(campi[i])) {
+                return false;
+            }
+            if (!validMinuti(campi[i])) {
+                return false;
+            }
+            if (!validOre(campi[i])) {
+                return false;
+            }
+            if (i == 3) { // Giorno del mese
+                int mese = Integer.parseInt(campi[i]);
+                if (mese > 12 || mese <= 0) {
+                    return false;
+                }
+            }
+            if (!validGiornoDellaSettimana(campi[i])) {
+                return false;
+            }
+        }
+
+        // Se la cron expression è stata valutata correttamente, restituisce sempre true
+        return true;
+    }
+
+    private static boolean validSecondi(String value) {
+        try {
+            int secondi = Integer.parseInt(value);
+            if (secondi < 0 || secondi > 59) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            // Il valore non è un numero
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean validMinuti(String value) {
+        try {
+            int minuti = Integer.parseInt(value);
+            if (minuti < 0 || minuti > 59) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            // Il valore non è un numero
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean validOre(String value) {
+        try {
+            int ore = Integer.parseInt(value);
+            if (ore < 0 || ore > 23) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            // Il valore non è un numero
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean validGiornoDellaSettimana(String value) {
+        try {
+            int giorno = Integer.parseInt(value);
+            if (giorno < 1 || giorno > 7) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            // Il valore non è un numero
+            return false;
+        }
+        return true;
+    }
 
 }

@@ -1,11 +1,11 @@
 package it.algos.schedule;
 
 import it.algos.utility.schedule.CronService;
+import it.algos.utility.schedule.CronUtils;
+import it.algos.utility.schedule.CronValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -21,16 +21,15 @@ import java.util.stream.Stream;
 
 import static it.algos.vbase.boot.BaseCost.NULLO;
 import static it.algos.vbase.boot.BaseCost.VUOTA;
+import static java.lang.System.out;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@TestMethodOrder(OrderAnnotation.class)
 class CronServiceTest {
-
-    @Autowired
-    private CronService cronService;
 
 
     private static final Map<String, String> CRON_PATTERNS = new LinkedHashMap<>() {{
@@ -65,11 +64,10 @@ class CronServiceTest {
         put("spazio vuoto nella colonna dei giorni", "0 * *   * ?");
     }};
 
-    static Stream<Arguments> cronPatterns() {
-        return CRON_PATTERNS.entrySet()
-                .stream()
-                .map(entry -> Arguments.of(entry.getKey(), entry.getValue()));
-    }
+
+    @Autowired
+    private CronService cronService;
+
 
     static Stream<Arguments> cronPatternsErrore() {
         return CRON_PATTERNS_ERRORE.entrySet()
@@ -77,88 +75,366 @@ class CronServiceTest {
                 .map(entry -> Arguments.of(entry.getKey(), entry.getValue()));
     }
 
-    @Test
+
+    @Nested
     @Order(1)
-    void testEspressioneVuota() {
-        String cron = VUOTA;
-        System.out.println(String.format("[%s] -> %s", cron, NULLO));
-        assertEquals("", cronService.info(cron));
+    @DisplayName("1 - CronServiceClazz")
+    @TestMethodOrder(OrderAnnotation.class)
+    class CronServiceClazz {
+
+        @Test
+        @Order(1)
+        @DisplayName("1 - testEspressioneVuota")
+        void testEspressioneVuota() {
+            out.println("1 - testEspressioneVuota");
+            out.println(VUOTA);
+
+            String cron = VUOTA;
+            out.println(String.format("[%s] -> %s", cron, NULLO));
+            assertEquals("", cronService.info(cron));
+        }
+
+        @Test
+        @Order(2)
+        @DisplayName("2 - testOgniMinuto")
+        void testOgniMinuto() {
+            out.println("2 - testOgniMinuto");
+            out.println(VUOTA);
+
+            String cron = "0 * * * * *";
+            String expected = "Esegue ogni minuto";
+            out.println(String.format("[%s] -> %s", cron, expected));
+            assertEquals(expected, cronService.info(cron));
+        }
+
+        @Test
+        @Order(3)
+        @DisplayName("3 - testOgniGiornoMezzanotte")
+        void testOgniGiornoMezzanotte() {
+            out.println("3 - testOgniGiornoMezzanotte");
+            out.println(VUOTA);
+
+            String cron = "0 0 0 * * *";
+            String expected = "Esegue tutti i giorni a mezzanotte";
+            out.println(String.format("[%s] -> %s", cron, expected));
+            assertEquals(expected, cronService.info(cron));
+        }
+
+        @Test
+        @Order(4)
+        @DisplayName("4 - testOgniGiornoOraSpecifica")
+        void testOgniGiornoOraSpecifica() {
+            out.println("4 - testOgniGiornoOraSpecifica");
+            out.println(VUOTA);
+
+            String cron = "0 30 14 * * *";
+            String expected = "Esegue tutti i giorni alle 14:30";
+            out.println(String.format("[%s] -> %s", cron, expected));
+            assertEquals(expected, cronService.info(cron));
+        }
+
+        @Test
+        @Order(5)
+        @DisplayName("5 - testGiorniSpecifici")
+        void testGiorniSpecifici() {
+            out.println("5 - testGiorniSpecifici");
+            out.println(VUOTA);
+            String cron = "0 0 12 * * MON,WED,FRI";
+            String expected = "Esegue all'ora 12 di lunedì, mercoledì e venerdì";
+            out.println(String.format("[%s] -> %s", cron, expected));
+            assertEquals(expected, cronService.info(cron));
+        }
     }
 
-
-    @Test
+    @Nested
     @Order(2)
-    void testOgniMinuto() {
-        String cron = "0 * * * * *";
-        String expected = "Esegue ogni minuto";
-        System.out.println(String.format("[%s] -> %s", cron, expected));
-        assertEquals(expected, cronService.info(cron));
+    @DisplayName("2 - CommonUseCaseTests")
+    @TestMethodOrder(OrderAnnotation.class)
+    class CommonUseCaseTests {
+
+        @Test
+        @Order(1)
+        @DisplayName("1 - shouldHandleEveryMinute")
+        void shouldHandleEveryMinute() throws CronValidationException {
+            out.println("1 - shouldHandleEveryMinute");
+            out.println(VUOTA);
+
+            String cron = "0 * * * * *";
+            String expected = "Esegue ogni minuto";
+            out.println(String.format("[%s] -> %s", cron, expected));
+
+            String result = CronUtils.descriviCron(cron);
+            assertEquals(expected, result);
+        }
+
+        @Test
+        @Order(2)
+        @DisplayName("2 - shouldHandleDailyExecution")
+        void shouldHandleDailyExecution() throws CronValidationException {
+            out.println("2 - shouldHandleDailyExecution");
+            out.println(VUOTA);
+
+            String cron = "0 0 0 * * *";
+            String expected = "Esegue tutti i giorni a mezzanotte";
+            out.println(String.format("[%s] -> %s", cron, expected));
+
+            String result = CronUtils.descriviCron(cron);
+            assertEquals(expected, result);
+        }
+
+        @Test
+        @Order(3)
+        @DisplayName("3 - shouldHandleWeeklyExecution")
+        void shouldHandleWeeklyExecution() throws CronValidationException {
+            out.println("3 - shouldHandleWeeklyExecution");
+            out.println(VUOTA);
+
+            String cron = "0 0 0 * * 1";
+            String expected = "Esegue all'ora 0 di lunedì";
+            out.println(String.format("[%s] -> %s", cron, expected));
+
+            String result = CronUtils.descriviCron(cron);
+            assertEquals(expected, result);
+        }
+
+        @Test
+        @Order(4)
+        @DisplayName("4 - shouldHandleMonthlyExecution")
+        void shouldHandleMonthlyExecution() throws CronValidationException {
+            out.println("4 - shouldHandleMonthlyExecution");
+            out.println(VUOTA);
+
+            String cron = "0 0 0 1 * *";
+            String expected = "Esegue all'ora 0 il giorno 1";
+            out.println(String.format("[%s] -> %s", cron, expected));
+
+            String result = CronUtils.descriviCron(cron);
+            assertEquals(expected, result);
+        }
     }
 
-    @Test
+    @Nested
     @Order(3)
-    void testOgniGiornoMezzanotte() {
-        String cron = "0 0 0 * * *";
-        String expected = "Esegue tutti i giorni a mezzanotte";
-        System.out.println(String.format("[%s] -> %s", cron, expected));
-        assertEquals(expected, cronService.info(cron));
+    @DisplayName("3 - SpecificTimeTests")
+    @TestMethodOrder(OrderAnnotation.class)
+    class SpecificTimeTests {
+
+        @Test
+        @Order(1)
+        @DisplayName("1 - shouldHandleSpecificHourAndMinute")
+        void shouldHandleSpecificHourAndMinute() throws CronValidationException {
+            out.println("1 - shouldHandleSpecificHourAndMinute");
+            out.println(VUOTA);
+
+            String cron = "0 30 14 * * *";
+            String expected = "Esegue tutti i giorni alle 14:30";
+            out.println(String.format("[%s] -> %s", cron, expected));
+
+            String result = CronUtils.descriviCron(cron);
+            assertEquals(expected, result);
+        }
+
+        @Test
+        @Order(2)
+        @DisplayName("2 - shouldHandleSpecificHourOnly")
+        void shouldHandleSpecificHourOnly() throws CronValidationException {
+            out.println("2 - shouldHandleSpecificHourOnly");
+            out.println(VUOTA);
+
+            String cron = "0 0 12 * * *";
+            String expected = "Esegue tutti i giorni alle 12";
+            out.println(String.format("[%s] -> %s", cron, expected));
+
+            String result = CronUtils.descriviCron(cron);
+            assertEquals(expected, result);
+        }
     }
 
-    @Test
-    @Order(3)
-    void testOgniGiornoOraSpecifica() {
-        String cron = "0 30 14 * * *";
-        String expected = "Esegue tutti i giorni alle 14:30";
-        System.out.println(String.format("[%s] -> %s", cron, expected));
-        assertEquals(expected, cronService.info(cron));
-    }
-
-    @Test
+    @Nested
     @Order(4)
-    void testGiorniSpecifici() {
-        String cron = "0 0 12 * * MON,WED,FRI";
-        String expected = "Esegue all'ora 12 di lunedì, mercoledì e venerdì";
-        System.out.println(String.format("[%s] -> %s", cron, expected));
-        assertEquals(expected, cronService.info(cron));
+    @DisplayName("4 - InvalidInputTests")
+    @TestMethodOrder(OrderAnnotation.class)
+    class InvalidInputTests {
+
+        @Test
+        @Order(1)
+        @DisplayName("1 - shouldRejectInvalidDayOfWeek")
+        void shouldRejectInvalidDayOfWeek() throws CronValidationException {
+            out.println("1 - shouldRejectInvalidDayOfWeek");
+            out.println(VUOTA);
+
+            String cron = "0 0 0 * * 8";
+            out.println(String.format("[%s] -> Exception attesa", cron));
+
+            CronValidationException thrown = assertThrows(
+                    CronValidationException.class,
+                    () -> CronUtils.descriviCron(cron)
+            );
+            assertEquals("Numero giorno non valido per DAY_OF_WEEK: 8", thrown.getMessage());
+        }
+
+        @Test
+        @Order(2)
+        @DisplayName("2 - shouldRejectInvalidMonth")
+        void shouldRejectInvalidMonth() throws CronValidationException {
+            out.println("2 - shouldRejectInvalidMonth");
+            out.println(VUOTA);
+
+            String cron = "0 0 0 * 13 *";
+            out.println(String.format("[%s] -> Exception attesa", cron));
+
+            CronValidationException thrown = assertThrows(
+                    CronValidationException.class,
+                    () -> CronUtils.descriviCron(cron)
+            );
+            assertEquals("Mese non valido: 13", thrown.getMessage());
+        }
     }
 
-    @ParameterizedTest(name = "{0}")
+    @Nested
     @Order(5)
-    @MethodSource("cronPatterns")
-    void testCronExpression(String description, String cronExpression) {
-        try {
-            CronExpression cron = CronExpression.parse(cronExpression);
+    @DisplayName("5 - NotAccept")
+    @TestMethodOrder(OrderAnnotation.class)
+    class NotAccept {
 
-            LocalDateTime now = LocalDateTime.now();
-            LocalDateTime next = cron.next(now);
-            assertNotNull(next, "L'espressione dovrebbe produrre una data valida");
+        @Test
+        @Order(1)
+        @DisplayName("1 - shouldNotAcceptNull")
+        void shouldNotAcceptNull() throws CronValidationException {
+            out.println("2 - shouldNotAcceptNull");
+            out.println(VUOTA);
 
-            LocalDateTime second = cron.next(next);
-            assertNotNull(second, "L'espressione dovrebbe produrre multiple date valide");
-            assertTrue(second.isAfter(next), "Le date successive devono essere in ordine crescente");
+            String cron = null;
+            out.println(String.format("[%s] -> Exception attesa", cron));
 
-            log.info("✓ Valida: {} - {} (Prossima esecuzione: {})",
-                    description, cronExpression,
-                    next.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        } catch (Exception e) {
-            fail(String.format("Espressione non valida: %s (%s). Errore: %s",
-                    cronExpression, description, e.getMessage()));
+            CronValidationException thrown = assertThrows(
+                    CronValidationException.class,
+                    () -> CronUtils.descriviCron(cron)
+            );
+            assertEquals("L'espressione cron non può essere nulla", thrown.getMessage());
+        }
+
+        @Test
+        @Order(2)
+        @DisplayName("2 - shouldNotAcceptEmpty")
+        void shouldNotAcceptEmpty() throws CronValidationException {
+            out.println("2 - shouldNotAcceptEmpty");
+            out.println(VUOTA);
+
+            String cron = "";
+            out.println(String.format("[%s] -> Exception attesa", cron));
+
+            CronValidationException thrown = assertThrows(
+                    CronValidationException.class,
+                    () -> CronUtils.descriviCron(cron)
+            );
+            assertEquals("L'espressione cron non può essere vuota", thrown.getMessage());
         }
     }
 
-    @ParameterizedTest(name = "{0}")
+
+    @Nested
     @Order(6)
-    @MethodSource("cronPatternsErrore")
-    void testCronExpressionErrore(String description, String cronExpression) {
-        try {
-            CronExpression cron = CronExpression.parse(cronExpression);
+    @DisplayName("6 - ValoriValidi")
+    @TestMethodOrder(OrderAnnotation.class)
+    class ValoriValidi {
 
-            LocalDateTime now = LocalDateTime.now();
-            // Verifica se l'espressione produrrebbe una data valida
-            // o se si verificherebbe un errore durante la parsing
-        } catch (Exception e) {
-            fail(String.format("Espressione non valida: %s (%s). Errore: %s",
-                    cronExpression, description, e.getMessage()));
+
+        protected static Stream<Arguments> CRON_VALIDE() {
+            return Stream.of(
+                    Arguments.of("ogni minuto", "0 * * * * ?"),
+                    Arguments.of("ogni 15 minuti", "0 */15 * * * ?"),
+                    Arguments.of("ogni 30 minuti nelle ore lavorative", "0 */30 9-17 * * ?"),
+                    Arguments.of("mezzanotte", "0 0 0 * * ?"),
+                    Arguments.of("mezzogiorno", "0 0 12 * * ?"),
+                    Arguments.of("alle 3:30", "0 30 3 * * ?"),
+                    Arguments.of("ogni ora", "0 0 * * * ?"),
+                    Arguments.of("lunedì e mercoledì alle 14:30", "0 30 14 ? * MON,WED"),
+                    Arguments.of("ogni fine settimana a mezzanotte", "0 0 0 ? * SAT,SUN"),
+                    Arguments.of("ogni 6 ore", "0 0 */6 * * ?")
+            );
         }
+
+
+        @Test
+        @Order(1)
+        @DisplayName("1 - espressioniValide")
+        protected void espressioniValide() {
+            out.println("1 - espressioniValide");
+            out.println(VUOTA);
+            Object[] mat;
+            String descrizione;
+            String expression;
+
+            for (Arguments args : CRON_VALIDE().toList()) {
+                mat = args.get();
+                descrizione = (String) mat[0];
+                expression = (String) mat[1];
+
+                try {
+                    CronExpression.parse(expression);
+                } catch (Exception e) {
+                    fail(String.format("Espressione non valida: %s (%s). Errore: %s", expression, descrizione, e.getMessage()));
+                }
+
+                String message = String.format("[%s] -> %s", expression, descrizione);
+                out.println(message);
+            }
+        }
+
     }
+
+
+    @Nested
+    @Order(7)
+    @DisplayName("7 - ValoriErrati")
+    @TestMethodOrder(OrderAnnotation.class)
+    class ValoriErrati {
+
+        protected static Stream<Arguments> CRON_ERRATE() {
+            return Stream.of(
+                    Arguments.of("ogni minuto", "0 * * * * ?"),
+                    Arguments.of("ogni ora", "0 0 * * * ?"),
+                    Arguments.of("mezzanotte", "0 0 0 * * ?"),
+                    Arguments.of("ora > 24", "0 0 45 * * ?"),
+                    Arguments.of("5 fields", "0 *   * * ?"),
+                    Arguments.of("doppio spazio", "0  10 1 4,20 * ?"),
+                    Arguments.of("mezzanotte", "0 0 0 * * ?")
+            );
+        }
+
+
+        @Test
+        @Order(1)
+        @DisplayName("1 - espressioniErrate")
+        protected void espressioniErrate() {
+            out.println("1 - espressioniErrate");
+            out.println(VUOTA);
+            Object[] mat;
+            String descrizione;
+            String expression;
+            CronExpression cronExpression;
+            String errore;
+            String message;
+
+            for (Arguments args : CRON_ERRATE().toList()) {
+                mat = args.get();
+                descrizione = (String) mat[0];
+                expression = (String) mat[1];
+
+                try {
+                    cronExpression = CronExpression.parse(expression);
+                } catch (Exception e) {
+                    errore = "[\u001B[31m" + expression + "\u001B[0m]";
+                    message = String.format("%s Errore: %s", errore, e.getMessage());
+                    out.println(message);
+                    continue;
+                }
+
+                message = String.format("[%s] -> %s", expression, descrizione);
+                out.println(message);
+            }
+        }
+     }
+
 }

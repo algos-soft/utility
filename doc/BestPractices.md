@@ -15,6 +15,7 @@
   * [🔧 Autowired](#-autowired)
   * [🔧 Table of contents - TOC](#-table-of-contents---toc)
   * [🔧 Cron Spring](#-cron-spring)
+  * [🔧 Test](#-test)
 <!-- TOC -->
 ## 🔧 Metodi statici
 ### Quando usare metodi statici:
@@ -199,4 +200,69 @@ Nelle espressioni cron di Spring, ci sono 6 posizioni:
 *   Posizione 4: Giorno del mese: (1-31) indica il giorno del mese.
 *   Posizione 5: Mese: (1-12) indica il mese dell'anno.
 *   Posizione 6: Giorno della settimana: (0-6, dove 0 e 7 possono essere domenica) indica il giorno della settimana.
+
+---
+
+## 🔧 Test
+
+```java
+- @Slf4j
+- @SpringBootTest
+- @Tag("integration")
+- @DisplayName("Task")
+- @TestClassOrder(ClassOrderer.OrderAnnotation.class)
+- @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+- class CronServiceTest {
+    // ...
+    // ...
+```
+
+```java
+
+@Nested
+@DisplayName("Interna")
+@TestMethodOrder(OrderAnnotation.class)
+class  Interna {
+
+    // ...
+}
+```
+
+```java
+@Test
+@Order(101)
+@Disabled("Disabilitato")
+@DisplayName("101 - getScheduledMethods")
+void getScheduledMethods() {
+    System.out.println("101 - getScheduledMethods");
+    System.out.println(VUOTA);
+
+    // ...
+}
+```
+
+```java
+
+@ParameterizedTest
+@MethodSource(value = "BIOGRAFIE")
+@Order(100)
+@DisplayName("100 - creaBean")
+void creaBean(String wikiTitle, int numParametri) {
+    System.out.println("100 - creaBean");
+    String sorgente = wikiTitle;
+    // ...
+```
+
+```java
+
+@ParameterizedTest(name = "{0}")
+@MethodSource(value = "BIOGRAFIE")
+@Order(100)
+@DisplayName("100 - creaBean")
+void creaBean(String name) {
+    System.out.println("100 - creaBean");
+    String wikiTitle = name;
+    // ...
+```
+
 
