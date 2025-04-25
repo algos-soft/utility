@@ -206,7 +206,7 @@ public class UtilityService {
             final String description = pref.getDescrizione();  // Made final
             final String status = pref.is() ? "acceso" : "spento";  // Made final
             final int durata = getDurata(method);  // Made final
-            String message = String.format("%s (%s) - %s [%s] (in %s)", methodName, status, description, finalCron, durata);
+            String message = String.format("%s (%s) - %s [%s] (in circa %s minuti)", methodName, status, description, finalCron, durata);
             return message;
         });
     }
