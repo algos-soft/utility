@@ -5,6 +5,7 @@ import it.algos.utility.schedule.ASchedule;
 import it.algos.utility.schedule.CronService;
 import it.algos.utility.schedule.WrapTask;
 import it.algos.utility.schedule.WrapTaskFactory;
+import it.algos.vbase.boot.BaseBoot;
 import it.algos.vbase.enumeration.TypeColor;
 import it.algos.vbase.modules.preferenza.PreferenzaService;
 import it.algos.vbase.mongo.MongoTemplateProvider;
@@ -14,6 +15,8 @@ import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.service.ReflectionService;
 import it.algos.vbase.service.TextService;
+import it.algos.vbase.ui.wrapper.ASpan;
+import it.algos.wiki24.backend.enumeration.WPref;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -29,9 +32,11 @@ import org.springframework.util.StringUtils;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import static it.algos.vbase.boot.BaseCost.SPAZIO;
 import static it.algos.vbase.boot.BaseCost.VUOTA;
 
 /**
@@ -57,22 +62,18 @@ public class UtilityService {
 
     @Autowired
     public AnnotationService annotationService;
-
-    @Autowired
-    private MongoTemplateProvider mongoTemplateProvider;
-
     @Autowired
     public PreferenzaService preferenzaService;
-
-    @Autowired
-    private WrapTaskFactory wrapTaskFactory;
-
-    @Autowired
-    private CronService cronService;
-
     @Value("${algos.project.modulo}")
     protected String projectName;
-
+    @Autowired
+    private MongoTemplateProvider mongoTemplateProvider;
+    @Autowired
+    private WrapTaskFactory wrapTaskFactory;
+    @Autowired
+    private CronService cronService;
+    @Value("${algos.project.boot.qualifier}")
+    private String bootClazzQualifier;
 
     public void resetStartup(boolean deleteAllBefore, boolean mainProjectOnly) {
         List<Class<? extends ModuloService>> listClazzService;
@@ -309,6 +310,21 @@ public class UtilityService {
         return info;
     }
 
+
+    public String infoList(@NonNull Method method) {
+        String info = VUOTA;
+        Optional<WrapTask> optWrapTask;
+
+        optWrapTask = getWrapTask(method);
+        if (optWrapTask.isPresent()) {
+            info = optWrapTask.get().infoList();
+        } else {
+            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
+        }
+
+        return info;
+    }
+
     private String[] getColore(int pos) {
         TypeColor color = TypeColor.values()[pos];
         String textColor = isColorDark(color.getEsa()) ? "white" : "black";
@@ -350,5 +366,42 @@ public class UtilityService {
         return annotatedMethods;
     }
 
+    /**
+     * Ordine casuale da annotation <br>
+     * Costruisce ordine alfabetico <br>
+     */
+    public List<Method> getScheduledMethods() {
+        List<Method> methods = new ArrayList<>(annotationService.getAnnotatedMethods(ASchedule.class));
+        methods.sort(Comparator
+                .comparing((Method m) -> m.getDeclaringClass().getName())
+                .thenComparing(Method::getName));
+
+        return methods;
+    }
+
+
+    /**
+     * Classi service in ordine di presentazione del menu <br>
+     * Metodi scheduled in ordine di presentazione <br>
+     */
+    public List<Method> getOrderedScheduledMethods() {
+        List<Method> methods = new ArrayList<>();
+        List<Method> methodsClazz;
+        Class[] views;
+        ModuloService modulo;
+
+        BaseBoot projectBoot = (BaseBoot) appContext.getBean(bootClazzQualifier);
+        views = projectBoot.ordineMenu();
+
+        for (Class clazz : views) {
+            modulo = reflectionService.getModulo(clazz);
+            if (modulo != null) {
+                methodsClazz = getAnnotatedClazzMethods(AopProxyUtils.ultimateTargetClass(modulo), ASchedule.class);
+                methods.addAll(methodsClazz);
+            }
+        }
+
+        return methods;
+    }
 
 }

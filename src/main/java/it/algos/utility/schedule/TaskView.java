@@ -19,6 +19,7 @@ import it.algos.vbase.service.MainLayoutService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
+import it.algos.wiki24.backend.boot.WikiBoot;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,11 +71,10 @@ public class TaskView extends AView {
         this.setMargin(true);
         this.setPadding(true);
         String titolo = "Task scheduled per questa applicazione";
-
-        List<Method> methods = new ArrayList<>(annotationService.getAnnotatedMethods(ASchedule.class));
-
         String message;
         int pos = 1;
+
+        List<Method> methods = utilityService.getOrderedScheduledMethods();
         if (methods != null && methods.size() > 0) {
             add(new H2(titolo));
             for (Method method : methods) {

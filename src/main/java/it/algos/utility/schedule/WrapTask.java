@@ -1,8 +1,15 @@
 package it.algos.utility.schedule;
 
+import com.cronutils.descriptor.CronDescriptor;
+import com.cronutils.model.Cron;
+import com.cronutils.model.CronType;
+import com.cronutils.model.definition.CronDefinitionBuilder;
+import com.cronutils.parser.CronParser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
+
+import java.util.Locale;
 
 import static it.algos.vbase.boot.BaseCost.SPAZIO;
 import static it.algos.vbase.boot.BaseCost.VUOTA;
@@ -30,6 +37,9 @@ public class WrapTask {
 
     @Getter
     public String cronSpring;
+
+    @Getter
+    public String cronSpringDesc;
 
     @Setter
     @Getter
@@ -60,8 +70,28 @@ public class WrapTask {
         this.description = description;
         this.scheduled = scheduled;
         this.cronSpring = cronSpring;
+        this.cronSpringDesc = fixCronDesc(cronSpring);
         this.durataTotaleMinuti = durataTotaleMinuti;
     }
+
+    public String fixCronDesc(String cronSpring) {
+        String cronSpringDesc = VUOTA;
+        CronParser parser = new CronParser(CronDefinitionBuilder.instanceDefinitionFor(CronType.SPRING));
+        Cron cron = null;
+
+        if (StringUtils.hasText(cronSpring)) {
+            cron = parser.parse(cronSpring);
+        }
+        // Generazione della descrizione in italiano
+        CronDescriptor descriptor = CronDescriptor.instance(Locale.ENGLISH);
+
+        if (cron != null) {
+            cronSpringDesc = descriptor.describe(cron);
+        }
+
+        return cronSpringDesc;
+    }
+
 
     public String getSiglaBreve() {
         return sigla.startsWith(TASK) ? sigla.substring(TASK.length()) : sigla;
@@ -83,6 +113,15 @@ public class WrapTask {
     public String infoText() {
         return info(getCronText());
     }
+
+    public String infoList() {
+        String message = "Task " + description + SPAZIO;
+        boolean flag = masterEnabled && taskEnabled;
+        String status = flag ? "<span style=\"color: red;\">accesa</span>" : "<span style=\"color: blue;\">spenta</span>";
+        message += "[" + status + SPAZIO + cronSpringDesc + "]";
+        return message;
+    }
+
 
     // Metodo di utilità per verificare se la task è effettivamente eseguibile
     public boolean isExecutable() {
