@@ -399,7 +399,11 @@ class CronServiceTest {
                     Arguments.of("ora > 24", "0 0 45 * * ?"),
                     Arguments.of("5 fields", "0 *   * * ?"),
                     Arguments.of("doppio spazio", "0  10 1 4,20 * ?"),
-                    Arguments.of("mezzanotte", "0 0 0 * * ?")
+                    Arguments.of("mezzanotte", "0 0 0 * * ?"),
+                    Arguments.of("", "0 0 0 * * 8"),
+                    Arguments.of("", "0 0 0 * * 8 2"),
+                    Arguments.of("", "4 0  * *"),
+                    Arguments.of("", "0 0 0 * 13 *")
             );
         }
 
