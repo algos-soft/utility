@@ -172,29 +172,56 @@ public class StyleExtractor {
      *
      * @param component il componente di cui si vogliono applicare gli stili
      */
+//    public static String getStyledText(Component component) {
+//        StringBuilder buffer = new StringBuilder();
+//        String outPut;
+//        Map<Component, Map<String, String>> stylesMap = extractStyles( component);
+//
+//        Map mappa = stylesMap.get(component);
+//        stylesMap.remove(component);
+//        if (stylesMap.size() == 1) {
+//            Component compConSpan = stylesMap.keySet().iterator().next();
+//            String testo = getTextFromSpan(compConSpan);
+//            return getStyledText(testo, mappa);
+//        } else {
+//            for (Component comp : stylesMap.keySet()) {
+//                String testo = getTextFromSpan(comp);
+//                outPut = getStyledText(testo, mappa);
+//                buffer.append(outPut);
+//                buffer.append(CAPO);
+//            }
+//        }
+//
+//        return buffer.toString();
+//    }
+
+
+
+    /**
+     * Applica gli stili e stampa il testo nel terminale usando i codici ANSI.
+     *
+     * @param component il componente di cui si vogliono applicare gli stili
+     */
     public static String getStyledText(Component component) {
         StringBuilder buffer = new StringBuilder();
-        String outPut;
-        Map<Component, Map<String, String>> stylesMap = extractStyles( component);
+        Map<Component, Map<String, String>> stylesMap = extractStyles(component);
 
-        Map mappa = stylesMap.get(component);
-        stylesMap.remove(component);
         if (stylesMap.size() == 1) {
             Component compConSpan = stylesMap.keySet().iterator().next();
             String testo = getTextFromSpan(compConSpan);
+            Map<String, String> mappa = stylesMap.get(compConSpan);
             return getStyledText(testo, mappa);
         } else {
             for (Component comp : stylesMap.keySet()) {
                 String testo = getTextFromSpan(comp);
-                outPut = getStyledText(testo, mappa);
-                buffer.append(outPut);
-                buffer.append(CAPO);
+                Map<String, String> mappa = stylesMap.get(comp); // ✅ usa la mappa giusta per ogni componente
+                String outPut = getStyledText(testo, mappa);
+                buffer.append(outPut).append(CAPO);
             }
         }
 
         return buffer.toString();
     }
-
 
 //    /**
 //     * Stampa la mappa degli stili in un formato leggibile.
