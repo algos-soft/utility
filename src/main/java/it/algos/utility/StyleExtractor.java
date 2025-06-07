@@ -36,6 +36,7 @@ public class StyleExtractor {
      */
     public static String getAnsiColor(String cssColor) {
         return switch (cssColor.toLowerCase()) {
+            case "reset" -> "\u001B[0m";
             case "black" -> "\u001B[30m";
             case "red" -> "\u001B[31m";
             case "green" -> "\u001B[32m";
