@@ -33,7 +33,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Builder
 @Document(collection = "icona")
-//@IReset()
+@IReset()
 @IEntity(sortProperty = "ordine", singularName = "icona", pluralName = "Icone")
 public class IconaEntity extends AbstractEntity {
 
