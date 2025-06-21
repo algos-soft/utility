@@ -3,8 +3,10 @@ package it.algos.utility.wamicona;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import it.algos.vbase.enumeration.RisultatoReset;
 import it.algos.vbase.service.ModuloService;
+import it.algos.wam24.modules.funzione.FunzioneEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -79,7 +81,11 @@ public class IconaService extends ModuloService<IconaEntity> {
     }
 
     public RisultatoReset resetOnly(MongoTemplate mongoTemplate) {
-        deleteAll();
+        if ( mongoTemplate.count(new Query(), IconaEntity.class)>0) {
+            return null;
+        }
+
+        mongoTemplate.remove(new Query(), IconaEntity.class);
 
         save(newEntity(VaadinIcon.AMBULANCE), mongoTemplate);
         save(newEntity(VaadinIcon.HEART), mongoTemplate);
