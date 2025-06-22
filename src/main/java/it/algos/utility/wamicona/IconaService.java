@@ -3,7 +3,6 @@ package it.algos.utility.wamicona;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import it.algos.vbase.enumeration.RisultatoReset;
 import it.algos.vbase.service.ModuloService;
-import it.algos.wam24.modules.funzione.FunzioneEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
