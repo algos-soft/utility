@@ -1,4 +1,4 @@
-package it.algos.utility.wamicona;
+package it.algos.utility.icona;
 
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.combobox.ComboBox;

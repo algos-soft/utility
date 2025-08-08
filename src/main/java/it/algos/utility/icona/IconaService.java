@@ -1,4 +1,4 @@
-package it.algos.utility.wamicona;
+package it.algos.utility.icona;
 
 import com.vaadin.flow.component.icon.VaadinIcon;
 import it.algos.vbase.enumeration.RisultatoReset;

@@ -1,4 +1,4 @@
-package it.algos.utility.wamicona;
+package it.algos.utility.icona;
 
 import com.vaadin.flow.router.*;
 import it.algos.vbase.annotation.IView;

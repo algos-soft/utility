@@ -1,4 +1,4 @@
-package it.algos.utility.wamicona;
+package it.algos.utility.icona;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vaadin.flow.component.Component;

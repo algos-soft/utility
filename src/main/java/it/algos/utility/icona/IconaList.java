@@ -1,4 +1,4 @@
-package it.algos.utility.wamicona;
+package it.algos.utility.icona;
 
 import it.algos.vbase.annotation.IList;
 import it.algos.vbase.constant.Bottone;
