@@ -15,6 +15,7 @@ import it.algos.vbase.service.AnnotationService;
 import it.algos.vbase.service.ModuloService;
 import it.algos.vbase.service.ReflectionService;
 import it.algos.vbase.service.TextService;
+import it.algos.vbase.ui.wrapper.ASpan;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -64,9 +65,9 @@ public class UtilityService {
     @Value("${algos.project.modulo}")
     protected String projectName;
     @Autowired
-    private WrapTaskFactory wrapTaskFactory;
-    @Autowired
     CronService cronService;
+    @Autowired
+    private WrapTaskFactory wrapTaskFactory;
     @Autowired
     private MongoTemplateProvider mongoTemplateProvider;
     @Value("${algos.project.boot.qualifier}")
@@ -185,7 +186,7 @@ public class UtilityService {
             final String description = pref.getDescrizione();  // Made final
             final String status = pref.is() ? "acceso" : "spento";  // Made final
             final int durata = getDurata(method);  // Made final
-            String message = String.format("%s (%s) - %s [%s] (in %s)", methodName, status, description, finalCron, durata);
+            String message = String.format("%s (%s) - %s [%s]", methodName, status, description, finalCron);
             return message;
         });
     }
@@ -235,7 +236,8 @@ public class UtilityService {
 
         if (optPref.isPresent()) {
             IPref pref = optPref.get();  // Estrai l'oggetto da Optional
-            String sigla = pref.getKeyCode();  // Made final
+//            String sigla = pref.getKeyCode();
+            String sigla = textService.primaMaiuscola(method.getName());
             boolean masterEnabled = Pref.taskMaster.is();
             boolean taskEnabled = pref.is();
             String description = pref.getDescrizione();
@@ -321,6 +323,22 @@ public class UtilityService {
 
         return info;
     }
+
+    public ASpan spanList(@NonNull Method method) {
+        ASpan span = null;
+        Optional<WrapTask> optWrapTask;
+
+        optWrapTask = getWrapTask(method);
+        if (optWrapTask.isPresent()) {
+            String testo = optWrapTask.get().infoList();
+            span = ASpan.text(testo);
+        } else {
+            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
+        }
+
+        return span;
+    }
+
 
     private String[] getColore(int pos) {
         TypeColor color = TypeColor.values()[pos];

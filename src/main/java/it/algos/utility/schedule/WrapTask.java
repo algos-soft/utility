@@ -115,13 +115,12 @@ public class WrapTask {
     }
 
     public String infoList() {
-        String message = "Task " + description + SPAZIO;
+        String message = sigla + SPAZIO + description + SPAZIO;
         boolean flag = masterEnabled && taskEnabled;
-        String status = flag ? "<span style=\"color: red;\">accesa</span>" : "<span style=\"color: blue;\">spenta</span>";
+        String status = flag ? "<span style=\"color: red;font-weight:bold\">accesa</span>" : "<span style=\"color: blue;font-weight:bold\">spenta</span>";
         message += "[" + status + SPAZIO + cronSpringDesc + "]";
         return message;
     }
-
 
     // Metodo di utilità per verificare se la task è effettivamente eseguibile
     public boolean isExecutable() {
@@ -131,7 +130,8 @@ public class WrapTask {
     public String getStatus() {
         String statoGlobale = masterEnabled ? "abilitate" : "disabilitate";
         String statoTask = taskEnabled ? "acceso" : "spento";
-        return String.format("(%s/%s)", statoGlobale, statoTask);
+//        return String.format("(%s/%s)", statoGlobale, statoTask);
+        return masterEnabled && taskEnabled ? "(accesa)" : "(spenta)";
     }
 
 }
