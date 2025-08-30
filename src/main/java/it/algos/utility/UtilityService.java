@@ -236,8 +236,8 @@ public class UtilityService {
 
         if (optPref.isPresent()) {
             IPref pref = optPref.get();  // Estrai l'oggetto da Optional
-//            String sigla = pref.getKeyCode();
-            String sigla = textService.primaMaiuscola(method.getName());
+            String sigla = pref.getKeyCode();
+//            String sigla = textService.primaMaiuscola(method.getName());
             boolean masterEnabled = Pref.taskMaster.is();
             boolean taskEnabled = pref.is();
             String description = pref.getDescrizione();
