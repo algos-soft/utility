@@ -1,6 +1,7 @@
 package it.algos.utility.schedule;
 
 import it.algos.vbase.service.HtmlService;
+import it.algos.vbase.service.TextService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +11,13 @@ import static it.algos.vbase.boot.BaseCost.VUOTA;
 public class WrapTaskFactory {
 
     private final CronService cronService;
+    private final TextService textService;
     private final HtmlService htmlService;
 
     @Autowired
-    public WrapTaskFactory(CronService cronService, HtmlService htmlService) {
+    public WrapTaskFactory(CronService cronService, TextService textService, HtmlService htmlService) {
         this.cronService = cronService;
+        this.textService = textService;
         this.htmlService = htmlService;
     }
 
@@ -30,6 +33,7 @@ public class WrapTaskFactory {
         // Passiamo il cronService insieme agli altri parametri
         return new WrapTask(
                 cronService,  // Prima il servizio iniettato
+                textService,  // Prima il servizio iniettato
                 htmlService,  // Prima il servizio iniettato
                 sigla != null ? sigla : VUOTA,
                 masterEnabled,
@@ -93,6 +97,7 @@ public class WrapTaskFactory {
         public WrapTask build() {
             return new WrapTask(
                     cronService,
+                    textService,// La dipendenza Spring viene dalla factory
                     htmlService,// La dipendenza Spring viene dalla factory
                     sigla,
                     masterEnabled,

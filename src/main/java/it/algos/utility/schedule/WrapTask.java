@@ -6,6 +6,7 @@ import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
 import it.algos.vbase.service.HtmlService;
+import it.algos.vbase.service.TextService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
@@ -19,6 +20,7 @@ public class WrapTask {
     private static final String TASK = "task";
 
     private final CronService cronService;
+    private final TextService textService;
     private final HtmlService htmlService;
 
     @Getter
@@ -57,6 +59,7 @@ public class WrapTask {
 
     public WrapTask(
             CronService cronService,
+            TextService textService,
             HtmlService htmlService,// Dipendenza Spring come primo parametro
             String sigla,
             boolean masterEnabled,
@@ -66,6 +69,7 @@ public class WrapTask {
             String cronSpring,
             int durataTotaleMinuti) {
         this.cronService = cronService;
+        this.textService = textService;
         this.htmlService = htmlService;
         this.sigla = sigla;
         this.masterEnabled = masterEnabled;
@@ -118,7 +122,7 @@ public class WrapTask {
     }
 
     public String infoList() {
-        String task = htmlService.bold(sigla);
+        String task = htmlService.bold(textService.primaMaiuscola(sigla));
         String message = task + SPAZIO + PARENTESI_TONDA_INI + description + PARENTESI_TONDA_END + SPAZIO;
         boolean flag = masterEnabled && taskEnabled;
         String status = flag ? htmlService.rosso("accesa") : htmlService.blue("spenta");
