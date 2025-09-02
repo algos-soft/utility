@@ -5,20 +5,21 @@ import com.cronutils.model.Cron;
 import com.cronutils.model.CronType;
 import com.cronutils.model.definition.CronDefinitionBuilder;
 import com.cronutils.parser.CronParser;
+import it.algos.vbase.service.HtmlService;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
 
 import java.util.Locale;
 
-import static it.algos.vbase.boot.BaseCost.SPAZIO;
-import static it.algos.vbase.boot.BaseCost.VUOTA;
+import static it.algos.vbase.boot.BaseCost.*;
 
 public class WrapTask {
 
     private static final String TASK = "task";
 
     private final CronService cronService;
+    private final HtmlService htmlService;
 
     @Getter
     public boolean masterEnabled;
@@ -55,7 +56,8 @@ public class WrapTask {
 
 
     public WrapTask(
-            CronService cronService,  // Dipendenza Spring come primo parametro
+            CronService cronService,
+            HtmlService htmlService,// Dipendenza Spring come primo parametro
             String sigla,
             boolean masterEnabled,
             boolean taskEnabled,
@@ -64,6 +66,7 @@ public class WrapTask {
             String cronSpring,
             int durataTotaleMinuti) {
         this.cronService = cronService;
+        this.htmlService = htmlService;
         this.sigla = sigla;
         this.masterEnabled = masterEnabled;
         this.taskEnabled = taskEnabled;
@@ -115,9 +118,11 @@ public class WrapTask {
     }
 
     public String infoList() {
-        String message = sigla + SPAZIO + description + SPAZIO;
+        String task = htmlService.bold(sigla);
+        String message = task + SPAZIO + PARENTESI_TONDA_INI + description + PARENTESI_TONDA_END + SPAZIO;
         boolean flag = masterEnabled && taskEnabled;
-        String status = flag ? "<span style=\"color: red;font-weight:bold\">accesa</span>" : "<span style=\"color: blue;font-weight:bold\">spenta</span>";
+        String status = flag ? htmlService.rosso("accesa") : htmlService.blue("spenta");
+        status = htmlService.bold(status);
         message += "[" + status + SPAZIO + cronSpringDesc + "]";
         return message;
     }
