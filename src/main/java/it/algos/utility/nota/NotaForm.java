@@ -13,7 +13,6 @@ import it.algos.vbase.field.ADateField;
 import it.algos.vbase.field.ATextField;
 import it.algos.vbase.form.DefaultForm;
 import it.algos.vbase.mongo.MongoTemplateProvider;
-import it.algos.vbase.service.LoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -28,9 +27,6 @@ public class NotaForm extends DefaultForm<NotaEntity> {
 
     @Autowired
     protected MongoTemplateProvider mongoTemplateProvider;
-
-    @Autowired
-    protected LoggerService logger;
 
 
     public NotaForm(NotaEntity bean) {
