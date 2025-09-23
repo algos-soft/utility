@@ -254,26 +254,6 @@ public class StyleExtractor {
         return optSpan.isPresent() ? optSpan.get().text() : VUOTA;
     }
 
-//    public static void test() {
-//        // Creazione di un esempio di layout
-//        FlexLayout layout = new FlexLayout();
-//
-//        // Aggiungi componenti con stili
-//        FlexComponent div1 = new FlexLayout();
-//        div1.getElement().setText("Esempio testo 1");
-//        div1.getStyle().set("font-weight", "bold").set("font-size", "16px");
-//
-//        FlexComponent div2 = new FlexLayout();
-//        div2.getElement().setText("Esempio testo 2");
-//        div2.getStyle().set("font-style", "italic").set("line-height", "1.5");
-//
-//        layout.add((Component) div1, (Component) div2);
-//
-//        // Estrarre e stampare gli stili
-//        Map<Component, Map<String, String>> stylesMap = extractStyles(layout);
-//        printStyles(stylesMap);
-//    }
-
     /**
      * Estrae il valore di una proprietà CSS da una stringa di stile inline.
      *

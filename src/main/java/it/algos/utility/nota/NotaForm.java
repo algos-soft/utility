@@ -64,7 +64,7 @@ public class NotaForm extends DefaultForm<NotaEntity> {
         terzaRiga.setAlignItems(Alignment.BASELINE);
         terzaRiga.setWidthFull();
         field = getField("fatto");
-        field.getElement().getStyle().set("margin-top", "12px");
+        field.getElement().getStyle().set("margin-top", "0.75rem");
         terzaRiga.add(field);
 
         if (!newRecord && bean.isFatto()) {

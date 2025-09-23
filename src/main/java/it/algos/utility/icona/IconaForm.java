@@ -110,8 +110,8 @@ public class IconaForm extends DefaultForm<IconaEntity> {
     // Metodo per creare un'icona a partire da un'istanza di IconaEntity
     private Icon creaIcona(VaadinIcon vaadinIcon) {
         Icon icon = vaadinIcon.create();
-        icon.setSize("20px");
-        icon.getStyle().set("margin-right", "8px");
+        icon.setSize("1.25rem");
+        icon.getStyle().set("margin-right", "0.5rem");
         icon.getStyle().set("color", "blue");
         return icon;
     }

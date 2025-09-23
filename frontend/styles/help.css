@@ -1,11 +1,11 @@
 
 /* Sovrascrivi l'indentazione per i livelli della TreeGrid */
 :root {
-    --vaadin-grid-tree-toggle-level-offset: 4px; /* Imposta questo valore come desiderato */
+    --vaadin-grid-tree-toggle-level-offset: 0.25rem; /* Imposta questo valore come desiderato */
 }
 
 .treegrid-indent {
-    padding-left: 4px !important; /* Imposta questo valore come desiderato */
+    padding-left: 0.25rem !important; /* Imposta questo valore come desiderato */
 }
 
 

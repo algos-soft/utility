@@ -67,8 +67,8 @@ public class IconaEntity extends AbstractEntity {
 
         if (vaadinIcon != null) {
             Icon icon = vaadinIcon.create();
-            icon.setSize("20px");
-            icon.getStyle().set("margin-right", "8px");
+            icon.setSize("1.25rem");
+            icon.getStyle().set("margin-right", "0.5rem");
             icon.getStyle().set("color", "blue");
             span.add(icon);
         }
@@ -81,10 +81,10 @@ public class IconaEntity extends AbstractEntity {
         Span tondo = new Span();
         tondo.getStyle()
                 .set("display", "inline-block")
-                .set("width", "20px")
-                .set("height", "20px")
+                .set("width", "1.25rem")
+                .set("height", "1.25rem")
                 .set("background-color", "blue") // Usa il nome del colore come background
-                .set("margin-right", "8px")
+                .set("margin-right", "0.5rem")
                 .set("border-radius", "50%"); // Rende il quadrato un cerchio
 
         return new ComboComponent(tondo, "html");

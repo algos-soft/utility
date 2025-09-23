@@ -1,5 +1,5 @@
 .hello-world-view {
-  padding: 2px;
+  padding: 0.12rem;
   box-sizing: border-box;
   display: block;
   position: relative;
@@ -11,13 +11,13 @@
   --cv-dropzone-bg-color: hsl(var(--cv-blue) / 0.2);
   --cv-droptarget-border-color: hsl(var(--cv-purple) / 1);
   --cv-droptarget-bg-color: hsl(var(--cv-purple) / 0.4);
-  --cv-stripe-width: 1.5px;
-  --cv-stripe-gap: 9px;
+  --cv-stripe-width: 0.1rem;
+  --cv-stripe-gap: 0.55rem;
   --cv-stripe-color: hsl(var(--cv-blue) / 0.2);
   --cv-layout-border-color: var(--lumo-contrast-40pct);
   --cv-checkerboard-color1: hsl(0 0% 0% / 0.05);
   --cv-checkerboard-color2: hsl(0 0% 100% / 0.05);
-  --cv-checkerboard-size: 16px;
+  --cv-checkerboard-size: 1rem;
 }
 
 .hello-world-view[dragging] {
@@ -40,27 +40,27 @@
 
 /* Apply some default gap and padding to layouts that don't have inline styles for them while dragging. */
 .hello-world-view[dragging] .layout:not([style*='gap:']) {
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .hello-world-view[dragging] .layout:not([style*='padding:'], [empty]) {
-  padding: 8px;
+  padding: 0.5rem;
 }
 
 .hello-world-view .cover-overlay {
   position: absolute;
-  border-radius: 1px;
+  border-radius: 0.06rem;
 }
 
 .hello-world-view:not([starting-drag]) .cover-overlay.editable-hovering {
-  outline: 2px solid hsl(var(--cv-blue) / 1);
-  outline-offset: -1px;
+  outline: 0.125rem solid hsl(var(--cv-blue) / 1);
+  outline-offset: -0.06rem;
 }
 
 .hello-world-view:not([starting-drag]) .cover-overlay.editable-editing {
-  outline: 1px solid hsl(var(--cv-blue) / 1);
-  outline-offset: -1px;
-  box-shadow: inset 0 0 0 2px var(--lumo-base-color);
+  outline: 0.06rem solid hsl(var(--cv-blue) / 1);
+  outline-offset: -0.06rem;
+  box-shadow: inset 0 0 0 0.125rem var(--lumo-base-color);
 }
 
 .hello-world-view .overlays,
@@ -80,14 +80,14 @@
 .hello-world-view .drop-zone {
   position: absolute;
   box-sizing: border-box;
-  border-radius: 1px;
-  min-height: 10px;
-  min-width: 10px;
+  border-radius: 0.06rem;
+  min-height: 0.62rem;
+  min-width: 0.62rem;
 }
 
 .hello-world-view[dragging] .drop-zone:not([empty-layout]) {
-  outline: 1px dashed var(--cv-dropzone-border-color);
-  outline-offset: -2px;
+  outline: 0.06rem dashed var(--cv-dropzone-border-color);
+  outline-offset: -0.12rem;
   background-color: var(--cv-dropzone-bg-color);
 }
 
@@ -103,9 +103,9 @@
 
 .hello-world-view[dragging] .drop-zone[drag-over] {
   background: var(--cv-droptarget-bg-color);
-  outline: 1px solid var(--cv-droptarget-border-color);
-  outline-offset: -1px;
-  box-shadow: inset 0 0 0 2px var(--lumo-base-color);
+  outline: 0.12rem solid var(--cv-droptarget-border-color);
+  outline-offset: -0.12rem;
+  box-shadow: inset 0 0 0 0.24rem var(--lumo-base-color);
 }
 
 .drop-zone[empty-layout] {
@@ -113,12 +113,12 @@
 }
 
 .hello-world-view:not([readonly]) .layout[empty],vaadin-form-layout[empty] {
-  border-radius: 1px;
+  border-radius: 0.12rem;
   background: repeating-conic-gradient(var(--cv-checkerboard-color1) 0% 25%, var(--cv-checkerboard-color2) 0% 50%) 50% /
     var(--cv-checkerboard-size) var(--cv-checkerboard-size);
   background-clip: content-box;
-  outline: 1px dashed var(--cv-layout-border-color);
-  outline-offset: -2px;
+  outline: 0.12rem dashed var(--cv-layout-border-color);
+  outline-offset: -0.24rem;
 }
 .hello-world-view[dragging]:not([readonly]) vaadin-form-layout[empty]{
   background: transparent;
@@ -128,8 +128,8 @@
 .hello-world-view .layout[empty]::before {
   content: '';
   display: block;
-  min-width: 64px;
-  min-height: 32px;
+  min-width: 4rem;
+  min-height: 2rem;
 }
 
 .hello-world-view[readonly] .drop-zones,
@@ -149,18 +149,18 @@
 
 
 .hello-world-view[dragging] vaadin-form-layout {
-  padding: 8px;
+  padding: 0.5rem;
 }
 .hello-world-view vaadin-form-layout[empty]::before {
   content: '';
   display: block;
-  min-width: 64px;
-  min-height: 32px;
+  min-width: 4rem;
+  min-height: 2rem;
 }
 
 .hello-world-view[dragging] vaadin-form-layout:not([empty])::after {
   content: '';
   display: block;
-  min-width: 64px;
-  min-height: 32px;
+  min-width: 4rem;
+  min-height: 2rem;
 }
