@@ -9,7 +9,6 @@ import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import jakarta.annotation.security.RolesAllowed;
 
-import static it.algos.vbase.security.Roles.ROLE_SUPERUSER;
 
 /**
  * Project base24
@@ -22,10 +21,10 @@ import static it.algos.vbase.security.Roles.ROLE_SUPERUSER;
  */
 @Route(value = "nota", layout = MainLayout.class)
 @IView(menuGroup = Gruppo.UTILITY, menuName = "Note", lumo = LumoIcon.BAR_CHART, vaadin = VaadinIcon.CHECK)
-@RolesAllowed(ROLE_SUPERUSER)
+@RolesAllowed("ROLE_SUPERUSER")
 public class NotaView extends AView {
 
-    final public static String[] roles = {ROLE_SUPERUSER};
+//    final public static String[] roles = {ROLE_SUPERUSER};
 
 
     NotaView(NotaService moduloCrudService) {
