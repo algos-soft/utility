@@ -34,6 +34,8 @@ import org.springframework.security.core.Authentication;
 import java.util.ArrayList;
 import java.util.List;
 
+import static it.algos.vbase.security.Roles.ROLE_SUPERUSER;
+
 /**
  * Custom authentication service used to authenticate the users against
  * a user database specific to the application.
@@ -49,7 +51,7 @@ public class UtilityAuthenticationService implements IAuthenticationService {
 
         // db access to be implemented...
         final List<GrantedAuthority> grantedAuths = new ArrayList<>();
-        grantedAuths.add(new SimpleGrantedAuthority("ROLE_SUPERUSER"));
+        grantedAuths.add(new SimpleGrantedAuthority(ROLE_SUPERUSER));
         final UserDetails principal = new User(name, password, grantedAuths);
 
         return new UsernamePasswordAuthenticationToken(principal, password, grantedAuths);
