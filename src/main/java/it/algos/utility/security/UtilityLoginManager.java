@@ -12,7 +12,6 @@ import it.algos.vbase.enumeration.TypeColor;
 import it.algos.vbase.security.LoginManager;
 import it.algos.vbase.ui.wrapper.ASpan;
 
-//import static it.algos.wam24.boot.WamCost.TEMP_USER;
 
 /**
  * Component responsibilities
