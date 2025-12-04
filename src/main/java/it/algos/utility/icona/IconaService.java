@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Project wam24
@@ -86,25 +87,26 @@ public class IconaService extends ModuloService<IconaEntity> {
 
         mongoTemplate.remove(new Query(), IconaEntity.class);
 
-        save(newEntity(VaadinIcon.AMBULANCE), mongoTemplate);
-        save(newEntity(VaadinIcon.HEART), mongoTemplate);
-        save(newEntity(VaadinIcon.MEDAL), mongoTemplate);
-        save(newEntity(VaadinIcon.STETHOSCOPE), mongoTemplate);
-        save(newEntity(VaadinIcon.USER), mongoTemplate);
-        save(newEntity(VaadinIcon.USER_STAR), mongoTemplate);
-        save(newEntity(VaadinIcon.TRUCK), mongoTemplate);
-        save(newEntity(VaadinIcon.MALE), mongoTemplate);
-        save(newEntity(VaadinIcon.FEMALE), mongoTemplate);
-        save(newEntity(VaadinIcon.PHONE), mongoTemplate);
-        save(newEntity(VaadinIcon.DOCTOR), mongoTemplate);
-        save(newEntity(VaadinIcon.SPECIALIST), mongoTemplate);
-        save(newEntity(VaadinIcon.BED), mongoTemplate);
-        save(newEntity(VaadinIcon.OFFICE), mongoTemplate);
-        save(newEntity(VaadinIcon.BRIEFCASE), mongoTemplate);
-        save(newEntity(VaadinIcon.STAR), mongoTemplate);
-        save(newEntity(VaadinIcon.USER_HEART), mongoTemplate);
-        save(newEntity(VaadinIcon.USER_CLOCK), mongoTemplate);
-        save(newEntity(VaadinIcon.USER_CHECK), mongoTemplate);
+        AtomicInteger counter = new AtomicInteger(1);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.AMBULANCE), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.HEART), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.MEDAL), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.STETHOSCOPE), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.USER), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.USER_STAR), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.TRUCK), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.MALE), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.FEMALE), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.PHONE), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.DOCTOR), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.SPECIALIST), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.BED), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.OFFICE), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.BRIEFCASE), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.STAR), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.USER_HEART), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.USER_CLOCK), mongoTemplate);
+        save(newEntity(counter.getAndIncrement(),VaadinIcon.USER_CHECK), mongoTemplate);
 
         return null;
     }
