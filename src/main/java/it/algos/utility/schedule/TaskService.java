@@ -6,10 +6,7 @@ import it.algos.vbase.modules.preferenza.PreferenzaService;
 import it.algos.vbase.mongo.MongoTemplateProvider;
 import it.algos.vbase.pref.IPref;
 import it.algos.vbase.pref.Pref;
-import it.algos.vbase.service.AnnotationService;
-import it.algos.vbase.service.ModuloService;
-import it.algos.vbase.service.ReflectionService;
-import it.algos.vbase.service.TextService;
+import it.algos.vbase.service.*;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -68,6 +65,8 @@ public class TaskService {
 
     @Value("${algos.project.modulo}")
     protected String projectName;
+    @Autowired
+    private TaskDescriptorService taskDescriptorService;
 
 
     public void resetStartup(boolean deleteAllBefore, boolean mainProjectOnly) {
@@ -141,15 +140,15 @@ public class TaskService {
         return Optional.ofNullable(method.getAnnotation(annotation));
     }
 
-    public Optional<String> getPrefCode(@NonNull Method method) {
-        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
-        return annotation.map(ASchedule::prefCode).filter(StringUtils::hasText);
-    }
-
-    public int getDurata(@NonNull Method method) {
-        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
-        return annotation.isPresent() ? annotation.get().durataMinuti() : 0;
-    }
+//    public Optional<String> getPrefCode(@NonNull Method method) {
+//        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
+//        return annotation.map(ASchedule::prefCode).filter(StringUtils::hasText);
+//    }
+//
+//    public int getDurata(@NonNull Method method) {
+//        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
+//        return annotation.isPresent() ? annotation.get().durataMinuti() : 0;
+//    }
 
     public Optional<String> getCron(@NonNull Method method) {
         Optional<Scheduled> annotation = getOptionalAnnotation(method, Scheduled.class);
@@ -182,7 +181,7 @@ public class TaskService {
         return optPref.map(pref -> {
             final String description = pref.getDescrizione();  // Made final
             final String status = pref.is() ? "acceso" : "spento";  // Made final
-            final int durata = getDurata(method);  // Made final
+            final int durata = 0;  // Made final
             String message = String.format("%s (%s) - %s [%s] (in %s)", methodName, status, description, finalCron, durata);
             return message;
         });
@@ -201,7 +200,7 @@ public class TaskService {
         return optPref.map(pref -> {
             final String description = pref.getDescrizione();  // Made final
             final String status = pref.is() ? "acceso" : "spento";  // Made final
-            final int durata = getDurata(method);  // Made final
+            final int durata = 0;  // Made final
             String message = String.format("%s (%s) - %s [%s] (in %s)", methodName, status, description, finalCron, durata);
             return message;
         });
@@ -210,7 +209,7 @@ public class TaskService {
 
     public Optional<IPref> getPref(@NonNull Method method) {
         Optional<IPref> optPref = Optional.empty();
-        Optional<String> optPrefCode = this.getPrefCode(method);
+        Optional<String> optPrefCode = taskDescriptorService.getCron(method);
 
         try {
             if (optPrefCode.isPresent()) {
@@ -228,7 +227,7 @@ public class TaskService {
     public Optional<WrapTask> getWrapTask(@NonNull Method method) {
         String cronText = this.getCronSpring(method);
         boolean scheduled = textService.isValid(cronText);
-        int durata = getDurata(method);
+        int durata = 0;
         Optional<IPref> optPref = getPref(method);
 
         if (optPref.isPresent()) {

@@ -1,20 +1,17 @@
 package it.algos.utility;
 
 import com.vaadin.flow.spring.annotation.SpringComponent;
-import it.algos.utility.schedule.ASchedule;
 import it.algos.utility.schedule.CronService;
 import it.algos.utility.schedule.WrapTask;
 import it.algos.utility.schedule.WrapTaskFactory;
+import it.algos.vbase.annotation.ITaskDescription;
 import it.algos.vbase.boot.BaseBoot;
 import it.algos.vbase.enumeration.TypeColor;
 import it.algos.vbase.modules.preferenza.PreferenzaService;
 import it.algos.vbase.mongo.MongoTemplateProvider;
 import it.algos.vbase.pref.IPref;
 import it.algos.vbase.pref.Pref;
-import it.algos.vbase.service.AnnotationService;
-import it.algos.vbase.service.ModuloService;
-import it.algos.vbase.service.ReflectionService;
-import it.algos.vbase.service.TextService;
+import it.algos.vbase.service.*;
 import it.algos.vbase.ui.wrapper.ASpan;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +67,8 @@ public class UtilityService {
     private WrapTaskFactory wrapTaskFactory;
     @Autowired
     private MongoTemplateProvider mongoTemplateProvider;
+    @Autowired
+    private TaskDescriptorService taskDescriptorService;
     @Value("${algos.project.boot.qualifier}")
     private String bootClazzQualifier;
 
@@ -144,15 +143,15 @@ public class UtilityService {
         return Optional.ofNullable(method.getAnnotation(annotation));
     }
 
-    public Optional<String> getPrefCode(@NonNull Method method) {
-        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
-        return annotation.map(ASchedule::prefCode).filter(StringUtils::hasText);
-    }
-
-    public int getDurata(@NonNull Method method) {
-        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
-        return annotation.isPresent() ? annotation.get().durataMinuti() : 0;
-    }
+//    public Optional<String> getPrefCode(@NonNull Method method) {
+//        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
+//        return annotation.map(ASchedule::prefCode).filter(StringUtils::hasText);
+//    }
+//
+//    public int getDurata(@NonNull Method method) {
+//        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
+//        return annotation.isPresent() ? annotation.get().durataMinuti() : 0;
+//    }
 
     public Optional<String> getCron(@NonNull Method method) {
         Optional<Scheduled> annotation = getOptionalAnnotation(method, Scheduled.class);
@@ -172,24 +171,24 @@ public class UtilityService {
     }
 
 
-    public Optional<String> getCronInfoSpring(@NonNull Method method) {
-        final String methodName = method.getName();  // Made final
-
-        String cronText = this.getCronSpring(method);
-        cronText = textService.isEmpty(cronText) ? "not scheduled" : cronText;
-
-        Optional<IPref> optPref = getPref(method);
-
-        // Use ifPresent to avoid casting and ensure variables are effectively final
-        String finalCron = cronText;
-        return optPref.map(pref -> {
-            final String description = pref.getDescrizione();  // Made final
-            final String status = pref.is() ? "acceso" : "spento";  // Made final
-            final int durata = getDurata(method);  // Made final
-            String message = String.format("%s (%s) - %s [%s]", methodName, status, description, finalCron);
-            return message;
-        });
-    }
+//    public Optional<String> getCronInfoSpring(@NonNull Method method) {
+//        final String methodName = method.getName();  // Made final
+//
+//        String cronText = this.getCronSpring(method);
+//        cronText = textService.isEmpty(cronText) ? "not scheduled" : cronText;
+//
+//        Optional<IPref> optPref = getPref(method);
+//
+//        // Use ifPresent to avoid casting and ensure variables are effectively final
+//        String finalCron = cronText;
+//        return optPref.map(pref -> {
+//            final String description = pref.getDescrizione();  // Made final
+//            final String status = pref.is() ? "acceso" : "spento";  // Made final
+//            final int durata = getDurata(method);  // Made final
+//            String message = String.format("%s (%s) - %s [%s]", methodName, status, description, finalCron);
+//            return message;
+//        });
+//    }
 
     public Optional<String> getCronInfoDesc(@NonNull Method method) {
         final String methodName = method.getName();  // Made final
@@ -204,7 +203,7 @@ public class UtilityService {
         return optPref.map(pref -> {
             final String description = pref.getDescrizione();  // Made final
             final String status = pref.is() ? "acceso" : "spento";  // Made final
-            final int durata = getDurata(method);  // Made final
+            final int durata = 0;  // Made final
             String message = String.format("%s (%s) - %s [%s] (in circa %s minuti)", methodName, status, description, finalCron, durata);
             return message;
         });
@@ -213,7 +212,7 @@ public class UtilityService {
 
     public Optional<IPref> getPref(@NonNull Method method) {
         Optional<IPref> optPref = Optional.empty();
-        Optional<String> optPrefCode = this.getPrefCode(method);
+        Optional<String> optPrefCode = taskDescriptorService.getCron(method);
 
         try {
             if (optPrefCode.isPresent()) {
@@ -231,7 +230,7 @@ public class UtilityService {
     public Optional<WrapTask> getWrapTask(@NonNull Method method) {
         Optional<String> optCron = this.getCron(method);
         boolean scheduled = optCron.isPresent();
-        int durata = getDurata(method);
+        int durata = 0;
         Optional<IPref> optPref = getPref(method);
 
         if (optPref.isPresent()) {
@@ -381,18 +380,18 @@ public class UtilityService {
         return annotatedMethods;
     }
 
-    /**
-     * Ordine casuale da annotation <br>
-     * Costruisce ordine alfabetico <br>
-     */
-    public List<Method> getScheduledMethods() {
-        List<Method> methods = new ArrayList<>(annotationService.getAnnotatedMethods(ASchedule.class));
-        methods.sort(Comparator
-                .comparing((Method m) -> m.getDeclaringClass().getName())
-                .thenComparing(Method::getName));
-
-        return methods;
-    }
+//    /**
+//     * Ordine casuale da annotation <br>
+//     * Costruisce ordine alfabetico <br>
+//     */
+//    public List<Method> getScheduledMethods() {
+//        List<Method> methods = new ArrayList<>(annotationService.getAnnotatedMethods(ASchedule.class));
+//        methods.sort(Comparator
+//                .comparing((Method m) -> m.getDeclaringClass().getName())
+//                .thenComparing(Method::getName));
+//
+//        return methods;
+//    }
 
 
     /**
@@ -411,7 +410,7 @@ public class UtilityService {
         for (Class clazz : views) {
             modulo = reflectionService.getModulo(clazz);
             if (modulo != null) {
-                methodsClazz = getAnnotatedClazzMethods(AopProxyUtils.ultimateTargetClass(modulo), ASchedule.class);
+                methodsClazz = getAnnotatedClazzMethods(AopProxyUtils.ultimateTargetClass(modulo), ITaskDescription.class);
                 methods.addAll(methodsClazz);
             }
         }
