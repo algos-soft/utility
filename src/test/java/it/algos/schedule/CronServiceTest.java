@@ -22,7 +22,6 @@ import java.util.stream.Stream;
 import static it.algos.vbase.boot.BaseCost.NULLO;
 import static it.algos.vbase.boot.BaseCost.VUOTA;
 import static java.lang.System.out;
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
