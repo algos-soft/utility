@@ -109,8 +109,12 @@ public class WrapTask {
     }
 
     private String info(String cronSpringText) {
-        String durata = durataTotaleMinuti < 1 ? "meno di 1 minuto" : durataTotaleMinuti + SPAZIO + "minuti";
-        return String.format("%s %s - %s [%s] (previsti %s)", sigla, getStatus(), description, scheduled ? cronSpringText : "not scheduled", durata);
+        if (durataTotaleMinuti == 0) {
+            return String.format("%s %s - %s [%s]", sigla, getStatus(), description, scheduled ? cronSpringText : "not scheduled");
+        } else {
+            String durata = durataTotaleMinuti + SPAZIO + "minuti";
+            return String.format("%s %s - %s [%s] (previsti %s)", sigla, getStatus(), description, scheduled ? cronSpringText : "not scheduled", durata);
+        }
     }
 
     public String infoCron() {

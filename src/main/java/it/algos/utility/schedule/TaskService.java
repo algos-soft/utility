@@ -253,26 +253,26 @@ public class TaskService {
     }
 
 
-    public List<WrapTask> getListWrapTask(@NonNull List<Method> methods) {
-        List<WrapTask> tasks = new ArrayList<>();
-        Optional<WrapTask> optTask;
-        WrapTask task;
-        int pos = 3; // esclude i primi colori bianco e nero
-        String[] colors;
-
-        for (Method method : methods) {
-            optTask = getWrapTask(method);
-            if (optTask.isPresent()) {
-                task = optTask.get();
-                colors = getColore(pos++);
-                task.setBackgroundColor(colors[0]);
-                task.setTextColor(colors[1]);
-                tasks.add(task);
-            }
-        }
-
-        return tasks;
-    }
+//    public List<WrapTask> getListWrapTask(@NonNull List<Method> methods) {
+//        List<WrapTask> tasks = new ArrayList<>();
+//        Optional<WrapTask> optTask;
+//        WrapTask task;
+//        int pos = 3; // esclude i primi colori bianco e nero
+//        String[] colors;
+//
+//        for (Method method : methods) {
+//            optTask = getWrapTask(method);
+//            if (optTask.isPresent()) {
+//                task = optTask.get();
+//                colors = getColore(pos++);
+//                task.setBackgroundColor(colors[0]);
+//                task.setTextColor(colors[1]);
+//                tasks.add(task);
+//            }
+//        }
+//
+//        return tasks;
+//    }
 
 
     public List<WrapTask> getScheduledListWrapTask(@NonNull List<Method> methods) {

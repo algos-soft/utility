@@ -13,6 +13,8 @@ import it.algos.vbase.pref.IPref;
 import it.algos.vbase.pref.Pref;
 import it.algos.vbase.service.*;
 import it.algos.vbase.ui.wrapper.ASpan;
+import it.algos.wiki24.backend.enumeration.WPref;
+import it.algos.wiki24.backend.service.AnnotationWikiService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -58,6 +60,8 @@ public class UtilityService {
     @Autowired
     public AnnotationService annotationService;
     @Autowired
+    public AnnotationWikiService annotationWikiService;
+    @Autowired
     public PreferenzaService preferenzaService;
     @Value("${algos.project.modulo}")
     protected String projectName;
@@ -71,6 +75,7 @@ public class UtilityService {
     private TaskDescriptorService taskDescriptorService;
     @Value("${algos.project.boot.qualifier}")
     private String bootClazzQualifier;
+
 
     public void resetStartup(boolean deleteAllBefore, boolean mainProjectOnly) {
         List<Class<? extends ModuloService>> listClazzService;
@@ -113,7 +118,6 @@ public class UtilityService {
         }
     }
 
-
     /**
      * @return all the methods annotated with a given annotation from a given class
      */
@@ -139,10 +143,6 @@ public class UtilityService {
         return method.isAnnotationPresent(annotation);
     }
 
-    public <T extends Annotation> Optional<T> getOptionalAnnotation(@NonNull Method method, @NonNull Class<T> annotation) {
-        return Optional.ofNullable(method.getAnnotation(annotation));
-    }
-
 //    public Optional<String> getPrefCode(@NonNull Method method) {
 //        Optional<ASchedule> annotation = getOptionalAnnotation(method, ASchedule.class);
 //        return annotation.map(ASchedule::prefCode).filter(StringUtils::hasText);
@@ -153,21 +153,13 @@ public class UtilityService {
 //        return annotation.isPresent() ? annotation.get().durataMinuti() : 0;
 //    }
 
+    public <T extends Annotation> Optional<T> getOptionalAnnotation(@NonNull Method method, @NonNull Class<T> annotation) {
+        return Optional.ofNullable(method.getAnnotation(annotation));
+    }
+
     public Optional<String> getCron(@NonNull Method method) {
         Optional<Scheduled> annotation = getOptionalAnnotation(method, Scheduled.class);
         return annotation.map(Scheduled::cron).filter(StringUtils::hasText);
-    }
-
-
-    public String getCronSpring(@NonNull Method method) {
-        String cronText = "not scheduled";
-        Optional<String> optCron = this.getCron(method);
-
-        if (optCron.isPresent()) {
-            cronText = cronService.info(optCron.get());
-        }
-
-        return cronText;
     }
 
 
@@ -190,6 +182,17 @@ public class UtilityService {
 //        });
 //    }
 
+    public String getCronSpring(@NonNull Method method) {
+        String cronText = "not scheduled";
+        Optional<String> optCron = this.getCron(method);
+
+        if (optCron.isPresent()) {
+            cronText = cronService.info(optCron.get());
+        }
+
+        return cronText;
+    }
+
     public Optional<String> getCronInfoDesc(@NonNull Method method) {
         final String methodName = method.getName();  // Made final
 
@@ -209,7 +212,6 @@ public class UtilityService {
         });
     }
 
-
     public Optional<IPref> getPref(@NonNull Method method) {
         Optional<IPref> optPref = Optional.empty();
         Optional<String> optPrefCode = taskDescriptorService.getCron(method);
@@ -226,8 +228,8 @@ public class UtilityService {
         return optPref;
     }
 
-
-    public Optional<WrapTask> getWrapTask(@NonNull Method method) {
+    @Deprecated
+    public Optional<WrapTask> getWrapTaskOld(@NonNull Method method) {
         Optional<String> optCron = this.getCron(method);
         boolean scheduled = optCron.isPresent();
         int durata = 0;
@@ -256,6 +258,38 @@ public class UtilityService {
         return Optional.empty();
     }
 
+    public Optional<WrapTask> getWrapTask(@NonNull Method method) {
+        Optional<String> optCron = getCron(method);
+
+        Optional<WPref> pref = annotationWikiService
+                .getPrefCode(method.getDeclaringClass(), method.getName())
+                .flatMap(WPref::getOptionalPref);
+
+        if (pref.isEmpty()) {
+            return Optional.empty();
+        }
+
+        WPref p = pref.get();
+
+        String sigla = textService.levaCodaDaPrimo(p.getKeyCode(), "Task");
+        sigla = textService.primaMaiuscola(sigla);
+
+        WrapTask wrap = wrapTaskFactory.builder()
+                .sigla(sigla)
+                .masterEnabled(Pref.taskMaster.is())
+                .taskEnabled(p.is())
+                .description(p.getDescrizione())
+                .scheduled(optCron.isPresent())
+                .cron(optCron.orElse(VUOTA))
+                .build();
+
+        return Optional.of(wrap);
+    }
+
+
+//    public Optional<WPref> getOptionalPref(String code) {
+//        return Optional.ofNullable(WPref.getPref(code));
+//    }
 
     public List<WrapTask> getListWrapTask(@NonNull List<Method> methods) {
         List<WrapTask> tasks = new ArrayList<>();
