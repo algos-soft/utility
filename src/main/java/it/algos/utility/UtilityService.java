@@ -13,8 +13,6 @@ import it.algos.vbase.pref.IPref;
 import it.algos.vbase.pref.Pref;
 import it.algos.vbase.service.*;
 import it.algos.vbase.ui.wrapper.ASpan;
-import it.algos.wiki24.backend.enumeration.WPref;
-import it.algos.wiki24.backend.service.AnnotationWikiService;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
@@ -59,8 +57,6 @@ public class UtilityService {
 
     @Autowired
     public AnnotationService annotationService;
-    @Autowired
-    public AnnotationWikiService annotationWikiService;
     @Autowired
     public PreferenzaService preferenzaService;
     @Value("${algos.project.modulo}")
@@ -258,119 +254,119 @@ public class UtilityService {
         return Optional.empty();
     }
 
-    public Optional<WrapTask> getWrapTask(@NonNull Method method) {
-        Optional<String> optCron = getCron(method);
-
-        Optional<WPref> pref = annotationWikiService
-                .getPrefCode(method.getDeclaringClass(), method.getName())
-                .flatMap(WPref::getOptionalPref);
-
-        if (pref.isEmpty()) {
-            return Optional.empty();
-        }
-
-        WPref p = pref.get();
-
-        String sigla = textService.levaCodaDaPrimo(p.getKeyCode(), "Task");
-        sigla = textService.primaMaiuscola(sigla);
-
-        WrapTask wrap = wrapTaskFactory.builder()
-                .sigla(sigla)
-                .masterEnabled(Pref.taskMaster.is())
-                .taskEnabled(p.is())
-                .description(p.getDescrizione())
-                .scheduled(optCron.isPresent())
-                .cron(optCron.orElse(VUOTA))
-                .build();
-
-        return Optional.of(wrap);
-    }
+//    public Optional<WrapTask> getWrapTask(@NonNull Method method) {
+//        Optional<String> optCron = getCron(method);
+//
+//        Optional<WPref> pref = annotationWikiService
+//                .getPrefCode(method.getDeclaringClass(), method.getName())
+//                .flatMap(WPref::getOptionalPref);
+//
+//        if (pref.isEmpty()) {
+//            return Optional.empty();
+//        }
+//
+//        WPref p = pref.get();
+//
+//        String sigla = textService.levaCodaDaPrimo(p.getKeyCode(), "Task");
+//        sigla = textService.primaMaiuscola(sigla);
+//
+//        WrapTask wrap = wrapTaskFactory.builder()
+//                .sigla(sigla)
+//                .masterEnabled(Pref.taskMaster.is())
+//                .taskEnabled(p.is())
+//                .description(p.getDescrizione())
+//                .scheduled(optCron.isPresent())
+//                .cron(optCron.orElse(VUOTA))
+//                .build();
+//
+//        return Optional.of(wrap);
+//    }
 
 
 //    public Optional<WPref> getOptionalPref(String code) {
 //        return Optional.ofNullable(WPref.getPref(code));
 //    }
 
-    public List<WrapTask> getListWrapTask(@NonNull List<Method> methods) {
-        List<WrapTask> tasks = new ArrayList<>();
-        Optional<WrapTask> optTask;
-        WrapTask task;
-        int pos = 3; // esclude i primi colori bianco e nero
-        String[] colors;
-
-        for (Method method : methods) {
-            optTask = getWrapTask(method);
-            if (optTask.isPresent()) {
-                task = optTask.get();
-                colors = getColore(pos++);
-                task.setBackgroundColor(colors[0]);
-                task.setTextColor(colors[1]);
-                tasks.add(task);
-            }
-        }
-
-        return tasks;
-    }
-
-
-    public List<WrapTask> getScheduledListWrapTask(@NonNull List<Method> methods) {
-        List<WrapTask> tasks = new ArrayList<>();
-        Optional<WrapTask> task;
-
-        for (Method method : methods) {
-            task = getWrapTask(method);
-            if (task.isPresent() && task.get().isScheduled()) {
-                tasks.add(task.get());
-            }
-        }
-
-        return tasks;
-    }
+//    public List<WrapTask> getListWrapTask(@NonNull List<Method> methods) {
+//        List<WrapTask> tasks = new ArrayList<>();
+//        Optional<WrapTask> optTask;
+//        WrapTask task;
+//        int pos = 3; // esclude i primi colori bianco e nero
+//        String[] colors;
+//
+//        for (Method method : methods) {
+//            optTask = getWrapTask(method);
+//            if (optTask.isPresent()) {
+//                task = optTask.get();
+//                colors = getColore(pos++);
+//                task.setBackgroundColor(colors[0]);
+//                task.setTextColor(colors[1]);
+//                tasks.add(task);
+//            }
+//        }
+//
+//        return tasks;
+//    }
 
 
-    public String infoCron(@NonNull Method method) {
-        String info = VUOTA;
-        Optional<WrapTask> optWrapTask;
+//    public List<WrapTask> getScheduledListWrapTask(@NonNull List<Method> methods) {
+//        List<WrapTask> tasks = new ArrayList<>();
+//        Optional<WrapTask> task;
+//
+//        for (Method method : methods) {
+//            task = getWrapTask(method);
+//            if (task.isPresent() && task.get().isScheduled()) {
+//                tasks.add(task.get());
+//            }
+//        }
+//
+//        return tasks;
+//    }
 
-        optWrapTask = getWrapTask(method);
-        if (optWrapTask.isPresent()) {
-            info = optWrapTask.get().infoText();
-        } else {
-            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
-        }
 
-        return info;
-    }
+//    public String infoCron(@NonNull Method method) {
+//        String info = VUOTA;
+//        Optional<WrapTask> optWrapTask;
+//
+//        optWrapTask = getWrapTask(method);
+//        if (optWrapTask.isPresent()) {
+//            info = optWrapTask.get().infoText();
+//        } else {
+//            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
+//        }
+//
+//        return info;
+//    }
 
 
-    public String infoList(@NonNull Method method) {
-        String info = VUOTA;
-        Optional<WrapTask> optWrapTask;
+//    public String infoList(@NonNull Method method) {
+//        String info = VUOTA;
+//        Optional<WrapTask> optWrapTask;
+//
+//        optWrapTask = getWrapTask(method);
+//        if (optWrapTask.isPresent()) {
+//            info = optWrapTask.get().infoList();
+//        } else {
+//            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
+//        }
+//
+//        return info;
+//    }
 
-        optWrapTask = getWrapTask(method);
-        if (optWrapTask.isPresent()) {
-            info = optWrapTask.get().infoList();
-        } else {
-            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
-        }
-
-        return info;
-    }
-
-    public ASpan spanList(@NonNull Method method) {
-        ASpan span = null;
-        Optional<WrapTask> optWrapTask;
-
-        optWrapTask = getWrapTask(method);
-        if (optWrapTask.isPresent()) {
-            String testo = optWrapTask.get().infoList();
-            span = ASpan.text(testo);
-        } else {
-            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
-        }
-
-        return span;
-    }
+//    public ASpan spanList(@NonNull Method method) {
+//        ASpan span = null;
+//        Optional<WrapTask> optWrapTask;
+//
+//        optWrapTask = getWrapTask(method);
+//        if (optWrapTask.isPresent()) {
+//            String testo = optWrapTask.get().infoList();
+//            span = ASpan.text(testo);
+//        } else {
+//            log.warn("Non sono riuscito a creare un oggetto WrapTask per il metodo " + method.getName());
+//        }
+//
+//        return span;
+//    }
 
 
     private String[] getColore(int pos) {

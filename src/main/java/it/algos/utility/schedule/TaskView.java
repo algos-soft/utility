@@ -78,8 +78,8 @@ public class TaskView extends AView {
             add(new H2(titolo));
             for (Method method : methods) {
                 message = pos++ + BaseCost.PARENTESI_TONDA_END + SPAZIO;
-                message += utilityService.infoCron(method);
-                add(ASpan.text(message).blue().bold());
+//                message += utilityService.infoCron(method);
+//                add(ASpan.text(message).blue().bold());
             }
         } else {
             add(new H3(titolo));
