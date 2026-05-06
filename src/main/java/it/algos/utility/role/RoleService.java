@@ -1,7 +1,7 @@
 package it.algos.utility.role;
 
 import it.algos.vbase.enumeration.RisultatoReset;
-import it.algos.vbase.enumeration.RoleEnum;
+import it.algos.vbase.security.Roles;
 import it.algos.vbase.service.ModuloService;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.*;
@@ -59,12 +59,12 @@ public class RoleService extends ModuloService<RoleEntity> {
     public RisultatoReset reset(MongoTemplate mongoTemplate) {
         RoleEntity newBean;
 
-        for (RoleEnum roleEnum : RoleEnum.values()) {
-            newBean = newEntity(roleEnum.ordinal() + 1, roleEnum.name());
-            if (newBean != null) {
-//                mappaBeans.put(roleEnum.name(), newBean);
-            }
-        }
+//        for (Roles role : Roles.values()) {
+//            newBean = newEntity(roleEnum.ordinal() + 1, roleEnum.name());
+//            if (newBean != null) {
+////                mappaBeans.put(roleEnum.name(), newBean);
+//            }
+//        }
 
 //        mappaBeans.values().stream().forEach(bean -> insertSave(bean));
         return RisultatoReset.vuotoMaCostruito;
