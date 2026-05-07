@@ -1,7 +1,7 @@
 package it.algos.utility.security;
 
 import it.algos.vbase.security.IAuthenticationService;
-import it.algos.vbase.security.Roles;
+import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.utility.SpringContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
