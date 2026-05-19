@@ -3,7 +3,9 @@ package it.algos.utility.icona;
 import com.vaadin.flow.router.*;
 import it.algos.vbase.annotation.IView;
 import it.algos.vbase.constant.Gruppo;
+import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.ui.view.*;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.*;
 
 /**
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.*;
  */
 @PageTitle("Icone")
 @Route(value = "icona", layout = MainLayout.class)
+@RolesAllowed({Roles.SUPERUSER})
 @IView(menuGroup = Gruppo.UTILITY)
 public class IconaView extends AView {
 

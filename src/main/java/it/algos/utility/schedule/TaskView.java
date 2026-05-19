@@ -15,11 +15,13 @@ import it.algos.vbase.boot.BaseBoot;
 import it.algos.vbase.boot.BaseCost;
 import it.algos.vbase.components.SimpleVerticalLayout;
 import it.algos.vbase.constant.Gruppo;
+import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.service.MainLayoutService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +36,7 @@ import static it.algos.vbase.boot.BaseCost.SPAZIO;
 @Slf4j
 @PageTitle("Elenco task")
 @Route(value = "task", layout = MainLayout.class)
+@RolesAllowed({Roles.SUPERUSER})
 @IView(menuGroup = Gruppo.UTILITY, menuName = "Task elenco", vaadin = VaadinIcon.LINES_LIST)
 public class TaskView extends AView {
 

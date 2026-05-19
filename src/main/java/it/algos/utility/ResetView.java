@@ -13,16 +13,19 @@ import it.algos.vbase.annotation.IView;
 import it.algos.vbase.components.SimpleHorizontalLayout;
 import it.algos.vbase.components.SimpleVerticalLayout;
 import it.algos.vbase.constant.Gruppo;
+import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.service.MongoService;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import it.algos.vbase.ui.wrapper.ASpan;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 @Route(value = "reset", layout = MainLayout.class)
+@RolesAllowed({Roles.SUPERUSER})
 @IView(menuGroup = Gruppo.UTILITY, menuName = "Reset", vaadin = VaadinIcon.REFRESH)
 public class ResetView extends AView {
 

@@ -5,9 +5,12 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoIcon;
 import it.algos.vbase.annotation.IView;
 import it.algos.vbase.constant.Gruppo;
+import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import jakarta.annotation.security.RolesAllowed;
+
+import static it.algos.vbase.security.enumeration.Roles.ROLE_SUPERUSER;
 
 
 /**
@@ -21,7 +24,7 @@ import jakarta.annotation.security.RolesAllowed;
  */
 @Route(value = "nota", layout = MainLayout.class)
 @IView(menuGroup = Gruppo.UTILITY, menuName = "Note", lumo = LumoIcon.BAR_CHART, vaadin = VaadinIcon.CHECK)
-//@RolesAllowed(ROLE_SUPERUSER)
+@RolesAllowed({Roles.SUPERUSER})
 public class NotaView extends AView {
 
 //    final public static String[] roles = {ROLE_SUPERUSER};
