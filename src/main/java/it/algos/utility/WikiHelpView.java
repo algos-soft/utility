@@ -6,13 +6,16 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
 import it.algos.vbase.annotation.IView;
 import it.algos.vbase.constant.Gruppo;
+import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.tree.MenuObject;
 import it.algos.vbase.tree.TreeNode;
 import it.algos.vbase.ui.view.HelpView;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 @PermitAll
 @Route(value = "wikihelp")
+@RolesAllowed({Roles.SUPERUSER})
 @CssImport("./styles/help.css")
 @IView(menuName = "Wiki", menuGroup = Gruppo.UTILITY, vaadin = VaadinIcon.INFO_CIRCLE)
 public class WikiHelpView extends HelpView {
