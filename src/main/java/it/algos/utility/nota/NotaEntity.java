@@ -20,8 +20,8 @@ import static it.algos.vbase.boot.BaseCost.NO_BLANK;
 import static it.algos.vbase.boot.BaseCost.VUOTA;
 
 
-@Data
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

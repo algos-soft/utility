@@ -27,8 +27,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * <p>
  * Estende la entity astratta AEntity che contiene la key property ObjectId <br>
  */
-@Data
-@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -90,4 +90,4 @@ public class IconaEntity extends AbstractEntity {
         return new ComboComponent(tondo, "html");
     }
 
-}// end of Bean
+}
