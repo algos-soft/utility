@@ -224,19 +224,6 @@ public class StyleExtractor {
         return buffer.toString();
     }
 
-//    /**
-//     * Stampa la mappa degli stili in un formato leggibile.
-//     *
-//     * @param stylesMap la mappa contenente gli stili dei componenti
-//     */
-//    public static void printStyles(Map<Component, Map<String, String>> stylesMap) {
-//        stylesMap.forEach((component, styles) -> {
-//            System.out.println("Component: " + component.getClass().getSimpleName());
-//            styles.forEach((key, value) ->
-//                    System.out.println("  " + key + ": " + (value != null ? value : "default")));
-//            System.out.println("-------------------------");
-//        });
-//    }
 
     public static String getTextFromSpan(Component component) {
         // Ottieni HTML del layout
