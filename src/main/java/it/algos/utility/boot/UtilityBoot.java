@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 @Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class UtilityBoot extends BaseBoot {
+public class UtilityBoot  {
 
 
     public void inizia() {
