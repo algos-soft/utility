@@ -4,13 +4,11 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoIcon;
 import it.algos.vbase.annotation.IView;
-import it.algos.vbase.constant.Gruppo;
+import it.algos.vbase.menu.Gruppo;
 import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.ui.view.AView;
 import it.algos.vbase.ui.view.MainLayout;
 import jakarta.annotation.security.RolesAllowed;
-
-import static it.algos.vbase.security.enumeration.Roles.ROLE_SUPERUSER;
 
 
 /**

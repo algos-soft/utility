@@ -2,7 +2,7 @@ package it.algos.utility.icona;
 
 import com.vaadin.flow.router.*;
 import it.algos.vbase.annotation.IView;
-import it.algos.vbase.constant.Gruppo;
+import it.algos.vbase.menu.Gruppo;
 import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.ui.view.*;
 import jakarta.annotation.security.RolesAllowed;
