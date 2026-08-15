@@ -1,10 +1,12 @@
 package it.algos.utility.icona;
 
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.*;
 import it.algos.vbase.annotation.IView;
 import it.algos.vbase.menu.Gruppo;
 import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.ui.view.*;
+import it.algos.wam24.menu.GruppoWam;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.*;
 
@@ -20,7 +22,7 @@ import org.springframework.beans.factory.annotation.*;
 @PageTitle("Icone")
 @Route(value = "icona", layout = MainLayout.class)
 @RolesAllowed({Roles.SUPERUSER})
-@IView(menuGroup = Gruppo.UTILITY)
+@IView(menuGroup = GruppoWam.UTILITY, menuName = "Icone", vaadin = VaadinIcon.PALETTE)
 public class IconaView extends AView {
 
 
