@@ -1,7 +1,7 @@
 package it.algos.utility.role;
 
 import com.vaadin.flow.router.Route;
-import it.algos.vbase.annotation.IView;
+import it.algos.vbase.annotation.clazz.IView;
 import it.algos.vbase.menu.Gruppo;
 import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.ui.view.AView;

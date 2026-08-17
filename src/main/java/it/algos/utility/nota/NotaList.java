@@ -1,7 +1,7 @@
 package it.algos.utility.nota;
 
 import com.vaadin.flow.data.provider.SortDirection;
-import it.algos.vbase.annotation.IList;
+import it.algos.vbase.annotation.clazz.IList;
 import it.algos.vbase.constant.Bottone;
 import it.algos.vbase.list.AList;
 import it.algos.vbase.ui.wrapper.ASpan;

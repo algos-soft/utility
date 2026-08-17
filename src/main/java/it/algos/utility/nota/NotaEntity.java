@@ -1,7 +1,11 @@
 package it.algos.utility.nota;
 
 import com.vaadin.flow.data.provider.SortDirection;
-import it.algos.vbase.annotation.*;
+import it.algos.vbase.annotation.clazz.IEntity;
+import it.algos.vbase.annotation.field.IFieldForm;
+import it.algos.vbase.annotation.field.IFieldList;
+import it.algos.vbase.annotation.clazz.IReset;
+import it.algos.vbase.annotation.field.IFieldSearch;
 import it.algos.vbase.entity.AbstractEntity;
 import it.algos.vbase.enumeration.LogLevel;
 import it.algos.vbase.enumeration.TextSearchMode;

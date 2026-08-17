@@ -4,7 +4,7 @@ package it.algos.utility;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
-import it.algos.vbase.annotation.IView;
+import it.algos.vbase.annotation.clazz.IView;
 import it.algos.vbase.menu.Gruppo;
 import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.tree.MenuObject;

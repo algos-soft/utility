@@ -1,6 +1,6 @@
 package it.algos.utility.role;
 
-import it.algos.vbase.annotation.IList;
+import it.algos.vbase.annotation.clazz.IList;
 import it.algos.vbase.list.AList;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

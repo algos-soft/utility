@@ -9,7 +9,7 @@ import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
-import it.algos.vbase.annotation.IView;
+import it.algos.vbase.annotation.clazz.IView;
 import it.algos.vbase.components.SimpleHorizontalLayout;
 import it.algos.vbase.components.SimpleVerticalLayout;
 import it.algos.vbase.menu.Gruppo;

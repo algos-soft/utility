@@ -3,7 +3,7 @@ package it.algos.utility.nota;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoIcon;
-import it.algos.vbase.annotation.IView;
+import it.algos.vbase.annotation.clazz.IView;
 import it.algos.vbase.menu.Gruppo;
 import it.algos.vbase.security.enumeration.Roles;
 import it.algos.vbase.ui.view.AView;
