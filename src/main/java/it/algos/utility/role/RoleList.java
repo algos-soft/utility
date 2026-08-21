@@ -10,7 +10,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 @Component
 @Scope(value = SCOPE_PROTOTYPE)
 @IList()
-public class RoleList extends AList {
+public class RoleList extends AList<RoleEntity> {
 
 
     /**
