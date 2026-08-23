@@ -1,5 +1,6 @@
 package it.algos.utility.role;
 
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Route;
 import it.algos.vbase.annotation.clazz.IView;
 import it.algos.vbase.menu.Gruppo;
@@ -19,7 +20,7 @@ import jakarta.annotation.security.RolesAllowed;
  */
 @Route(value = "role", layout = MainLayout.class)
 @RolesAllowed({Roles.SUPERUSER})
-@IView(menuGroup = Gruppo.UTILITY, menuName = "Ruoli")
+@IView(menuGroup = Gruppo.UTILITY, menuName = "Ruoli",vaadin = VaadinIcon.ACADEMY_CAP)
 public class RoleView extends AView {
 
     /**
