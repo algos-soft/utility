@@ -1,5 +1,6 @@
 package it.algos.utility.role;
 
+import com.vaadin.flow.spring.annotation.SpringComponent;
 import it.algos.vbase.annotation.clazz.IList;
 import it.algos.vbase.list.AList;
 import org.springframework.context.annotation.Scope;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
-@Component
+@SpringComponent
 @Scope(value = SCOPE_PROTOTYPE)
 @IList()
 public class RoleList extends AList<RoleEntity> {
